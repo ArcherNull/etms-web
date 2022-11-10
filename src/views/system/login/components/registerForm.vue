@@ -1,11 +1,7 @@
 <!--
  * @Author: Null
  * @Date: 2022-05-26 10:14:55
-<<<<<<< HEAD
- * @Description: 注册表单121233
-=======
  * @Description: 注册表单12
->>>>>>> 4f08a48268a2e03ad75e0bc1a82798a07caf4221
 -->
 
 <template>
