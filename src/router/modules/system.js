@@ -38,6 +38,18 @@ const system = {
       }
     },
     {
+      path: '/system/sys',
+      component: _import(`pages/system/sys/index`),
+      name: 'Domain',
+      meta: {
+        ...meta,
+        title: '系统管理',
+        icon: 'el-icon-tickets',
+        hidden: false,
+        roles: ['admin', 'jerry']
+      }
+    },
+    {
       path: '/system/user',
       component: _import('pages/system/user/index'),
       name: 'User',
