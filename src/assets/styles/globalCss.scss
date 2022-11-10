@@ -1,0 +1,94 @@
+/*
+ * @Author: Null
+ * @Date: 2021-11-08 09:13:34
+ * @Description:  原本不想使用公共样式的，想直接采用tailwind.css的。但是考虑到后续用户的个性化定制一级换肤功能，的需要这么做
+ * 这样做的好处是，能够将各部分的样式提取出来放在服务器中进行加载，减小项目体积
+ */
+
+ // admin 系统主要样式
+@import './admin/index.scss';
+// 边距 rem
+@import './margin-padding/index.scss';
+// flex.css 样式补充
+@import './flex/flex.scss';
+// 自定义elementUi的样式
+@import './element/index.scss';
+// 引入动画样式
+@import './admin/animation.scss';
+// vxe-table 主题
+// @import './admin/theme/vxe-table/index.scss';
+
+
+*{
+  box-sizing: border-box;
+}
+
+// 边距相关,固定px
+$sizes: (0, 4, 8, 10, 12, 16, 20);
+
+@for $index from 1 to 7 {
+  .#{$prefix}-m-#{nth($sizes, $index)} { margin: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-mt-#{nth($sizes, $index)} { margin-top: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-mr-#{nth($sizes, $index)} { margin-right: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-mb-#{nth($sizes, $index)} { margin-bottom: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-ml-#{nth($sizes, $index)} { margin-left: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-mtb-#{nth($sizes, $index)} { margin-top: #{nth($sizes, $index)}px !important; margin-bottom: #{nth($sizes, $index)}px !important;}
+  .#{$prefix}-mlr-#{nth($sizes, $index)} { margin-left: #{nth($sizes, $index)}px !important; margin-right: #{nth($sizes, $index)}px !important;}
+
+  .#{$prefix}-p-#{nth($sizes, $index)} { padding: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-pt-#{nth($sizes, $index)} { padding-top: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-pr-#{nth($sizes, $index)} { padding-right: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-pb-#{nth($sizes, $index)} { padding-bottom: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-pl-#{nth($sizes, $index)} { padding-left: #{nth($sizes, $index)}px !important; }
+  .#{$prefix}-ptb-#{nth($sizes, $index)} { padding-top: #{nth($sizes, $index)}px !important; padding-bottom: #{nth($sizes, $index)}px !important;}
+  .#{$prefix}-plr-#{nth($sizes, $index)} { padding-left: #{nth($sizes, $index)}px !important; padding-right: #{nth($sizes, $index)}px !important;}
+
+}
+
+// 快速使用
+.#{$prefix}-m { margin: 20px !important; }
+.#{$prefix}-mt { margin-top: 20px !important; }
+.#{$prefix}-mr { margin-right: 20px !important; }
+.#{$prefix}-mb { margin-bottom: 20px !important; }
+.#{$prefix}-ml { margin-left: 20px !important; }
+
+.#{$prefix}-p { padding: 20px !important; }
+.#{$prefix}-pt { padding-top: 20px !important; }
+.#{$prefix}-pr { padding-right: 20px !important; }
+.#{$prefix}-pb { padding-bottom: 20px !important; }
+.#{$prefix}-pl { padding-left: 20px !important; }
+
+// border相关样式
+// 灰色边框 gary
+$border-color-gary : 'gray';
+$borderGarySizes: ('#dcdfe6', '#e4e7ed', '#ebeef5', '#f2f6fc', '#d9d9d9');
+
+// 灰色边框 red
+$border-color-red : 'red';
+$borderRedSizes: ('pink', 'yellow', 'blue', 'green', 'red');
+
+@for $index from 1 to 6 {
+  // 灰色
+  .#{$prefix}-b-#{$border-color-gary}-#{$index} { border: solid 1px #{nth($borderGarySizes , $index)} }
+  .#{$prefix}-bt-#{$border-color-gary}-#{$index} { border-top: solid 1px #{nth($borderGarySizes , $index)} }
+  .#{$prefix}-bb-#{$border-color-gary}-#{$index} { border-bottom: solid 1px #{nth($borderGarySizes , $index)} }
+  .#{$prefix}-br-#{$border-color-gary}-#{$index} { border-right: solid 1px #{nth($borderGarySizes , $index)} }
+  .#{$prefix}-bl-#{$border-color-gary}-#{$index} { border-left: solid 1px #{nth($borderGarySizes , $index)} }
+
+
+
+  .#{$prefix}-b-#{$border-color-red}-#{$index} { border: solid 1px #{nth($borderRedSizes , $index)} }
+
+}
+
+// 禁选文本
+.forbid-select-text{
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+
+  

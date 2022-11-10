@@ -1,0 +1,71 @@
+<!--
+ * @Author: Null
+ * @Date: 2021-11-06 14:17:36
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <!-- 引入 VContextmenu 组件样式 -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/v-contextmenu/dist/index.css"
+    />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      html,
+      body,
+      #app {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+      }
+      .dk-home {
+        background-color: #909399;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .dk-home__main {
+        user-select: none;
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .dk-home__loading {
+        height: 32px;
+        width: 32px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+    <div id="app">
+      <div class="dk-home">
+        <div class="dk-home__main">
+          <img
+            class="dk-home__loading"
+            src="./image/loading/loading-spin.svg"
+            alt="loading"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

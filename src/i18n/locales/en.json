@@ -1,0 +1,32 @@
+{
+	"_element": "en",
+	"_name": "English",
+	"layout":{
+		"sidebar":{
+			"menu":{
+				"/":"unknown page",
+				"/index":"home",
+				"/errorLog":"errorLog",
+				"/messageBox":"messageBox",
+				"/system":"system",
+				"/system/domain":"domain",
+				"/system/user":"user",
+				"/system/task-manage":"task-manage",
+				"/system/task-manage/task-plan":"task-plan",
+				"/system/task-manage/task-record":"task-record",
+				"/system/task-manage/task-table":"task-table",
+				"/system/task-manage/task-bigData-table":"task-bigData-table",
+				"/system/module-display":"module-display"
+			}
+		}
+	},
+	"page": {
+		"demo": {
+			"playground": {
+				"locales": {
+					"text": "admin system is a fully open source and free enterprise back-end product front-end integration solution, using the latest front-end technology stack, has prepared most of the project preparations, and with a lot of sample code to help the management system agile development."
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,136 @@
+/*
+ * @Author: Null
+ * @Date: 2021-12-30 14:38:44
+ * @Description: 对elementUI自定义样式的更改入口文件
+ */
+
+/* 按需导入和全局导入，这里没有理解【存在问题】 */
+// 按需引入button
+// @import '~element-ui/packages/theme-chalk/src/button';
+
+// 全局引入方式
+// @import "~element-ui/packages/theme-chalk/src/index";
+// @import 'element-ui/lib/theme-chalk/index.css';
+
+
+/* 更改el-icon样式,谨慎操作，这个会更改所有icon的样式【不推荐使用更改大小，可以更改颜色】 */
+// i[class*=' el-icon-'],
+// [class^='el-icon-'],
+// .el-input__prefix,
+// .el-input__suffix {
+//   // font-size: $el-icon-size;
+//   color: $faIcons-default-bg !important;
+// }
+
+/* 自定义添加input输入框文本内容状态背景样式，使用方法为 在标签el-input中加入属性DangerColor="danger"  */
+.el-input__inner[DangerColor='danger'] {
+  background-color: $color-danger; //红色
+}
+
+.el-input__inner[WarningColor='warning'] {
+  background-color: $color-warning; //橙色
+}
+
+.el-input__inner[SuccessColor='success'] {
+  background-color: $color-success; //绿色
+}
+
+.el-input__inner[InfoColor='info'] {
+  background-color: $color-info; //灰色
+}
+
+/* 在el-input-number标签上加入danger-color='danger'则应用此样式 */
+.el-input-number[danger-color='danger'] {
+  .el-input__inner {
+    color: red !important;
+  }
+}
+
+/* svg-icon 标签统一应用样式颜色 */
+.#{$prefix}-svg-cn {
+  color: $color-primary;
+}
+
+// .layout-main-container {
+//   /* 弹窗el-dialog蒙层统一样式 */
+//   $dialog-top: 76px;
+//   $siderbar-width: 230px;
+//   $margin-10px: 10px;
+//   $border-radius10: 10px;
+
+//   .el-message-box__wrapper {
+//     position: fixed;
+//     top: $dialog-top;
+//     bottom: $margin-10px;
+//     left: calc($siderbar-width);
+//     right: $margin-10px;
+//     text-align: center;
+//     border-radius: $border-radius10;
+//   }
+
+//   .el-dialog__wrapper,
+//   .v-modal {
+//     height: calc(100% - $dialog-top);
+//     width: calc(100% - $siderbar-width);
+//     margin: $dialog-top 0px 0px $siderbar-width;
+//   }
+// }
+
+.el-dialog__body {
+  position: relative;
+  padding: 10px 20px;
+  color: #606266;
+  word-break: break-all;
+  // cursor: pointer;
+}
+
+.el-submenu__title {}
+
+.el-menu {
+  border-width: 0px;
+}
+
+.el-menu--collapse {
+  width: 50px;
+}
+
+// el-descriptions标签的全局样式
+.el-descriptions__global_css{
+  min-width: 60px;
+  max-width: 200px;
+}
+
+.vue-notification {
+  // styling
+  margin: 0 5px 5px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #ffffff;
+  
+  // default (blue)
+  background: $color-primary-1;
+  border-left: 5px solid $color-primary;
+
+  // types (green, amber, red)
+  &.success {
+    background: #68CD86;
+    border-left-color: #42A85F;
+  }
+
+  &.warn {
+    background: #ffb648;
+    border-left-color: #f48a06;
+  }
+
+  &.error {
+    background: #E54D42;
+    border-left-color: #B82E24;
+  }
+}
+
+.el-badge__content.is-fixed {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  transform: translateY(-50%) translateX(100%);
+}

@@ -1,0 +1,32 @@
+{
+	"_element": "ja",
+	"_name": "日本語",
+	"layout":{
+		"sidebar":{
+			"menu":{
+				"/":"不明なページ",
+				"/home":"トップページ",
+				"/system":"システム管理",
+				"/errorLog":"エラーログ",
+				"/messageBox":"メッセージボックス",
+				"/system/domain":"ドメイン名管理",
+				"/system/user":"ユーザー管理",
+				"/system/task-manage":"計画タスク管理",
+				"/system/task-manage/task-plan":"計画タスク",
+				"/system/task-manage/task-record":"タスクモニタリング",
+				"/system/task-manage/task-table":"「タスク」テーブル",
+				"/system/task-manage/task-bigData-table":"ビッグデータテーブル",
+				"/system/module-display":"モジュールディスプレイ"
+			}
+		}
+	},
+	"page": {
+		"demo": {
+			"playground": {
+				"locales": {
+					"text": "admin system は、最新のフロントエンドテクノロジースタックを使用した、完全にオープンソースの無料エンタープライズバックエンド製品フロントエンド統合ソリューションであり、プロジェクトのほとんどの準備を整えており、システムのアジャイル開発の管理に役立つ多くのサンプルコードを備えています。"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,115 @@
+/*
+ * @Author: Null
+ * @Date: 2021-11-08 09:13:34
+ * @Description: 关于elementUi相关的变量文件，已在vue.config.js文件中引入，不需要在src文件夹下单独引入【不可删除】
+ */
+// @import '~@/assets/styles/element/extendCss.scss';
+@import './extendCss.scss';
+// @import '../admin/theme/vxe-table/index.scss';
+// @import './hover-variables.scss';
+
+
+// 工具类名统一前缀，单位px
+$prefix: dk;
+
+// 工具类名统一前缀,单位rem
+$prefixRem: dk1;
+
+/* 改变主题色变量 */
+// 主色
+$color-primary: #409eff;
+
+// 主题色的其他浅色值
+$color-primary-1: rgba($color: $color-primary, $alpha: 0.8);
+$color-primary-2: rgba($color: $color-primary, $alpha: 0.6);
+$color-primary-3: rgba($color: $color-primary, $alpha: 0.4);
+$color-primary-4: rgba($color: $color-primary, $alpha: 0.2);
+
+// 辅助色
+$color-info: #909399;
+$color-info-1: rgba($color: $color-info, $alpha: 0.8);
+$color-info-2: rgba($color: $color-info, $alpha: 0.6);
+$color-info-3: rgba($color: $color-info, $alpha: 0.4);
+$color-info-4: rgba($color: $color-info, $alpha: 0.2);
+
+$color-success: #67c23a;
+$color-success-1: rgba($color: $color-success, $alpha: 0.8);
+$color-success-2: rgba($color: $color-success, $alpha: 0.6);
+$color-success-3: rgba($color: $color-success, $alpha: 0.4);
+$color-success-4: rgba($color: $color-success, $alpha: 0.2);
+
+$color-warning: #e6a23c;
+$color-warning-1: rgba($color: $color-warning, $alpha: 0.8);
+$color-warning-2: rgba($color: $color-warning, $alpha: 0.6);
+$color-warning-3: rgba($color: $color-warning, $alpha: 0.4);
+$color-warning-4: rgba($color: $color-warning, $alpha: 0.2);
+
+$color-danger: #f56c6c;
+$color-danger-1: rgba($color: $color-danger, $alpha: 0.8);
+$color-danger-2: rgba($color: $color-danger, $alpha: 0.6);
+$color-danger-3: rgba($color: $color-danger, $alpha: 0.4);
+$color-danger-4: rgba($color: $color-danger, $alpha: 0.2);
+
+// 文字颜色
+$color-text-main: #303133;
+$color-text-normal: #606266;
+$color-text-sub: #909399;
+$color-text-placehoder: #c0c4cc;
+
+// 边框颜色
+$color-border-1: #dcdfe6;
+$color-border-2: #e4e7ed;
+$color-border-3: #ebeef5;
+$color-border-4: #f2f6fc;
+$color-border-5: #d9d9d9;
+
+
+// 边框宽度
+$border-width-1: 0.0625rem;
+
+// 背景颜色
+$color-bg: rgba(248, 248, 249, 0.5); // 248,248,249  // #f8f8f9
+
+$color-content-bg:rgba(248, 248, 249);
+
+// 辅助绘制背景
+$test-color-bg: greenyellow;
+$test-color: pink;
+
+// 按钮的primary类型的颜色
+$--color-primary: $color-primary;
+
+// 字体大小
+$font-text-18: 1.125rem; // 大标题
+$font-text-16: 1rem; // 一级标题
+$font-text-15: 0.9375rem; // 较大文本
+$font-text-14: 0.875rem; // 正文
+$font-text-13: 0.8125rem; // 较小文本
+$font-text-12: 0.75rem; // 注释
+
+// 侧边--菜单栏颜色
+$sidebar-menu-bg: rgba(11, 38, 63); // 侧边--菜单栏-底部背景  // #0b263f  // 11,38,63
+$sidebar-menu-text: #fff; // 侧边--菜单栏-文字
+
+// fontawesome 图标库---默认背景颜色
+// $faIcons-default-bg: #a9a9a9; // #C0C0C0   // #606266  // #A9A9A9
+// fontawesome 图标库---默认大小 ， 该属性设置会限制所有icon大小，该优先级最高【慎用】
+$faIcons-default-size: 1rem;
+
+// 布局尺寸--标签导航高度
+$layout-tagview-hegiht: 2.1875rem; // 为什么是35px，而不是36px，因为还有1px border-bottom
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+// el-icon样式--- 宽高大小
+$el-icon-size: 1rem;
+
+// 菜单栏hover样式
+$menuHover:'#001529';
+
+// 顶部用户信息附近的操作icon按钮宽度
+$header-icon-btn-width:40px;
+
+// 百度地图地址搜索下拉框宽度
+$baiduMapSearchBoxWidth: 300px;

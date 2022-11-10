@@ -1,0 +1,39 @@
+{
+	"_element": "zh-CN",
+	"_name": "简体中文",
+	"layout":{
+		"sidebar":{
+			"menu":{
+				"/":"未知页面",
+				"/index":"首页",
+				"/errorLog":"错误日志",
+				"/messageBox":"消息盒子",
+				"/system":"系统管理",
+				"/system/domain":"域名管理",
+				"/system/user":"用户管理",
+				"/system/task-manage":"计划任务管理",
+				"/system/task-manage/task-plan":"计划任务",
+				"/system/task-manage/task-record":"任务监控",
+				"/system/task-manage/task-table":"任务表格",
+				"/system/task-manage/task-bigData-table":"大数据表格",
+				"/system/module-display":"模块展示"
+			}
+		}
+	},
+	"app":{
+		"body":{
+			"button":{
+				"markCancel":"标记/取消"
+			}
+		}
+	},
+	"page": {
+		"demo": {
+			"playground": {
+				"locales": {
+					"text": "admin系统 是一个完全 开源免费 的企业中后台产品前端集成方案，使用最新的前端技术栈，已经做好大部分项目前期准备工作，并且带有大量示例代码，助力管理系统敏捷开发。"
+				}
+			}
+		}
+	}
+}
