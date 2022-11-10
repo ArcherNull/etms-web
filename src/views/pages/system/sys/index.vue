@@ -12,6 +12,7 @@ export default {
   data () {
     // 这里存放数据
     return {
+      preValue: [],
       value: [],
       options: [
         {
@@ -224,29 +225,50 @@ export default {
   },
   // 方法集合
   methods: {
-    cascaderChange (val) {
-      console.log('val', val.flat(Infinity))
-      console.log('val', Array.from(new Set(val.flat(Infinity))))
+    // cascaderChange (val) {
+    //   console.log('this.value', this.value)
+    //   console.log('val=====>', val)
+    //   console.log('val', val.flat(Infinity))
+    //   console.log('val', Array.from(new Set(val.flat(Infinity))))
 
-      let list = []
-      // 二级菜单
-      const sdmo = this.options.map(item => {
-        return item.children
-      })
-      // 获取所有的二级菜单
-      for (let i = 0; i < sdmo.length; i++) {
-        const aaa = sdmo[i].map(item => {
-          return item.value
-        })
-        list = [...list, ...aaa]
+    //   let list = []
+    //   // 二级菜单
+    //   const sdmo = this.options.map(item => {
+    //     return item.children
+    //   })
+    //   // 获取所有的二级菜单
+    //   for (let i = 0; i < sdmo.length; i++) {
+    //     const aaa = sdmo[i].map(item => {
+    //       return item.value
+    //     })
+    //     list = [...list, ...aaa]
+    //   }
+    //   console.log('list', list)
+    //   const clickList = Array.from(new Set(val.flat(Infinity)))// 获取所有被点击的数据
+    //   // 保留被点击的二级菜单
+    //   const cccc = clickList.filter((item) => {
+    //     return list.indexOf(item) !== -1
+    //   })
+    //   console.log('cccc', cccc)
+    // },
+    cascaderChange (val) {
+      console.log('this.value', this.value)
+      console.log('val=====>', val)
+      let lastVal = []
+      if (this.$refs) {
+        lastVal = this.$refs.cascader.value
       }
-      console.log('list', list)
-      const clickList = Array.from(new Set(val.flat(Infinity)))// 获取所有被点击的数据
-      // 保留被点击的二级菜单
-      const cccc = clickList.filter((item) => {
-        return list.indexOf(item) !== -1
-      })
-      console.log('cccc', cccc)
+      this.preValue = lastVal
+      console.log('lastVal=====>', lastVal)
+
+      let firstVal = ''
+      if (lastVal.length) {
+        firstVal = lastVal[0][0]
+        const bool = val.every(ele => ele[0] === firstVal)
+        if (!bool) {
+          this.value = val.filter(ele => ele[0] !== firstVal)
+        }
+      }
     }
   }
 }
