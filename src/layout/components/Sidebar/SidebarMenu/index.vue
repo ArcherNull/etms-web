@@ -96,26 +96,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.siderbarMenu {
-  &-menuBox {
-    .scrollbar-wrapper {
-      overflow-x: hidden;
-      .el-scrollbar__wrap {
-        overflow-y: scroll;
-        width: 10px;
-        height: 100%;
-      }
-    }
-  }
-}
 ::v-deep .siderbarMenu-menuBox-menu {
+  height: calc(100vh - 90px);
+  box-sizing: border-box;
   .el-submenu {
     .el-submenu__title {
       padding-left: 14px !important;
-      .sub-el-icon{
+      .sub-el-icon {
         margin-right: 15px;
       }
-      .el-submenu__icon-arrow{
+      .el-submenu__icon-arrow {
         margin-top: -4px;
       }
     }

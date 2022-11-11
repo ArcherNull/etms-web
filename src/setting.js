@@ -25,7 +25,7 @@ const version = admin.version
 // 特殊变量前缀名
 const prefixName = `${admin.name}-${version}`
 
-const defaultLanguage = cookies.get('lang', prefixName) || process.env.VUE_APP_I18N_LOCALE
+const defaultLanguage = cookies?.get('lang', prefixName) || process.env.VUE_APP_I18N_LOCALE
 
 export default {
   // 项目名

@@ -18,7 +18,9 @@
       :enable-col-resize="true"
       :row-selection="agTableOptions.rowSelection || 'multiple'"
       @rowDoubleClicked="rowDoubleClicked"
+      @cellContextMenu="onCellContextMenu"
       @gridReady="onGridReady"
+      @contextmenu.prevent.native=""
     />
 
     <!-- :default-col-def="
@@ -91,30 +93,11 @@
 
     /> -->
 
-    <!-- 侧边抽屉   v-if="ifRowDetailDrawer"-->
-    <el-drawer
-      v-if="showRowDetailDrawer"
-      title="详情"
-      :modal="false"
-      class="agGrid-drawer"
-      :visible.sync="showAgRowDataDetailDrawer"
-      :modal-append-to-body="false"
-      direction="rtl"
-      width="250px"
-    >
-      <div class="agGrid-drawer__content">
-        <div
-          v-for="(item, index) in agTableOptions.columnDefs"
-          :key="index"
-          class="agGrid-drawer__content-line"
-        >
-          <div class="title">{{ item.headerName }}</div>
-          <div class="context">
-            {{ agTableOptions.rowData[index][item.field] || '' }}
-          </div>
-        </div>
-      </div>
-    </el-drawer>
+    <AgDrawer :show-drawer="showRowDetailDrawer" :visible.sync="showAgRowDataDetailDrawer" :ag-table-options="agTableOptions" />
+
+    <!-- 单元格右键菜单栏 -->
+    <CellMenuList :visible="openCellMenuList" />
+
   </div>
 </template>
 
@@ -123,6 +106,7 @@ import { random } from 'lodash'
 import { AgGridVue } from 'ag-grid-vue'
 import { mapState } from 'vuex'
 import { localeText } from './common/agGrid-localeText.js'
+import { eventBus, receiveData } from './common/agGrid-eventBus'
 // import { CustomHeader } from './common/test/customerHeader.js'
 import { CustomTooltip } from './common/test/customTooltip.js'
 
@@ -152,7 +136,10 @@ import { agGridMethods } from './common/agGrid-methods.js'
 export default {
   name: 'AgGrid',
   components: {
-    AgGridVue
+    AgGridVue,
+    CellMenuList: () => import('./components/CellMenuList/index.vue'),
+    AgDrawer: () => import('./components/AgDrawer/index.vue')
+
   },
   props: {
     agTableOptions: {
@@ -190,11 +177,13 @@ export default {
       //   theme: 'alpine',
       //   gridOptions,
       //   defaultColDef
-      // }
+      // },
     }
   },
   computed: {
     ...mapState('agGrid/theme', ['theme']),
+    ...mapState('agGrid/cellContextMenu', ['openCellMenuList']),
+
     ...mapState('agGrid/defaultColDef', [
       'width',
       'minWidth',
@@ -399,6 +388,17 @@ export default {
       return this.showRowDataDetailDrawer && columnDefs && columnDefs.length && rowData && rowData.length
     }
   },
+  mounted () {
+    eventBus.$off('agEventBus')
+    eventBus.$on('agEventBus', (data) => {
+      console.log('agEventBus=====>', data)
+      receiveData(data)
+    })
+  },
+  destroyed () {
+    eventBus.$off('agEventBus')
+  },
+
   // 错误捕获钩子
   errorCaptured (err, vm, info) {
     console.log(
@@ -411,47 +411,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-::v-deep .agGrid-drawer {
-  // 抽屉宽度 -写死
-  .el-drawer__container {
-    .el-drawer.rtl {
-      margin: 90px 10px 0px 0;
-      box-sizing: border-box;
-      height: calc(100vh - 105px);
-      border-radius: 8px;
-      width: 300px !important;
-    }
-  }
-  .el-drawer__header {
-    padding: 10px;
-    margin-bottom: 0px;
-  }
-  .el-drawer__body {
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  // 侧边框详情内容样式
-  .agGrid-drawer__content {
-    padding: 0px 10px;
-    font-size: 14px;
-    margin-bottom: 60px;
-    &-line {
-      display: grid;
-      grid-template-columns: 1.2fr 2fr;
-      column-gap: 8px;
-      padding: 4px 0;
-      .title {
-        text-align: right;
-        color: #999;
-      }
-      .context {
-        color: #333;
-      }
-    }
-  }
-}
-</style>

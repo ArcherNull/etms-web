@@ -38,7 +38,7 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   &-img {
-    height: 100%;
+    height: 50px;
   }
 }
 
