@@ -8,6 +8,7 @@
     <MyButton
       v-for="(item, index) in schemas"
       :key="index"
+      v-waves
       v-bind="item"
       @click="emitFun(item, index, schemas)"
     >
