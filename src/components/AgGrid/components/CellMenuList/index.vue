@@ -15,10 +15,21 @@
       class="CellMenuList-tabs"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="字段" name="fields">字段</el-tab-pane>
-      <el-tab-pane label="文件" name="file">文件</el-tab-pane>
-      <el-tab-pane label="打印" name="print">打印</el-tab-pane>
-      <el-tab-pane label="配置" name="config">配置</el-tab-pane>
+      <el-tab-pane label="字段" name="fields">
+        <FieldsSet />
+      </el-tab-pane>
+      <el-tab-pane label="文件" name="file">
+        <FilesSet />
+      </el-tab-pane>
+      <el-tab-pane label="打印" name="print">
+        <PrintSet />
+      </el-tab-pane>
+      <el-tab-pane label="图表" name="eChart">
+        <AgChart />
+      </el-tab-pane>
+      <el-tab-pane label="配置" name="config">
+        <ConfigSet />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -27,6 +38,13 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'CellMenuList',
+  components: {
+    ConfigSet: () => import('./components/ConfigSet/index.vue'),
+    FieldsSet: () => import('./components/FieldsSet/index.vue'),
+    FilesSet: () => import('./components/FilesSet/index.vue'),
+    PrintSet: () => import('./components/PrintSet/index.vue'),
+    AgChart: () => import('./components/AgChart/indx.vue')
+  },
   props: {
     visible: {
       type: Boolean,
@@ -63,6 +81,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$menu-height:40vh;
+$menu-width:30vw;
+
 .CellMenuList {
   background-color: #fff;
   z-index: 3000;
@@ -75,8 +96,17 @@ export default {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 
   &-tabs {
-    width: 25vw;
-    height: 35vh;
+    width: $menu-width;
+    min-width: 400px;
+    height: $menu-height;
+    overflow: hidden;
+    ::v-deep .el-tabs__header{
+      margin-bottom: 0px;
+    }
+    ::v-deep .el-tab-pane{
+      height: calc($menu-height - 50px);
+      overflow: auto;
+    }
     ::v-deep .el-tabs__nav-scroll {
       display: flex;
       align-items: center;
