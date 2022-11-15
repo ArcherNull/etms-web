@@ -28,6 +28,18 @@ export function validURL (url) {
 }
 
 /**
+ * @description: 判断http/https/ftp链接是否正确
+ * @param {string} url
+ * @returns {Boolean}
+ */
+export function validURL2 (url) {
+  const reg = /(http|https|ws|wss|ftp):\/\/([\w.]+\/?)\S*/ // 带wwww的
+  // const reg = /(http|https|ws|wss|ftp):\/\/\S*/ // 可带或可不带www
+
+  return reg.test(url)
+}
+
+/**
  * @description: 判断英文小写
  * @param {string} str
  * @returns {Boolean}
@@ -169,7 +181,10 @@ export function formatMoney (money) {
 export function formatTelephoneNumber (telephoneNumber) {
   const reg = /^(\d3,4|\d{3,4}-)?\d{7,8}$/
   if (reg.test(telephoneNumber)) {
-    telephoneNumber = telephoneNumber.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')
+    telephoneNumber = telephoneNumber.replace(
+      /^(\d{3})\d{4}(\d{4})$/,
+      '$1****$2'
+    )
   }
   return telephoneNumber
 }

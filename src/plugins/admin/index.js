@@ -22,7 +22,10 @@ echarts.registerMap('china', china)
 import api from '@/api/index'
 // 国际化
 import i18n from '@/i18n/index.js'
-
+// 图片预览
+import Viewer from '../vViewer/index'
+// 图片剪裁工具
+import VueCropper from 'vue-cropper'
 // vue-clipboard2剪贴板
 import VueClipboard from 'vue-clipboard2'
 
@@ -107,6 +110,10 @@ export default {
       // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
       ak: 'DjZL60GyDrVkIgOzm0Fjx2mXuAzdMHvw'
     })
+    // 图片预览
+    Vue.use(Viewer)
+    // 图片剪裁工具
+    Vue.use(VueCropper)
 
     // 全局错误捕获
     Vue.config.errorHandler = function (err, vm, info) {

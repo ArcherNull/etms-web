@@ -4,7 +4,9 @@
  * @Description: webSocket方法封装
  */
 
-var ws = new WebSocket('wss://echo.websocket.org')
+const wsBaseUrl = 'ws://localhost:8002'
+
+var ws = new WebSocket(wsBaseUrl)
 
 // 实例对象的onopen属性，用于指定连接成功后的回调函数。
 ws.onopen = function (event) {
@@ -19,10 +21,13 @@ ws.onmessage = function (evt) {
 
 // 实例对象的onclose属性，用于指定连接关闭后的回调函数。
 ws.onclose = function (evt) {
-  // var code = event.code
-  // var reason = event.reason
-  // var wasClean = event.wasClean
+  var code = event.code
+  var reason = event.reason
+  var wasClean = event.wasClean
   console.log('Connection closed.')
+  console.log('code', code)
+  console.log('reason', reason)
+  console.log('wasClean', wasClean)
 }
 // 实例对象的onerror属性，用于指定报错时的回调函数。
 ws.onerror = function (event) {

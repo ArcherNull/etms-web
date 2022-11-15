@@ -5,24 +5,24 @@
 -->
 
 <template>
-  <div :id="domId" class="firstTitle-box firstTitle-box-anchor dk-mb-10">
-    <div :class="['firstTitle',isShowTitleBg ?'dk-pt-8 dk-pb-8':'dk-mb-10']" flex="main:justify cross:center">
-      <div class="firstTitle-left" flex="main:left cross:center">
-        <div class="firstTitle-left__box" flex="main:left cross:center">
+  <div :id="domId" class="FirstTitle-box FirstTitle-box-anchor dk-mb-10">
+    <div :class="['FirstTitle',isShowTitleBg ?'dk-pt-8 dk-pb-8':'dk-mb-10']" flex="main:justify cross:center">
+      <div class="FirstTitle-left" flex="main:left cross:center">
+        <div class="FirstTitle-left__box" flex="main:left cross:center">
           <div
             v-if="isShowTitleBg"
             :style="{ background: statusBarbg }"
-            class="firstTitle-left__box_bg dk-mr-8"
+            class="FirstTitle-left__box_bg dk-mr-8"
           />
-          <div class="firstTitle-left__box_title dk-f2-title">
+          <div class="FirstTitle-left__box_title dk-f2-title">
             {{ title }}
           </div>
         </div>
-        <div class="firstTitle-left__subBox dk-ml-10 dk-subContent">
+        <div class="FirstTitle-left__subBox dk-ml-10 dk-subContent">
           <slot name="left" />
         </div>
       </div>
-      <div class="firstTitle-right">
+      <div class="FirstTitle-right">
         <slot name="right" />
       </div>
     </div>
@@ -92,10 +92,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.firstTitle-box{
+.FirstTitle-box{
   position: relative;
 }
-.firstTitle {
+.FirstTitle {
   width: 100%;
   position: sticky;
   background: #fff;

@@ -118,6 +118,7 @@ const validateCode = {
       resolve(code)
     })
   },
+
   /**
    * 绘制验证码图片
    * canvasId 为验证码canvas图片id

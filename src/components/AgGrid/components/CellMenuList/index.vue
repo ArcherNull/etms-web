@@ -57,7 +57,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('agGrid/cellContextMenu', ['menuListData', 'left', 'top'])
+    ...mapState('agGrid/cellContextMenu', ['menuListData', 'left', 'top', 'openDialogCount'])
   },
   watch: {
     visible (value) {
@@ -74,7 +74,11 @@ export default {
       console.log('handleClick', ele)
     },
     closeMenu () {
-      this.OPEN_CELL_MENU_LIST(false)
+      if (this.openDialogCount <= 0) {
+        this.OPEN_CELL_MENU_LIST(false)
+      } else {
+        console.log('还有弹窗存在', this.openDialogCount)
+      }
     }
   }
 }

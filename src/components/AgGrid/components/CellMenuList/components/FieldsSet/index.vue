@@ -241,7 +241,8 @@ export default {
           },
           {
             type: 'info',
-            btnText: '重置'
+            btnText: '重置',
+            plain: true
           }
         ]
       }

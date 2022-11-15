@@ -155,7 +155,7 @@ export function checkIdNum (rule, value, callback) {
 
 // 判断是否符合身份证格式,强校验
 export const isIdCard = {
-  /* *********验证身份证格式********** */
+  /* *********验证证格式********** */
   _isIdCard: function (value) {
     const idCard = value
     if (idCard.length === 15) {
@@ -224,6 +224,10 @@ export const isIdCard = {
   }
   /* *********验证身份证格式********** */
 }
+
+// 身份证号码正则表达式汇总
+// /^[1-9]\d{5}(19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}{0-9Xx}$/
+// 参考文档 https://blog.csdn.net/weixin_45595683/article/details/117374330
 
 // 判断字符串长度是否超出范围
 const isRange = function (value, range1, range2) {

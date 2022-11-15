@@ -20,14 +20,37 @@ export function downLoadByATag (url, fileName = 'downLoad', extname = '.png') {
 }
 
 /**
- * @description: 文件格式转换函数，只支持excel文件，格式为  .csv / .xlsx
+ * @description: Excel文件格式转换函数，只支持excel文件，格式为  .csv / .xlsx
  * @param { 接收的文件流 ， 必传 } bold
  * @param { 转换格式的文件案名 } fileName
  * @param { 转换的格式 } format
  * @return {*}
  */
-export function convertFormat (bold, fileName = 'downLoad', extname = '.csv') {
-  const blob = new Blob([bold], { type: 'application/vnd.ms-excel' }) // 核心代码
+export function convertExcelFormat (bold, fileName = 'downLoad', extname = '.csv') {
+  const blob = new Blob([bold], {
+    type: 'application/vnd.ms-excel'
+  }) // 核心代码
+  const url = window.URL.createObjectURL(blob)
+  downLoadByATag(url, fileName, extname)
+}
+
+/**
+ * @description: Image文件格式转换函数，只支持excel文件，格式为  .csv / .xlsx
+ * @param { 接收的文件流 ， 必传 } bold
+ * @param { 转换格式的文件案名 } fileName
+ * @param { 转换的格式 } format
+ * @return {*}
+ */
+export function convertImageFormat (bold, fileName = 'downLoad', extname = '.png') {
+  const contentTypeObj = {
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif'
+  }[extname]
+  const blob = new Blob([bold], {
+    type: contentTypeObj
+  }) // 核心代码
   const url = window.URL.createObjectURL(blob)
   downLoadByATag(url, fileName, extname)
 }
@@ -43,18 +66,27 @@ export async function chooseExcel (domId, filename = 'downLoad', extname = '.xls
   if (domId) {
     const files = document.getElementById(domId).files[0]
     console.log('files图片文件的信息的获取', files)
-    const fileToBuffer = (file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.onload = () => {
-          resolve(reader.result)
+    if (files) {
+      const regStr = /\.csv|\.xlsx$/
+      if (regStr.test(files.name)) {
+        const fileToBuffer = (file) => {
+          return new Promise((resolve) => {
+            const reader = new FileReader()
+            reader.onload = () => {
+              resolve(reader.result)
+            }
+            reader.readAsArrayBuffer(file)
+          })
         }
-        reader.readAsArrayBuffer(file)
-      })
+        const bold = await fileToBuffer(files)
+        console.log('bold', bold)
+        convertExcelFormat(bold, filename, extname)
+      } else {
+        console.error('请上传.csv/.xlsx后缀结尾的excel文件')
+      }
+    } else {
+      console.error('未获取到文件流数据')
     }
-    const bold = await fileToBuffer(files)
-    console.log('bold', bold)
-    convertFormat(bold, filename, extname)
   } else {
     console.error('未获取到文件')
   }
@@ -70,13 +102,21 @@ export function csvExcelConvertToxlsxExcel (domId, filename = 'csvExcelConvertTo
   chooseExcel(domId, filename)
 }
 
+/**
+ * @description: .xlsx文件的excel 转换为 .csv文件的excel
+ * @param { String } domId 元素节点id
+ * @param { String } filename 文件名
+ * @return {*}
+ */
 export function xlsxExcelConvertTocsvExcel (domId, filename = 'xlsxExcelConvertTocsvExcel') {
   chooseExcel(domId, filename, '.csv')
 }
 
 export default {
-  convertFormat,
+  convertExcelFormat,
+  convertImageFormat,
   chooseExcel,
   downLoadByATag,
-  csvExcelConvertToxlsxExcel
+  csvExcelConvertToxlsxExcel,
+  xlsxExcelConvertTocsvExcel
 }

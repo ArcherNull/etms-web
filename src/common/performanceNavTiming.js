@@ -9,3 +9,22 @@ export function showNavigationDetails () {
   console.table(entry.toJSON())
 }
 
+/**
+ * @description: 网络连接状况
+ * @return {*}
+ */
+export function networkConnection () {
+  const { rtt, downlink, effectiveType, saveDate } = navigator.connection
+  console.group('当前网络状态')
+  console.log(`有效网络连接类型:${effectiveType}`) // 2g 3g 4g
+  console.log(`估算的下行速度/带宽:${downlink}Mb/s`)
+  console.log(`估算往返时间:${rtt}ms`)
+  console.log(`打开请求数据保护模式:${saveDate}`)
+  console.groupEnd()
+  return {
+    rtt,
+    downlink,
+    effectiveType,
+    saveDate
+  }
+}

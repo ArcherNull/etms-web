@@ -54,7 +54,7 @@ export default {
         ],
         rowData: rowData.getRowData()
       },
-      agTable: null, // ag-grid表格方法shi'li
+      agTable: null, // ag-grid表格方法实例
       register: {
 
       },

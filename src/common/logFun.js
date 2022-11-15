@@ -9,6 +9,15 @@ import util from '@/libs/util.js'
 
 // logType 日志类型，区分为 错误日志 errorLog ； 操作日志 ：operationLog
 
+export function getPageInfo () {
+  const locationHref = get(window, 'location.href', '')
+  const page = get(window, 'location.hash', '').replace('#', '')
+  return {
+    locationHref,
+    page
+  }
+}
+
 /**
  * @description: 此方法用于错误日志的数据生成
  * @param {Object} errorLog 错误日志对象 ， message ， type ， meta
@@ -17,8 +26,7 @@ import util from '@/libs/util.js'
 export function errorLogFun (errorLog) {
   const { message, type = 'info', errorType = 'js', meta } = errorLog
 
-  const locationHref = get(window, 'location.href', '')
-  const page = get(window, 'location.hash', '').replace('#', '')
+  const { locationHref, page } = getPageInfo()
 
   const jsonMeta = JSON.stringify({
     // 当前用户信息
@@ -53,8 +61,7 @@ export function errorLogFun (errorLog) {
 export function operationLogFun (errorLog) {
   const { message, type = 'info', operationType = 'clickButton', meta } = errorLog
 
-  const locationHref = get(window, 'location.href', '')
-  const page = get(window, 'location.hash', '').replace('#', '')
+  const { locationHref, page } = getPageInfo()
 
   const jsonMeta = JSON.stringify({
     // 当前用户信息
@@ -62,7 +69,7 @@ export function operationLogFun (errorLog) {
     // 当前用户的 uuid
     // uuid: util.cookies.get('uuid'),
     // 日志类型
-    logType: '：operationLog',
+    logType: 'operationLog',
     // 操作方式 confirm 确认弹窗 ； clickButton 点击按钮 ， approval 审批流程
     operationType,
     // 当前的 token

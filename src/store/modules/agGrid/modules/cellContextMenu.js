@@ -8,8 +8,9 @@ const state = {
   // 打开单元格鼠标右键菜单列表
   openCellMenuList: false,
   menuListData: {},
-  left: 0,
-  top: 0
+  left: 0, // 右侧菜单的坐标y
+  top: 0, // 右侧菜单的坐标x
+  openDialogCount: 0 // 菜单栏中打开弹窗的次数
 }
 
 const mutations = {
@@ -28,6 +29,10 @@ const mutations = {
   // 打开单元格鼠标右键菜单列表
   SET_TOP: (state, top) => {
     state.top = top
+  },
+  // 打开单元格鼠标右键菜单列表
+  SET_OPEN_DIALOG_COUNT: (state, count) => {
+    state.openDialogCount += count
   }
 }
 

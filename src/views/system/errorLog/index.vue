@@ -18,15 +18,40 @@
       </div>
     </div>
     <!-- <MyVxeTable :table-config="tableConfig" /> -->
+    <!-- <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" /> -->
+
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { AgGridUtils } from '@/components/AgGrid/common/agGrid-utils'
+
 export default {
   name: 'ErrorLog',
   data () {
     return {
+      // agTableOptions: {
+      //   columnDefs: [
+      //     {
+      //       headerName: '#',
+      //       colId: 'rowNum',
+      //       valueGetter: 'node.id',
+      //       // sort: 'asc',
+      //       // sortable: false,
+      //       filter: false,
+      //       width: 100,
+      //       pinned: 'left', // 固定在左侧
+      //       lockPosition: true, // 锁定位置，默认为false,该属性设置为true时，拖拽列无效；如果不设置pinned: 'right', 默认展示在最左方
+      //       checkboxSelection: true, // 设置当前列有可选项=
+      //       headerCheckboxSelection: true,
+      //       cellRenderer: (params) => Number(params.value) + 1
+      //       // serialNumComparator
+      //     },
+      //     ...columnDefs
+      //   ],
+      //   rowData: rowData.getRowData()
+      // },
       // 表格配置项
       tableConfig: {
         maxHeight: 600,
@@ -73,7 +98,8 @@ export default {
             type: 'danger'
           }
         ]
-      }
+      },
+      agTable: null // ag-grid表格方法实例
     }
   },
   computed: {
@@ -89,6 +115,10 @@ export default {
   },
   methods: {
     ...mapActions('setting/log', ['pushErrorLog', 'clearAllErrorLog']),
+    getGridApi (api) {
+      const agTable = new AgGridUtils(api)
+      this.agTable = agTable
+    },
     // 添加错误日志
     addErrorLog () {
       this.pushErrorLog({

@@ -3,6 +3,8 @@
  * @Date: 2022-04-27 09:37:05
  * @Description: 轮询定时器
  */
+// 网络状况监听
+import { networkConnection } from '@/common/performanceNavTiming'
 
 let timer = null
 
@@ -16,7 +18,7 @@ const devLimitTime = 7000
 
 // 生产环境，第一次进入，加载接口。后进入，设定时间5min , 弹窗显示时间15s
 const proTime = 5 * 60 * 1000
-const proLimitTime = 15000
+const proLimitTime = 5 * 60 * 1000
 
 const timeout = isDev ? devTime : proTime
 const limitTimeout = isDev ? devLimitTime : proLimitTime
@@ -52,6 +54,8 @@ function timePoll (time = timeout) {
 // 请求接口
 function getMessageData (limitTime) {
   console.log(`轮询请求接口====>${count}次`, limitTime)
+  // 检查网络
+  networkConnection()
 }
 
 // 获取数据
