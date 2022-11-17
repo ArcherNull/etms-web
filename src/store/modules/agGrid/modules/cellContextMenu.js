@@ -5,6 +5,7 @@
  */
 
 const state = {
+  agEventList: null, // ag-grid事件
   // 打开单元格鼠标右键菜单列表
   openCellMenuList: false,
   menuListData: {},
@@ -16,6 +17,10 @@ const state = {
 }
 
 const mutations = {
+  // ag-grid事件
+  SET_AG_EVENT_LIST: (state, data) => {
+    state.agEventList = data
+  },
   // 打开单元格鼠标右键菜单列表
   OPEN_CELL_MENU_LIST: (state, openCellMenuList) => {
     state.openCellMenuList = openCellMenuList
@@ -43,6 +48,11 @@ const mutations = {
 }
 
 const actions = {
+  /**
+   * @description:打开右键弹窗
+   * @param {*} data
+   * @return {*}
+   */
   openCellMenuList ({ commit }, data) {
     const { openCellMenuList, menuListData } = data
     console.log('menuListData', menuListData)
@@ -55,6 +65,25 @@ const actions = {
       commit('SET_TOP', event.clientY)
     }
     return false
+  },
+
+  /**
+   * @description: 接收ag-grid点击事件
+   * @param {*} commit
+   * @param {*} data
+   * @return {*}
+   */
+  receiveEventData ({ state, commit, dispatch }, data) {
+    const { row, eventName } = data
+    console.log('eventName=====>', eventName)
+    console.log('row=====>', row)
+    if (eventName === 'onCellContextMenu') {
+      const bool = state.openCellMenuList
+      dispatch('openCellMenuList', {
+        openCellMenuList: !bool,
+        menuListData: row
+      })
+    }
   }
 }
 

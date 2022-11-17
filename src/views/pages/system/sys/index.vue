@@ -9,9 +9,7 @@
       <div slot="content">
         <MyButton @click="search">搜索</MyButton>
         <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" />
-
         <AgGrid :ag-table-options="agTableOptions1" @getGridApi="getGridApi1" />
-
       </div>
     </FirstTitle>
   </div>

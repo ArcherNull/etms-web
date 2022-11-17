@@ -7,7 +7,6 @@
 // 定时器，用于刷新手动计算的合计行 paginationChanged
 import store from '@/store/index'
 import { AgGridUtils, refreshTotalToList, getCurrentGridDataAndNumericalOrder } from './agGrid-utils'
-import { eventBus } from './agGrid-eventBus'
 
 export const agGridMethods = {
   /**
@@ -145,7 +144,7 @@ export const agGridMethods = {
    */
   onCellContextMenu (row) {
     console.log('onCellContextMenu', row)
-    eventBus.$emit('agEventBus', {
+    store.dispatch('agGrid/cellContextMenu/receiveEventData', {
       row,
       eventName: 'onCellContextMenu'
     })

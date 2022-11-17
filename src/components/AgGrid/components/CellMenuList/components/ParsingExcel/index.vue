@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="ParsingExcel">
+  <div class="ParsingExcel" @click.stop="">
     <input
       ref="excel-upload-input"
       class="ParsingExcel-upload-input"
@@ -43,10 +43,7 @@
         </span>
       </div>
       <div slot="content" class="scroll-div-box1">
-        <!-- <MyVxeTable :table-config="tableConfig" /> -->
-
         <AgGrid :show-cell-menu-list="false" :ag-table-options="agTableOptions" @getGridApi="getGridApi" />
-
       </div>
       <div slot="footer">
         <MyButton @click="dialogVisible = false">取 消</MyButton>
@@ -58,7 +55,7 @@
 
 <script>
 import XLSX from 'xlsx'
-import { AgGridUtils } from '@/components/AgGrid/common/agGrid-utils'
+import { AgGridUtils, InitColumnDefs } from '@/components/AgGrid/common/agGrid-utils'
 
 export default {
   name: 'ParsingExcel',
@@ -92,11 +89,6 @@ export default {
       excelData: {
         header: null,
         results: null
-      },
-      // 解析完excel的数据
-      tableConfig: {
-        tableHeader: [],
-        data: []
       },
       // 解析前时间
       parsingExcelStartTime: '',
@@ -155,24 +147,22 @@ export default {
     onSuccess ({ results, header }) {
       console.log('results', results)
       console.log('header', header)
-      const tableHeader = []
+
+      const database = {}
 
       for (let i = 0; i < header.length; i++) {
-        const obj = {
-          field: header[i],
-          width: 100,
-          title: header[i]
-        }
-        tableHeader.push(obj)
-      }
-      this.tableConfig = {
-        tableHeader,
-        data: results
+        database[header[i]] = header[i]
       }
 
+      const columnDefs = new InitColumnDefs({
+        showFirstColumn: true,
+        database
+      })
+
+      this.agTableOptions.columnDefs = columnDefs
+      this.agTableOptions.rowData = results
       // 解析后时间
       this.diffStartTimeToEndTime()
-
       this.dialogVisible = true
     },
     // 计算解析前时间和解析后时间的差值

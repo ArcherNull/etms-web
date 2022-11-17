@@ -109,7 +109,7 @@ import { random } from 'lodash'
 import { AgGridVue } from 'ag-grid-vue'
 import { mapState } from 'vuex'
 import { localeText } from './common/agGrid-localeText.js'
-import { eventBus, receiveData } from './common/agGrid-eventBus'
+import { eventBus } from './common/agGrid-eventBus'
 // import { CustomHeader } from './common/test/customerHeader.js'
 import { CustomTooltip } from './common/test/customTooltip.js'
 
@@ -399,7 +399,6 @@ export default {
     eventBus.$off('agEventBus')
     eventBus.$on('agEventBus', (data) => {
       console.log('agEventBus=====>', data)
-      receiveData(data)
     })
   },
   destroyed () {
