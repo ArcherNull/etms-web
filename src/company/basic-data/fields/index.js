@@ -115,23 +115,34 @@ export const fieldsConfig = {
  */
 export class InitColumnDefs {
   // 序号列
-  static FIRST_COLUMN = {
+  FIRST_COLUMN = {
     headerName: '#',
-    colId: 'rowNum',
-    valueGetter: 'node.id',
-    // sort: 'asc',
-    // sortable: false,
-    filter: false,
-    width: 100,
+    field: 'numericalOrder',
+    width: 70,
+    // state: true,
     pinned: 'left', // 固定在左侧
     lockPosition: true, // 锁定位置，默认为false,该属性设置为true时，拖拽列无效；如果不设置pinned: 'right', 默认展示在最左方
-    checkboxSelection: true, // 设置当前列有可选项=
+    checkboxSelection: true, // 设置当前列有可选项
+    sortable: false,
+    filter: false,
+
+    // filter: CustomerFilter,
+    floatingFilter: false,
     headerCheckboxSelection: true,
-    cellRenderer: (params) => Number(params.value) + 1
+    headerCheckboxSelectionFilteredOnly: true
   }
 
   constructor (fieldsConfig, oldServerData) {
+    this.fieldsConfig = fieldsConfig
+    this.oldServerData = oldServerData
+
+    // 初始化
+    return this.init(fieldsConfig, oldServerData)
+  }
+  init (fieldsConfig, oldServerData) {
     const { database, columnDefs, showFirstColumn, specColumns } = fieldsConfig
+
+    console.log('this.FIRST_COLUMN=====>', this.FIRST_COLUMN)
 
     if (!isEmpty(database)) {
       if (oldServerData?.length) {
@@ -141,10 +152,14 @@ export class InitColumnDefs {
           let colDefs = []
           if (isEmpty(specColumns)) {
             colDefs = this.initColDefs(database)
-            showFirstColumn && colDefs.unshift(this.FIRST_COLUMN)
           } else {
             colDefs = this.dealSpecColumns(database, specColumns)
           }
+
+          console.log('this.FIRST_COLUMN', this.FIRST_COLUMN)
+          showFirstColumn && colDefs.unshift(this.FIRST_COLUMN)
+
+          console.log('colDefs=====>', colDefs)
           return colDefs
         } else {
           showFirstColumn && columnDefs.unshift(this.FIRST_COLUMN)
@@ -153,6 +168,7 @@ export class InitColumnDefs {
       }
     } else {
       console.error('database是必传字段,且不能为空')
+      return []
     }
   }
   // 获取基础的列头数据
@@ -214,7 +230,9 @@ export class InitColumnDefs {
               colDefs.splice(id, 0, ele)
             })
           } else {
-            console.error(`插入列字段名称为${ele.field},插入原列字段${ele.afterField}后，未成功`)
+            console.error(
+              `插入列字段名称为${ele.field},插入原列字段${ele.afterField}后，未成功`
+            )
           }
         })
       }

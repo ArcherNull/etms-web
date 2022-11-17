@@ -10,7 +10,9 @@ const state = {
   menuListData: {},
   left: 0, // 右侧菜单的坐标y
   top: 0, // 右侧菜单的坐标x
-  openDialogCount: 0 // 菜单栏中打开弹窗的次数
+  openDialogCount: 0, // 菜单栏中打开弹窗的次数
+
+  showCalcBottomRow: false // 显示和隐藏底部合计行
 }
 
 const mutations = {
@@ -33,6 +35,10 @@ const mutations = {
   // 打开单元格鼠标右键菜单列表
   SET_OPEN_DIALOG_COUNT: (state, count) => {
     state.openDialogCount += count
+  },
+  // 显示和隐藏底部合计行
+  SET_SHOW_CALC_BOTTOM_ROW: (state, bool) => {
+    state.showCalcBottomRow = bool
   }
 }
 

@@ -5,8 +5,7 @@
  * 官方文档： https://www.ag-grid.com/javascript-data-grid/
  */
 
-// import { cloneDeep, sumBy } from 'lodash'
-
+import { sumBy, isArray, isEmpty } from 'lodash'
 // ag-grid渲染之前的处理
 
 /**
@@ -155,21 +154,38 @@ export function AgGridUtils (api) {
   const that = this
   // gridApi 网格aoi , columnApi 列api
   const { api: gridApi, columnApi } = api
+
   if (gridApi && columnApi) {
     /* ************************ 网格API操作 ****************************  */
     this.gridApi = gridApi
     // 获取并返回当前网格内的所有过滤后的数据
-    this.getCurrentGridNode = gridApi.getModel().rowsToDisplay
+    this.getCurrentGridNode = gridApi?.getModel()?.rowsToDisplay || []
     // 获取并返回当前网格内的所有原始数据
-    this.getRootGridData = gridApi.getModel().rootNode.allLeafChildren
+    this.getRootGridData = gridApi?.getModel()?.rootNode?.allLeafChildren || []
 
-    // 获取并返回当前网格内的所有过滤后的数据
+    // 获取并返回当前网格内的所有过滤后的前端视图数据
     this.getCurrentGridData = function () {
-      return gridApi.getModel().rowsToDisplay.map((ele) => ele.data)
+      const getCurrentGridNode = this.getCurrentGridNode
+      if (Array.isArray(getCurrentGridNode) && getCurrentGridNode.length) {
+        return getCurrentGridNode.map((ele) => ele.data)
+      } else {
+        return []
+      }
     }
-    // 当前网格中的所有后端数据
+
+    // 添加序列行
+    this.getCurrentGridDataAndNumericalOrder = function () {
+      return getCurrentGridDataAndNumericalOrder(this.getCurrentGridNode)
+    }
+
+    // 当前网格中的所有后端数据【包含筛选阴残的】
     this.allLeafChildren = function () {
-      return gridApi.getModel().rootNode.allLeafChildren.map((ele) => ele.data)
+      const getRootGridData = this.getRootGridData
+      if (Array.isArray(getRootGridData) && getRootGridData.length) {
+        return getRootGridData.map((ele) => ele.data)
+      } else {
+        return []
+      }
     }
 
     /**
@@ -188,7 +204,11 @@ export function AgGridUtils (api) {
       const selectedRowDatas = gridApi.getSelectedRows()
       console.log('selectedRowDatas------------', selectedRowDatas)
       if (that.checkRowsType(selectedRowDatas)) {
-        return selectedRowDatas
+        if (selectedRowDatas.length <= 100) {
+          return selectedRowDatas
+        } else {
+          alert('选中的行数据不可超过100条!')
+        }
       } else {
         alert('未选中的行数据！')
       }
@@ -340,6 +360,24 @@ export function AgGridUtils (api) {
      */
     this.clearAllColumnsPinned = function () {
       columnApi.applyColumnState({ defaultState: { pinned: null }})
+
+      /*
+      给特定的行设定状态
+      columnApi.applyColumnState({
+        state: [
+          { colId: 'year', sort: 'asc' },
+          { colId: 'country', sort: 'desc' },
+        ],
+        defaultState: { sort: null },
+      });
+      */
+
+      /*
+      清除排序
+      columnApi.applyColumnState({
+        defaultState: { sort: null },
+      });
+      */
     }
 
     /**
@@ -391,11 +429,40 @@ export function AgGridUtils (api) {
 
     /**
      * @description: 导出 .csv 格式的excel文件
+     * 参考属性文档：https://www.ag-grid.com/javascript-data-grid/csv-export/#csvexportparams
+     * 导出csv文件，
+     * 优点：能够导出视图上的渲染列头，包含设定好的列头
+     * 缺点：存在一个问题，就是时间数据容易乱码，未测试其它数据
+     *
      * @return {*}
      */
-    this.exportDataAsCsv = function () {
+    this.exportDataAsCsv = function (config = '导出数据') {
       console.log('导出所有数据')
-      gridApi.exportDataAsCsv()
+
+      // const defaultConfig = {
+      //   columnSeparator: ',', // 列分隔符
+      //   allColumns: false, // 如果为true，则所有列都将按照它们在columnDefs中的显示顺序导出。
+      //   fileName: 'excel.csv', // 导出 .csv文件的文件名
+      //   onlySelected: true, // true表示仅仅导出选中的行数据
+      //   onlySelectedAllPages: false, // 导出选中的行数据，并包含其它页的数据
+      //   skipPinnedBottom: false, // 跳过固定在底部的数据
+      //   skipPinnedTop: false // 跳过固定在顶部的数据
+      // }
+
+      // eslint-disable-next-line prefer-const
+      let exportParams = {
+        columnGroups: true,
+        fileName: 'excel.csv'
+      }
+      if (typeof config === 'string') {
+        exportParams.fileName = `${config}`
+      } else {
+        exportParams = Object.assign(exportParams, {
+          ...config
+        })
+      }
+
+      gridApi.exportDataAsCsv(exportParams)
     }
 
     /**
@@ -408,31 +475,9 @@ export function AgGridUtils (api) {
     }
 
     /**
-     * @description: 配置导出的 csv 的excel文件
-     * @param {*} config
-     * 参考属性文档：https://www.ag-grid.com/javascript-data-grid/csv-export/#csvexportparams
+     * @description: 生成数据分隔符
      * @return {*}
      */
-    this.setDefaultCsvExportParams = function (config) {
-      const defaultConfig = {
-        columnSeparator: ',', // 列分隔符
-        allColumns: false, // 如果为true，则所有列都将按照它们在columnDefs中的显示顺序导出。
-        fileName: 'excel.csv', // 导出 .csv文件的文件名
-        onlySelected: false, // true表示仅仅导出选中的行数据
-        onlySelectedAllPages: false, // 导出选中的行数据，并包含其它页的数据
-        skipPinnedBottom: false, // 跳过固定在底部的数据
-        skipPinnedTop: false // 跳过固定在顶部的数据
-      }
-      return {
-        ...defaultConfig,
-        ...config
-      }
-    }
-
-    /**
-   * @description: 生成数据分隔符
-   * @return {*}
-   */
     this.dataInputSelector = function (data) {
       switch (data) {
         case 'none':
@@ -446,6 +491,15 @@ export function AgGridUtils (api) {
   } else {
     alert('ag-grid表格工具实例创建失败！')
   }
+
+  setTimeout(() => {
+    console.group('agGrid实例创建完成之后执行')
+    console.log('1、agGrid实例创建完成之后执行=====>添加后台数据合计行')
+    const getCurrentGridData = this.getCurrentGridDataAndNumericalOrder()
+    refreshTotalToList(getCurrentGridData, gridApi)
+
+    console.groupEnd()
+  })
 }
 
 AgGridUtils.prototype.calculateTotalLine = calculateTotalLine
@@ -453,38 +507,53 @@ AgGridUtils.prototype.refreshTotalToList = refreshTotalToList
 AgGridUtils.prototype.refreshTotal = refreshTotal
 
 /**
+ * @description: 获取当前网格数据，并添加序列列 NumericalOrder
+ * @param {*} getCurrentGridNode
+ * @return {*}
+ */
+export function getCurrentGridDataAndNumericalOrder (getCurrentGridNode = []) {
+  if (Array.isArray(getCurrentGridNode) && getCurrentGridNode.length) {
+    return getCurrentGridNode.map((ele, ind) => {
+      ele.data.numericalOrder = ind + 1
+      return ele.data
+    })
+  } else {
+    return []
+  }
+}
+
+/**
  * @description: 计算合计,传入需要计算的数据对象、合计参数，返回一个ag-grid合计需要的参数,只要是数字行自动计算【重要】
  * @param { 网格数据对象 Object[] } list
  * @return {*}
  */
 function calculateTotalLine (list) {
-  // console.log("获取所有表格数据", list);1
-  // console.log("获取行数据", param);
-  // let val = JSON.parse(JSON.stringify(list[0])) 深度赋值，不能包含undefined/null的情况
-
-  if (list.length !== 0) {
+  if (isArray(list) && !isEmpty(list)) {
     const val = JSON.parse(JSON.stringify(list[0]))
     const keys = Object.keys(val)
 
     // 判断特定的金额字段/序列行，才做计算
-    const autoCalc = ele => {
+    const autoCalc = (ele) => {
       if (ele === 'numericalOrder') {
         return true
       } else {
-        return /Fee|money|Money|Price|Pay|Weight|Volume|Num|costShare$/g.test(ele)
+        const regStr =
+          /Fee|money|Money|Price|Pay|Weight|Volume|Num|costShare|age$/g
+        return regStr.test(ele)
       }
     }
+
+    const formatMathNum = (num) => (!num && isNaN(num) ? 0 : num.toFixed(3))
 
     /**
      * @description: 计算数组对象中某属性的和
      * @param {*} arr 数组
      */
     const getSum = (arr, keyName) => {
-      const sum = arr.reduce(function (total, item) {
-        const itemNum = Number(item[keyName])
-        return total + itemNum
-      }, 0)
-      return isNaN(sum) ? 0 : sum
+      const sum = sumBy(arr, function (item) {
+        return Number(item[keyName])
+      })
+      return formatMathNum(sum)
     }
 
     // 平均值计算字段
@@ -498,33 +567,30 @@ function calculateTotalLine (list) {
      */
     const getAverageNum = (arr, keyName) => {
       const sum = getSum(arr, keyName)
-      return sum && ((sum * 1000) / (1000 * arr.length)).toFixed(3)
+      return sum && formatMathNum((sum * 1000) / (1000 * arr.length))
     }
 
     for (const ele of keys) {
       if (autoCalc(ele)) {
         if (!isNaN(Number(val[ele]))) {
           // 判断是不是序号行
-          if (ele === 'numericalOrder') {
-            val['numericalOrder'] = `${list.length}条`
-          } else {
-            const sum = getSum(list, ele)
-            val[ele] = sum ? sum.toFixed(3) : ''
+          if (ele !== 'numericalOrder') {
+            val[ele] = getSum(list, ele)
           }
         } else {
           val[ele] = ''
         }
       } else if (averageField.includes(ele)) {
-        const average = getAverageNum(list, ele)
-        val[ele] = average
+        val[ele] = getAverageNum(list, ele)
       } else {
         val[ele] = ''
       }
     }
-
+    val.numericalOrder = `${list.length}条`
+    console.log('[val]=====>', [val])
     return [val]
   } else {
-    return ['']
+    return []
   }
 }
 
@@ -534,9 +600,26 @@ function calculateTotalLine (list) {
  * @param { 生成的gridApi实例，ag-grid-vue标签上的@gridReady="onGridReady"所返回的 } gridApi
  * @return {*}
  */
-function refreshTotalToList (list, gridApi) {
-  const totalParams = calculateTotalLine(list)
-  gridApi.setPinnedBottomRowData(totalParams)
+
+// 用于刷新合计行的定时器
+let refreshTotalToListTimer = null
+export function refreshTotalToList (list = [], gridApi) {
+  if (isArray(list) && !isEmpty(list)) {
+    const setTime = () => {
+      if (!refreshTotalToListTimer) {
+        refreshTotalToListTimer = setTimeout(() => {
+          refreshTotalToListTimer = null
+          console.log('用于刷新合计行的事件=====>实际执行')
+          const totalParams = calculateTotalLine(list)
+          gridApi.setPinnedBottomRowData(totalParams)
+          gridApi.refreshCells({ force: true })
+        }, 150)
+      } else {
+        console.error('刷新合计行正在执行,中断多余执行=====>')
+      }
+    }
+    setTime()
+  }
 }
 
 /**

@@ -108,7 +108,7 @@ export const columnDefs = [
   {
     headerName: '籍贯',
     field: 'jg',
-    // floatingFilter: true,
+    floatingFilter: true,
     filterParams: {
       buttons: ['apply', 'reset'],
       closeOnApply: true
@@ -119,8 +119,10 @@ export const columnDefs = [
     field: 'sf',
     tooltipField: 'sf',
     tooltipComponentParams: { color: '#ececec' },
-    filter: 'agNumberColumnFilter',
-    suppressMenu: true,
+    floatingFilter: true,
+
+    // filter: 'agNumberColumnFilter',
+    // suppressMenu: true,
     floatingFilterComponent: NumberFloatingFilterComponent,
     floatingFilterComponentParams: {
       suppressFilterButton: true,

@@ -5,9 +5,8 @@
  */
 
 // 定时器，用于刷新手动计算的合计行 paginationChanged
-let timer = null
-import { AgGridUtils } from './agGrid-utils'
-import { eventBus } from './agGrid-eventBus'
+import store from '@/store/index'
+import { AgGridUtils, refreshTotalToList, getCurrentGridDataAndNumericalOrder } from './agGrid-utils'
 
 export const agGridMethods = {
   /**
@@ -145,10 +144,6 @@ export const agGridMethods = {
    */
   onCellContextMenu (row) {
     console.log('onCellContextMenu', row)
-    eventBus.$emit('agEventBus', {
-      row,
-      eventName: 'onCellContextMenu'
-    })
   },
 
   /**
@@ -253,23 +248,10 @@ export const agGridMethods = {
    * @return {*}
    */
   paginationChanged (event) {
-    const that = this
-    const setTime = () => {
-      if (timer) {
-        clearTimeout(timer)
-      }
-      timer = setTimeout(() => {
-        console.log('每次页面状态更改时刷新合计paginationChanged', event)
-        const bool = AgGridUtils.refreshTotalToList(event.api, that.tHeader)
-        console.log('状态更改时刷新合计', bool)
-        that.$emit('refreshOver', bool)
-      }, 50)
-    }
-    setTime()
-    console.log('每次页面状态更改时刷新合计paginationChanged', event)
-    const bool = AgGridUtils.refreshTotalToList(event.api, that.tHeader)
-    console.log('状态更改时刷新合计', bool)
-    that.$emit('refreshOver', bool)
+    console.log('执行=====>agGrid事件paginationChanged', event)
+    const bool = store.state.agGrid.cellContextMenu.showCalcBottomRow
+    console.log('bool=====>', bool)
+    bool && paginationChanged(event)
   },
 
   /**
@@ -281,7 +263,8 @@ export const agGridMethods = {
   OnRowDataUpdatedEvent (event) {
     console.log('表格刷新事件OnRowDataUpdatedEvent', event)
     // 刷新合计
-    AgGridUtils.refreshTotalToList(event.api)
+    // AgGridUtils.refreshTotalToList(event.api)
+    paginationChanged(event)
   },
 
   /**
@@ -291,7 +274,7 @@ export const agGridMethods = {
    */
   FilterChangedEvent (event) {
     // 刷新合计
-    AgGridUtils.refreshTotalToList(event.api)
+    // AgGridUtils.refreshTotalToList(event.api)
   },
 
   /**
@@ -361,4 +344,12 @@ export const agGridMethods = {
       return selRows.filter((m) => m[text] === item[text]).length <= 0
     })
   }
+}
+
+// 分页改变
+export function paginationChanged (event) {
+  const { api: gridApi } = event
+  const getCurrentGridNode = gridApi?.getModel()?.rowsToDisplay || []
+  const getCurrentGridData = getCurrentGridDataAndNumericalOrder(getCurrentGridNode)
+  refreshTotalToList(getCurrentGridData, gridApi)
 }
