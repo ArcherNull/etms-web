@@ -4,12 +4,17 @@
  * @Description: 导入文件
 -->
 <template>
-  <div class="ImportFile">ImportFile</div>
+  <div class="ImportFile">
+    <ParsingExcel />
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'ImportFile'
+  name: 'ImportFile',
+  components: {
+    ParsingExcel: () => import('../../../ParsingExcel/index.vue')
+  }
 }
 </script>
 

@@ -10,6 +10,7 @@
     v-bind="customizedAttrs"
     :class="['myDialog', customizedAttrs.class]"
     v-on="$listeners"
+    @opened="opened"
     @closed="closed"
   >
     <span slot="title" class="dk-f1-title">
@@ -56,6 +57,9 @@ export default {
     ...mapMutations('agGrid/cellContextMenu', ['SET_OPEN_DIALOG_COUNT']),
     closed () {
       this.SET_OPEN_DIALOG_COUNT(-1)
+    },
+    opened () {
+      this.SET_OPEN_DIALOG_COUNT(1)
     }
   }
 }

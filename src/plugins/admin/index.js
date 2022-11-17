@@ -46,6 +46,8 @@ import 'flex.css'
 import 'normalize.css'
 // 引入全局样式
 import '@/assets/styles/globalCss.scss'
+// dialogDrag 指令样式
+import '@/directives/dialogDrag/index.css'
 // 引入svg图标
 import '@assets/svg-icons'
 // svg 图标数组

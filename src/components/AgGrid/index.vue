@@ -97,7 +97,9 @@
     <AgDrawer :show-drawer="showRowDetailDrawer" :visible.sync="showAgRowDataDetailDrawer" :ag-table-options="agTableOptions" />
 
     <!-- 单元格右键菜单栏 -->
-    <CellMenuList :visible="openCellMenuList" />
+    <div v-if="showCellMenuList">
+      <CellMenuList :visible="openCellMenuList" />
+    </div>
 
   </div>
 </template>
@@ -146,6 +148,10 @@ export default {
     agTableOptions: {
       type: Object,
       default: () => {}
+    },
+    showCellMenuList: {
+      type: Boolean,
+      default: true
     }
   },
   data () {

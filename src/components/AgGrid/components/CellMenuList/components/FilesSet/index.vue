@@ -27,7 +27,7 @@
       title="前端导入解析"
       width="850px"
     >
-      <div slot="content">前端导入解析</div>
+      <div slot="content"><ParsingExcel /></div>
       <div slot="footer">
         <MyButton @click.stop="openFrontParseFile = false">取消</MyButton>
       </div>
@@ -79,13 +79,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 export default {
   name: 'FilesSet',
   components: {
     FirstTitle: () => import('../FirstTitle/index.vue'),
     SecondTitle: () => import('../SecondTitle/index.vue'),
-
+    ParsingExcel: () => import('../ParsingExcel/index.vue'),
     MyButton: () => import('../MyButton/index.vue'),
     MyBtnList: () => import('../MyBtnList/index.vue'),
     MyDialog: () => import('../MyDialog/index.vue'),
@@ -150,12 +149,9 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('agGrid/cellContextMenu', ['SET_OPEN_DIALOG_COUNT']),
     clickFun (data) {
       console.log('item', data)
       const { item } = data
-      this.SET_OPEN_DIALOG_COUNT(1)
-
       item.loading = true
       switch (item.btnText) {
         case '前端导入解析':
