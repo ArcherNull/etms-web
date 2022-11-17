@@ -4,6 +4,7 @@
  * @Description: ag-grid工具函数
  * 官方文档： https://www.ag-grid.com/javascript-data-grid/
  */
+import store from '@/store/index'
 import { sumBy, isArray, isEmpty, isObject } from 'lodash'
 // ag-grid渲染之前的处理
 
@@ -752,6 +753,8 @@ export const fieldsConfig = {
  * @return {*}
  */
 export class InitColumnDefs {
+  SHOW_FIRST_COLUMN = store.state.agGrid.cellContextMenu.showCalcBottomRow
+
   // 序号列
   FIRST_COLUMN = {
     headerName: '#',
@@ -795,12 +798,12 @@ export class InitColumnDefs {
           }
 
           console.log('this.FIRST_COLUMN', this.FIRST_COLUMN)
-          showFirstColumn && colDefs.unshift(this.FIRST_COLUMN)
+          this.SHOW_FIRST_COLUMN && showFirstColumn && colDefs.unshift(this.FIRST_COLUMN)
 
           console.log('colDefs=====>', colDefs)
           return colDefs
         } else {
-          showFirstColumn && columnDefs.unshift(this.FIRST_COLUMN)
+          this.SHOW_FIRST_COLUMN && showFirstColumn && columnDefs.unshift(this.FIRST_COLUMN)
           return columnDefs
         }
       }

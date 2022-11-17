@@ -5,7 +5,10 @@
 -->
 <template>
   <div class="errorLog">
-    <div class="errorLog-header dk-header-search-container" flex="main:justify cross:center">
+    <div
+      class="errorLog-header dk-header-search-container"
+      flex="main:justify cross:center"
+    >
       <div class="errorLog-header__left">
         <MySearchBox />
       </div>
@@ -17,70 +20,43 @@
         />
       </div>
     </div>
-    <!-- <MyVxeTable :table-config="tableConfig" /> -->
-    <!-- <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" /> -->
-
+    <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import { AgGridUtils } from '@/components/AgGrid/common/agGrid-utils'
+import {
+  AgGridUtils,
+  InitColumnDefs
+} from '@/components/AgGrid/common/agGrid-utils'
 
 export default {
   name: 'ErrorLog',
   data () {
     return {
-      // agTableOptions: {
-      //   columnDefs: [
-      //     {
-      //       headerName: '#',
-      //       colId: 'rowNum',
-      //       valueGetter: 'node.id',
-      //       // sort: 'asc',
-      //       // sortable: false,
-      //       filter: false,
-      //       width: 100,
-      //       pinned: 'left', // 固定在左侧
-      //       lockPosition: true, // 锁定位置，默认为false,该属性设置为true时，拖拽列无效；如果不设置pinned: 'right', 默认展示在最左方
-      //       checkboxSelection: true, // 设置当前列有可选项=
-      //       headerCheckboxSelection: true,
-      //       cellRenderer: (params) => Number(params.value) + 1
-      //       // serialNumComparator
-      //     },
-      //     ...columnDefs
-      //   ],
-      //   rowData: rowData.getRowData()
-      // },
-      // 表格配置项
-      tableConfig: {
-        maxHeight: 600,
-        tableHeader: [
+      agTableOptions: {
+        columnDefs: [],
+        rowData: []
+      },
+      fieldsConfig: {
+        showFirstColumn: true, // 是否展示序号列
+        database: {
+          message: '信息',
+          type: '信息类型',
+          page: '发生页面',
+          time: '发生时间',
+          meta: '其它'
+        },
+        specColumns: [
           {
-            field: 'message',
-            title: '信息',
-            sortable: true,
-            width: 400
-          },
-          {
-            field: 'type',
-            title: '信息类型',
-            width: 120
-          },
-          {
-            field: 'page',
-            title: '发生页面'
-          },
-          {
-            field: 'time',
-            title: '发生时间'
-          },
-          {
+            headerName: '其它',
             field: 'meta',
-            title: '其它'
+            cellRenderer: function (params) {
+              return `<span style="color:red;">${params.value}</span>`
+            }
           }
-        ],
-        data: []
+        ]
       },
       // 按钮配置项
       btnListConfig: {
@@ -107,16 +83,26 @@ export default {
   },
   watch: {
     log: function (newVal) {
-      this.tableConfig.data = newVal
+      this.agTableOptions.rowData = newVal
     }
   },
+  created () {
+    this.getInitTable()
+  },
   mounted () {
-    this.tableConfig.data = this.log
+    this.agTableOptions.rowData = this.log
   },
   methods: {
     ...mapActions('setting/log', ['pushErrorLog', 'clearAllErrorLog']),
+    // 获取初始化表格
+    getInitTable () {
+      const col = new InitColumnDefs(this.fieldsConfig)
+      console.log('col=====>', col)
+      this.agTableOptions.columnDefs = col
+    },
     getGridApi (api) {
       const agTable = new AgGridUtils(api)
+      agTable.sizeColumnsToFit()
       this.agTable = agTable
     },
     // 添加错误日志
@@ -153,11 +139,14 @@ export default {
           console.log('结束函数回调')
         }
       }
-      this.$commJs.confirmModel(confirmObj, this).then((res) => {
-        console.log('res======>', res)
-      }).finally(() => {
-        item.loading = false
-      })
+      this.$commJs
+        .confirmModel(confirmObj, this)
+        .then((res) => {
+          console.log('res======>', res)
+        })
+        .finally(() => {
+          item.loading = false
+        })
     },
     /**
      * @description: MyBtnList组件的事件统一处理
@@ -178,12 +167,15 @@ export default {
         case '删除2':
           console.log('删除')
           item.loading = true
-          this.$commJs.confirmModel('确认删除吗？', this).then((res) => {
-            console.log('res======>', res)
-            res === 'confirm' && this.clearErrorLog()
-          }).finally(() => {
-            item.loading = false
-          })
+          this.$commJs
+            .confirmModel('确认删除吗？', this)
+            .then((res) => {
+              console.log('res======>', res)
+              res === 'confirm' && this.clearErrorLog()
+            })
+            .finally(() => {
+              item.loading = false
+            })
           break
       }
     }
