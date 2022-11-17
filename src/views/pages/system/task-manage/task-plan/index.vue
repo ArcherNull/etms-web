@@ -277,6 +277,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    console.log('12312313')
+  },
   methods: {
     ...mapMutations('agGrid/theme', ['SET_THEME']),
     getGridApi (api) {

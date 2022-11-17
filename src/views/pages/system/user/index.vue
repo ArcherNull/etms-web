@@ -71,6 +71,7 @@ export default {
     pageAnchor (str) {
       this.$commJs.jumpPageAnchor(this, str)
     }
+    //
   }
 }
 </script>

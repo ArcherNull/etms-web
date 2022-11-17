@@ -11,6 +11,8 @@
 				"/messageBox":"メッセージボックス",
 				"/system/domain":"ドメイン名管理",
 				"/system/user":"ユーザー管理",
+				"/system/sys":"sys",
+				"/system/test":"测试",
 				"/system/task-manage":"計画タスク管理",
 				"/system/task-manage/task-plan":"計画タスク",
 				"/system/task-manage/task-record":"タスクモニタリング",

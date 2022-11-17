@@ -61,11 +61,11 @@ export default {
     el.addEventListener('click', handleClick(el, binding), false)
   },
   update (el, binding) {
-    el.removeEventListener('click', el[context].removeHandle, false)
+    el.removeEventListener('click', el[context]?.removeHandle, false)
     el.addEventListener('click', handleClick(el, binding), false)
   },
   unbind (el) {
-    el.removeEventListener('click', el[context].removeHandle, false)
+    el.removeEventListener('click', el[context]?.removeHandle, false)
     el[context] = null
     delete el[context]
   }

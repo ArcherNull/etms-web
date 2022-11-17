@@ -4,33 +4,36 @@
  * @Description: 单元格右键菜单栏
 -->
 <template>
-  <div
-    v-if="visible"
-    :style="{ left: left + 'px', top: top + 'px' }"
-    class="CellMenuList"
-    @click.stop=""
-  >
-    <el-tabs
-      v-model="activeName"
-      class="CellMenuList-tabs"
-      @tab-click="handleClick"
+  <div v-if="visible">
+    <div
+      :style="{ left: left + 'px', top: top + 'px' }"
+      class="CellMenuList"
+      @click.stop=""
     >
-      <el-tab-pane label="字段" name="fields">
-        <FieldsSet />
-      </el-tab-pane>
-      <el-tab-pane label="文件" name="file">
-        <FilesSet />
-      </el-tab-pane>
-      <el-tab-pane label="打印" name="print">
-        <PrintSet />
-      </el-tab-pane>
-      <el-tab-pane label="图表" name="eChart">
-        <AgChart />
-      </el-tab-pane>
-      <el-tab-pane label="配置" name="config">
-        <ConfigSet />
-      </el-tab-pane>
-    </el-tabs>
+      <el-tabs
+        v-model="activeName"
+        class="CellMenuList-tabs"
+        @tab-click="handleClick"
+      >
+        <el-tab-pane label="字段" name="fields">
+          <FieldsSet />
+        </el-tab-pane>
+        <el-tab-pane label="文件" name="file">
+          <FilesSet />
+        </el-tab-pane>
+        <el-tab-pane label="打印" name="print">
+          <PrintSet />
+        </el-tab-pane>
+        <el-tab-pane label="图表" name="eChart">
+          <AgChart />
+        </el-tab-pane>
+        <el-tab-pane label="配置" name="config">
+          <ConfigSet />
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <!-- 蒙层 -->
+    <div class="CellMenuList-mask" @click="close" />
   </div>
 </template>
 
@@ -79,6 +82,9 @@ export default {
       } else {
         console.log('还有弹窗存在', this.openDialogCount)
       }
+    },
+    close () {
+      this.OPEN_CELL_MENU_LIST(false)
     }
   }
 }
@@ -116,6 +122,13 @@ $menu-width:30vw;
       align-items: center;
       justify-content: center;
     }
+  }
+  &-mask{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }
 </style>

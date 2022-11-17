@@ -11,6 +11,8 @@
 				"/system":"system",
 				"/system/domain":"domain",
 				"/system/user":"user",
+				"/system/sys":"sys",
+				"/system/test":"test",
 				"/system/task-manage":"task-manage",
 				"/system/task-manage/task-plan":"task-plan",
 				"/system/task-manage/task-record":"task-record",

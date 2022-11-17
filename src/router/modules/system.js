@@ -50,6 +50,18 @@ const system = {
       }
     },
     {
+      path: '/system/test',
+      component: _import(`pages/system/test/index`),
+      name: 'Domain',
+      meta: {
+        ...meta,
+        title: '测试',
+        icon: 'el-icon-tickets',
+        hidden: false,
+        roles: ['admin', 'jerry']
+      }
+    },
+    {
       path: '/system/user',
       component: _import('pages/system/user/index'),
       name: 'User',

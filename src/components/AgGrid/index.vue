@@ -20,6 +20,7 @@
       @rowDoubleClicked="rowDoubleClicked"
       @cellContextMenu="onCellContextMenu"
       @gridReady="onGridReady"
+      @paginationChanged="paginationChanged"
       @contextmenu.prevent.native=""
     />
 
@@ -326,7 +327,7 @@ export default {
           // localeText，localeTextFunc	您可以通过提供a localeText或a 来更改分页面板和默认过滤器中的文本localeTextFunc（请参阅下文）。见国际化。
           localeText, // 【重要】国际化
           overlayLoadingTemplate: agGridLoading, // 【重要】叠加层 loadding----加载中
-          overlayNoRowsTemplate: agGridLoading, // 【重要】叠加层 loadding----无数据
+          overlayNoRowsTemplate: '<span>暂无数据</span>', // 【重要】叠加层 loadding----无数据
           /* 其他 */
           // defaultExportParams: true, // 用于导出到csv或 excel的默认配置对象,该属性适用于版本v25.2，新版本是defaultCsvExportParams
           // defaultCsvExportParams: true,

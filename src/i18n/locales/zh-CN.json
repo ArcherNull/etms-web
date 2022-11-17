@@ -11,6 +11,8 @@
 				"/system":"系统管理",
 				"/system/domain":"域名管理",
 				"/system/user":"用户管理",
+				"/system/sys":"sys",
+				"/system/test":"测试",
 				"/system/task-manage":"计划任务管理",
 				"/system/task-manage/task-plan":"计划任务",
 				"/system/task-manage/task-record":"任务监控",
