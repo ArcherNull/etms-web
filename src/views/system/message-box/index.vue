@@ -17,17 +17,14 @@
       />
     </HeaderContainer>
 
-    <!-- 侧边菜单栏 -->
-    <!-- <div class="MessageBox-aside">侧边菜单栏</div> -->
-
     <!-- 主要内容区域 -->
-    <div class="MessageBox-main dk-mt-10">
+    <div class="MessageBox-main dk-mt-10 borderRed">
       <!-- 分为： 公告通知/操作消息/系统消息 <br>
       公告通知，分为 通知/公告/单证中心/审批等<br>
       操作消息，分为 操作历史记录，运单/订单/审批单号/账单等操作记录等<br>
       系统消息， 分为系统版本信息，引导页等 -->
 
-      <el-tabs :tab-position="tabPosition" style="height: 200px">
+      <el-tabs :tab-position="tabPosition">
         <el-tab-pane label="公告通知">公告通知</el-tab-pane>
         <el-tab-pane label="操作消息">操作消息</el-tab-pane>
         <el-tab-pane label="系统消息">系统消息</el-tab-pane>
@@ -102,9 +99,11 @@ export default {
   &-header {
     @extend %card;
   }
-  &-aside {
-  }
   &-main {
+    height: calc(100vh - 165px);
+    ::v-deep .el-tabs{
+      height: 100%;
+    }
   }
 }
 </style>

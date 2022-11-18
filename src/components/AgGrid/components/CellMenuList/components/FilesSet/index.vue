@@ -21,43 +21,27 @@
       </div>
     </FirstTitle>
 
-    <!-- 前端导入解析 -->
+    <!-- 导入解析 -->
     <MyDialog
-      :visible.sync="openFrontParseFile"
-      title="前端导入解析"
+      :visible.sync="openParseFile"
+      title="导入解析"
       width="850px"
     >
-      <div slot="content"><ParsingExcel /></div>
+      <div slot="content">
+        <ImportFile />
+      </div>
       <div slot="footer">
-        <MyButton @click.stop="openFrontParseFile = false">取消</MyButton>
+        <MyButton @click.stop="openParseFile = false">取消</MyButton>
       </div>
     </MyDialog>
 
-    <!-- 后端导入解析 -->
-    <MyDialog
-      :visible.sync="openEndParseFile"
-      title="后端导入解析"
-      width="850px"
-    >
-      <div slot="content">后端导入解析</div>
-      <div slot="footer">
-        <MyButton @click.stop="openEndParseFile = false">取消</MyButton>
+    <!-- 导出 -->
+    <MyDialog :visible.sync="openExport" title="导出" width="850px">
+      <div slot="content">
+        <ExportFile />
       </div>
-    </MyDialog>
-
-    <!-- 前端导出 -->
-    <MyDialog :visible.sync="openFrontExport" title="前端导出" width="850px">
-      <div slot="content">前端导出</div>
       <div slot="footer">
-        <MyButton @click.stop="openFrontExport = false">取消</MyButton>
-      </div>
-    </MyDialog>
-
-    <!-- 后端导出 -->
-    <MyDialog :visible.sync="openEndExport" title="后端导出" width="850px">
-      <div slot="content">后端导出</div>
-      <div slot="footer">
-        <MyButton @click.stop="openEndExport = false">取消</MyButton>
+        <MyButton @click.stop="openExport = false">取消</MyButton>
       </div>
     </MyDialog>
 
@@ -67,12 +51,29 @@
         <SecondTitle title="本地文件">
           <MyCropperUpLoad slot="content" />
         </SecondTitle>
-        <SecondTitle title="表格文件">
-          <MyCropperUpLoad slot="content" />
-        </SecondTitle>
       </div>
       <div slot="footer">
         <MyButton @click.stop="cropperModel = false">取消</MyButton>
+      </div>
+    </MyDialog>
+
+    <!-- 格式转化 -->
+    <MyDialog :visible.sync="convertFormat" title="格式转化" width="850px">
+      <div slot="content">
+        格式转化
+      </div>
+      <div slot="footer">
+        <MyButton @click.stop="convertFormat = false">取消</MyButton>
+      </div>
+    </MyDialog>
+
+    <!-- 线上预览 -->
+    <MyDialog :visible.sync="previewOnline" title="线上预览" width="850px">
+      <div slot="content">
+        线上预览
+      </div>
+      <div slot="footer">
+        <MyButton @click.stop="previewOnline = false">取消</MyButton>
       </div>
     </MyDialog>
   </div>
@@ -84,14 +85,17 @@ export default {
   components: {
     FirstTitle: () => import('../FirstTitle/index.vue'),
     SecondTitle: () => import('../SecondTitle/index.vue'),
-    ParsingExcel: () => import('../ParsingExcel/index.vue'),
     MyButton: () => import('../MyButton/index.vue'),
     MyBtnList: () => import('../MyBtnList/index.vue'),
     MyDialog: () => import('../MyDialog/index.vue'),
+    ExportFile: () => import('./components/ExportFile/index.vue'),
+    ImportFile: () => import('./components/ImportFile/index.vue'),
+
     MyCropperUpLoad: () => import('./components/MyCropperUpLoad/index.vue')
   },
   data () {
     return {
+      parseExcelModel: 'frontParseExcel',
       importBtnConfig: {
         config: {
           size: 'mini'
@@ -99,11 +103,7 @@ export default {
         schemas: [
           {
             type: 'primary',
-            btnText: '前端导入解析'
-          },
-          {
-            type: 'primary',
-            btnText: '后端导入解析'
+            btnText: '导入解析'
           }
         ]
       },
@@ -114,11 +114,7 @@ export default {
         schemas: [
           {
             type: 'primary',
-            btnText: '前端导出'
-          },
-          {
-            type: 'primary',
-            btnText: '后端导出'
+            btnText: '导出'
           }
         ]
       },
@@ -138,14 +134,22 @@ export default {
           {
             type: 'primary',
             btnText: '线上预览'
+          },
+          {
+            type: 'primary',
+            btnText: '数据加密'
+          },
+          {
+            type: 'primary',
+            btnText: '随机字符串'
           }
         ]
       },
       cropperModel: false,
-      openFrontParseFile: false,
-      openEndParseFile: false,
-      openFrontExport: false,
-      openEndExport: false
+      openParseFile: false,
+      openExport: false,
+      convertFormat: false,
+      previewOnline: false
     }
   },
   methods: {
@@ -154,17 +158,13 @@ export default {
       const { item } = data
       item.loading = true
       switch (item.btnText) {
-        case '前端导入解析':
-          console.log('前端导入解析')
-          this.openFrontParseFile = true
+        case '导入解析':
+          console.log('导入解析')
+          this.openParseFile = true
           break
-        case '后端导入解析':
-          console.log('后端导入解析')
-          this.openEndParseFile = true
-          break
-        case '前端导出':
-          console.log('前端导出')
-          this.openFrontExport = true
+        case '导出':
+          console.log('导出')
+          this.openExport = true
           break
         case '后端导出':
           console.log('后端导出')
@@ -176,9 +176,17 @@ export default {
           break
         case '格式转化':
           console.log('格式转化')
+          this.convertFormat = true
           break
         case '线上预览':
           console.log('线上预览')
+          this.previewOnline = true
+          break
+        case '数据加密':
+          console.log('数据加密')
+          break
+        case '随机字符串':
+          console.log('随机字符串')
           break
         default:
           console.log('无效点击')
@@ -191,3 +199,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.parseExcelModel{
+  margin-bottom: 10px;
+}
+</style>

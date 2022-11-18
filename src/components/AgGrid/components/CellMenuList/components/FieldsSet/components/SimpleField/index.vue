@@ -10,9 +10,9 @@
       :key="index"
       class="SimpleField-item"
     >
-      <div class="SimpleField-item__left" :title="fieldItem.headerName" @click="selectedItem(fieldItem)">
+      <div class="SimpleField-item__left" :title="fieldItem.headerName">
         <el-checkbox v-model="fieldItem.hide" />
-        <div class="SimpleField-item__left-text ellipsis">{{ fieldItem.headerName }}</div>
+        <div class="SimpleField-item__left-text ellipsis" @click="selectedItem(fieldItem)">{{ fieldItem.headerName }}</div>
       </div>
       <div class="SimpleField-item__right">
         <PinnedBox v-model="fieldItem.pinned" @change="changePinned" />
@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     selectedItem (item) {
+      console.log('点击', item)
       item.hide = !item.item
     },
     changePinned (ele) {

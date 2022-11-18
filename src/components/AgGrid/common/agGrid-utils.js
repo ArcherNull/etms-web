@@ -393,7 +393,7 @@ export function AgGridUtils (api) {
     }
 
     /**
-     * @description: 将列的行数据省略号的数据显示完整
+     * @description: 将列的行数据省略号的数据显示完整【不会超过列最大的设置宽度】
      * @param {Boolean} skipHeader true 表示列头省略号显示的数据跳过， false表示不跳过
      * @return {*}
      */

@@ -4,7 +4,7 @@
  * @Description: 字段设置
 -->
 <template>
-  <div class="ConfigSet">
+  <div class="ConfigSet" @click.stop="">
     <FirstTitle title="全局搜索">
       <div slot="content">
         <el-form
@@ -23,6 +23,11 @@
               }"
               @search="searchFun"
             />
+          </el-form-item>
+          <el-form-item label="复制单元格内容">
+            <MyButton size="mini" type="primary" @click.stop="copyContent('123123')">
+              复制
+            </MyButton>
           </el-form-item>
           <el-form-item label="行跳转" prop="name">
             <el-input v-model="configForm.name" />
@@ -45,10 +50,10 @@
           size="mini"
           label-width="150px"
         >
-          <el-form-item label="表格主题" prop="name">
-            <el-select v-model="configForm.name" placeholder="请选择">
+          <el-form-item label="表格主题">
+            <el-select :value="theme" placeholder="请选择" @change="changeTheme">
               <el-option
-                v-for="(item,index) in options"
+                v-for="(item,index) in themeList"
                 :key="index"
                 :label="item.label"
                 :value="item.value"
@@ -83,16 +88,49 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'ConfigSet',
   components: {
     FirstTitle: () => import('../FirstTitle/index.vue'),
     SearchBox: () => import('../SearchBox/index.vue'),
-    MyBtnList: () => import('../MyBtnList/index.vue')
+    MyBtnList: () => import('../MyBtnList/index.vue'),
+    MyButton: () => import('../MyButton/index.vue')
+
   },
   data () {
     return {
-      options: [],
+      theme: '', // 主题名
+      themeList: [
+        {
+          label: 'balham',
+          value: 'balham'
+        },
+        {
+          label: 'balham-dark',
+          value: 'balham-dark'
+        },
+        {
+          label: 'alpine',
+          value: 'alpine'
+        },
+        {
+          label: 'material',
+          value: 'material'
+        },
+        {
+          label: 'blue',
+          value: 'blue'
+        },
+        {
+          label: 'refresh',
+          value: 'refresh'
+        },
+        {
+          label: 'dark',
+          value: 'dark'
+        }
+      ],
       searchLoading: false,
       btnListConfig: {
         config: {
@@ -122,6 +160,8 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('agGrid/theme', ['SET_THEME']),
+
     // 搜索
     searchFun (ele) {
       console.log('搜索', ele)
@@ -132,14 +172,6 @@ export default {
       const { item } = data
       item.loading = true
       switch (item.btnText) {
-        case '简易版':
-          this.fieldsMode = '标准版'
-          item.btnText = '标准版'
-          break
-        case '标准版':
-          this.fieldsMode = '简易版'
-          item.btnText = '简易版'
-          break
         case '保存':
           console.log('保存')
           break
@@ -150,6 +182,11 @@ export default {
       setTimeout(() => {
         item.loading = false
       }, 2000)
+    },
+    // 改变主题
+    changeTheme (ele) {
+      console.log('改变主题', ele)
+      this.SET_THEME(ele)
     }
   }
 }

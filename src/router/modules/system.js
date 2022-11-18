@@ -11,7 +11,13 @@ const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
 
 import Layout from '@/layout/layout.vue'
 
-const meta = { auth: true, cache: true }
+const meta = {
+  auth: true,
+  cache: true,
+  hidden: false,
+  icon: 'el-icon-s-marketing'
+}
+const childMeta = { ...meta, icon: 'el-icon-tickets' }
 
 // 基础系统设置菜单
 const system = {
@@ -20,9 +26,7 @@ const system = {
   redirect: { name: 'Domain' },
   meta: {
     ...meta,
-    title: '系统管理',
-    icon: 'el-icon-s-marketing',
-    hidden: false
+    title: '系统管理'
   },
   children: [
     {
@@ -30,34 +34,28 @@ const system = {
       component: _import(`pages/system/domain/index`),
       name: 'Domain',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '域名管理',
-        icon: 'el-icon-tickets',
-        hidden: false,
         roles: ['admin', 'jerry']
       }
     },
     {
       path: '/system/sys',
       component: _import(`pages/system/sys/index`),
-      name: 'Domain',
+      name: 'Sys',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '系统管理',
-        icon: 'el-icon-tickets',
-        hidden: false,
         roles: ['admin', 'jerry']
       }
     },
     {
       path: '/system/test',
       component: _import(`pages/system/test/index`),
-      name: 'Domain',
+      name: 'Test',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '测试',
-        icon: 'el-icon-tickets',
-        hidden: false,
         roles: ['admin', 'jerry']
       }
     },
@@ -66,10 +64,8 @@ const system = {
       component: _import('pages/system/user/index'),
       name: 'User',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '用户管理',
-        icon: 'el-icon-tickets',
-        hidden: false,
         roles: ['admin', 'jerry']
       }
     },
@@ -81,8 +77,6 @@ const system = {
       meta: {
         ...meta,
         title: '计划任务管理',
-        icon: 'el-icon-tickets',
-        hidden: false,
         roles: ['admin', 'jerry']
       },
       children: [
@@ -91,10 +85,8 @@ const system = {
           component: _import('pages/system/task-manage/task-plan'),
           name: 'TaskPlan',
           meta: {
-            ...meta,
+            ...childMeta,
             title: '计划任务',
-            icon: 'el-icon-tickets',
-            hidden: false,
             roles: ['admin', 'jerry']
           }
         },
@@ -103,10 +95,8 @@ const system = {
           component: _import('pages/system/task-manage/task-record'),
           name: 'TaskRecord',
           meta: {
-            ...meta,
+            ...childMeta,
             title: '任务监控',
-            icon: 'el-icon-tickets',
-            hidden: false,
             roles: ['admin', 'jerry']
           }
         },
@@ -115,10 +105,8 @@ const system = {
           component: _import('pages/system/task-manage/task-table'),
           name: 'TaskTable',
           meta: {
-            ...meta,
+            ...childMeta,
             title: '任务表格',
-            icon: 'el-icon-tickets',
-            hidden: false,
             roles: ['admin', 'jerry']
           }
         },
@@ -127,10 +115,8 @@ const system = {
           component: _import('pages/system/task-manage/task-bigData-table'),
           name: 'TaskBigDataTable',
           meta: {
-            ...meta,
+            ...childMeta,
             title: '大数据表格',
-            icon: 'el-icon-tickets',
-            hidden: false,
             roles: ['admin', 'jerry']
           }
         }
@@ -141,10 +127,8 @@ const system = {
       component: _import('pages/system/module-display/index'),
       name: 'ModuleDisplay',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '模块展示',
-        icon: 'el-icon-tickets',
-        hidden: false,
         roles: ['admin', 'jerry']
       }
     }

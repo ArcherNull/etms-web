@@ -47,16 +47,7 @@ export default {
           page: '发生页面',
           time: '发生时间',
           meta: '其它'
-        },
-        specColumns: [
-          {
-            headerName: '其它',
-            field: 'meta',
-            cellRenderer: function (params) {
-              return `<span style="color:red;">${params.value}</span>`
-            }
-          }
-        ]
+        }
       },
       // 按钮配置项
       btnListConfig: {
@@ -97,7 +88,6 @@ export default {
     // 获取初始化表格
     getInitTable () {
       const col = new InitColumnDefs(this.fieldsConfig)
-      console.log('col=====>', col)
       this.agTableOptions.columnDefs = col
     },
     getGridApi (api) {

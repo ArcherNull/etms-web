@@ -3,8 +3,7 @@
  * @Date: 2021-11-11 09:07:49
  * @Description: 公共方法
  */
-
-// import store from '@/store/index.js'
+import { isString } from 'lodash'
 import axios from 'axios'
 import setting from '../setting'
 import { saveAs } from 'file-saver'
@@ -31,9 +30,7 @@ export function jumpPageAnchor (that, cDomId = '') {
       const route = that.$route
       if (route) {
         currentPath = route.path
-        const {
-          anchor
-        } = route.params
+        const { anchor } = route.params
         anchorContent = cDomId || anchor
       } else {
         // 存在this , 但是没有route对象
@@ -60,10 +57,11 @@ export function pageScrollToAnchor (domId = '') {
     // 如果当前已经在这个页面不跳转 直接去
     const toElement = document.getElementById(domId)
     console.log('toElement============>', toElement)
-    toElement && toElement.scrollIntoView({
-      behavior: 'smooth', // 平滑过渡
-      block: 'start' // 上边框与视窗顶部平齐。默认值
-    })
+    toElement &&
+      toElement.scrollIntoView({
+        behavior: 'smooth', // 平滑过渡
+        block: 'start' // 上边框与视窗顶部平齐。默认值
+      })
   } else {
     console.error('元素id为空,请检查！')
   }
@@ -78,7 +76,7 @@ export function generateCurrentPageAnchor () {
   // 转换HTMLCollection对象为数组
   const newArr = Array.from(domObj)
   const anchorList = []
-  newArr.forEach(ele => {
+  newArr.forEach((ele) => {
     anchorList.push({
       id: ele.id, // 用于锚点定位
       title: ele.id.split(':')[1], // 用于锚点标题
@@ -640,7 +638,7 @@ const commFun = {
       const watermarkParentDom = watermarkDom[0].parentNode
       console.log('watermarkParentDom', watermarkParentDom)
       if (watermarkParentDom) {
-        watermarkDom.forEach(ele => {
+        watermarkDom.forEach((ele) => {
           watermarkParentDom.removeChild(ele)
         })
       } else {
@@ -656,7 +654,7 @@ const commFun = {
     const hasWatermarkDom = judgeWatermaskInCOntainer()
     console.log('hasWatermarkDom', hasWatermarkDom)
     if (!hasWatermarkDom.length) {
-    // 如果存在传入id， 以id盒子为容器
+      // 如果存在传入id， 以id盒子为容器
       if (mergeObject.watermark_id) {
         dom = document.getElementById(mergeObject.watermark_id)
         clientWidth = dom.clientWidth
@@ -664,7 +662,7 @@ const commFun = {
         scrollHeight = dom.scrollHeight
         clientHeight = dom.clientHeight
       } else {
-      // 不存在传入id,则以body标签为水印添加的容器
+        // 不存在传入id,则以body标签为水印添加的容器
         dom = document.body
         clientWidth = document.body.scrollWidth
         clientHeight = document.body.clientWidth
@@ -682,70 +680,74 @@ const commFun = {
       // 如果将水印列数设置为0，或水印列数设置过大，超过页面最大宽度，则重新计算水印列数和水印x轴间隔
       if (
         mergeObject.watermark_cols === 0 ||
-      parseInt(
-        mergeObject.watermark_x +
-        mergeObject.watermark_width * mergeObject.watermark_cols +
-        mergeObject.watermark_x_space * (mergeObject.watermark_cols - 1)
-      ) > page_width
+        parseInt(
+          mergeObject.watermark_x +
+            mergeObject.watermark_width * mergeObject.watermark_cols +
+            mergeObject.watermark_x_space * (mergeObject.watermark_cols - 1)
+        ) > page_width
       ) {
         mergeObject.watermark_cols = parseInt(
-          (page_width - mergeObject.watermark_x + mergeObject.watermark_x_space) /
-        (mergeObject.watermark_width + mergeObject.watermark_x_space)
+          (page_width -
+            mergeObject.watermark_x +
+            mergeObject.watermark_x_space) /
+            (mergeObject.watermark_width + mergeObject.watermark_x_space)
         )
         mergeObject.watermark_x_space = parseInt(
           (page_width -
-          mergeObject.watermark_x -
-          mergeObject.watermark_width * mergeObject.watermark_cols) /
-        (mergeObject.watermark_cols - 1)
+            mergeObject.watermark_x -
+            mergeObject.watermark_width * mergeObject.watermark_cols) /
+            (mergeObject.watermark_cols - 1)
         )
       }
       // 如果将水印行数设置为0，或水印行数设置过大，超过页面最大长度，则重新计算水印行数和水印y轴间隔
       if (
         mergeObject.watermark_rows === 0 ||
-      parseInt(
-        mergeObject.watermark_y +
-        mergeObject.watermark_height * mergeObject.watermark_rows +
-        mergeObject.watermark_y_space * (mergeObject.watermark_rows - 1)
-      ) > page_height
+        parseInt(
+          mergeObject.watermark_y +
+            mergeObject.watermark_height * mergeObject.watermark_rows +
+            mergeObject.watermark_y_space * (mergeObject.watermark_rows - 1)
+        ) > page_height
       ) {
         mergeObject.watermark_rows = parseInt(
           (mergeObject.watermark_y_space +
-          page_height -
-          mergeObject.watermark_y) /
-        (mergeObject.watermark_height + mergeObject.watermark_y_space)
+            page_height -
+            mergeObject.watermark_y) /
+            (mergeObject.watermark_height + mergeObject.watermark_y_space)
         )
         mergeObject.watermark_y_space = parseInt(
           (page_height -
-          mergeObject.watermark_y -
-          mergeObject.watermark_height * mergeObject.watermark_rows) /
-        (mergeObject.watermark_rows - 1)
+            mergeObject.watermark_y -
+            mergeObject.watermark_height * mergeObject.watermark_rows) /
+            (mergeObject.watermark_rows - 1)
         )
       }
       let x
       let y
       for (let i = 0; i < mergeObject.watermark_rows; i++) {
         y =
-        mergeObject.watermark_y +
-        (mergeObject.watermark_y_space + mergeObject.watermark_height) * i
+          mergeObject.watermark_y +
+          (mergeObject.watermark_y_space + mergeObject.watermark_height) * i
         for (let j = 0; j < mergeObject.watermark_cols; j++) {
           x =
-          mergeObject.watermark_x +
-          (mergeObject.watermark_width + mergeObject.watermark_x_space) * j
+            mergeObject.watermark_x +
+            (mergeObject.watermark_width + mergeObject.watermark_x_space) * j
           const mask_div = document.createElement('div')
           mask_div.id = 'mask_div' + i + j
           mask_div.className = mask_div_classname
-          mask_div.appendChild(document.createTextNode(mergeObject.watermark_txt))
+          mask_div.appendChild(
+            document.createTextNode(mergeObject.watermark_txt)
+          )
           // 设置水印div倾斜显示
           mask_div.style.webkitTransform =
-          'rotate(-' + mergeObject.watermark_angle + 'deg)'
+            'rotate(-' + mergeObject.watermark_angle + 'deg)'
           mask_div.style.MozTransform =
-          'rotate(-' + mergeObject.watermark_angle + 'deg)'
+            'rotate(-' + mergeObject.watermark_angle + 'deg)'
           mask_div.style.msTransform =
-          'rotate(-' + mergeObject.watermark_angle + 'deg)'
+            'rotate(-' + mergeObject.watermark_angle + 'deg)'
           mask_div.style.OTransform =
-          'rotate(-' + mergeObject.watermark_angle + 'deg)'
+            'rotate(-' + mergeObject.watermark_angle + 'deg)'
           mask_div.style.transform =
-          'rotate(-' + mergeObject.watermark_angle + 'deg)'
+            'rotate(-' + mergeObject.watermark_angle + 'deg)'
           mask_div.style.visibility = ''
           mask_div.style.position = 'absolute'
           mask_div.style.left = x + 'px'
@@ -800,9 +802,10 @@ const commFun = {
           base64: true
         }) // 将图片文件加入到zip包内
       })
-      zip.generateAsync({
-        type: 'blob'
-      }) // zip下载
+      zip
+        .generateAsync({
+          type: 'blob'
+        }) // zip下载
         .then(function (content) {
           // see FileSaver.js
           saveAs(content, `${fileName}.zip`) // zip下载后的名字
@@ -889,16 +892,8 @@ const commFun = {
    * @return {*}
    */
   getCurrentWindowLocationInfo () {
-    const {
-      location
-    } = window
-    const {
-      href,
-      protocol,
-      host,
-      port,
-      hostname
-    } = location
+    const { location } = window
+    const { href, protocol, host, port, hostname } = location
     const locationInfo = {
       location,
       href,
@@ -918,16 +913,20 @@ const commFun = {
    * @return {*}
    */
   copyToClipboard (that, text) {
-    that.$copyText(text).then(
-      (res) => {
-        console.log('复制成功=====>', text)
-        that.$message.success('已成功复制，可直接去粘贴')
-      },
-      (res) => {
-        console.error('复制失败！', res)
-        that.$message.warning('复制失败！')
-      }
-    )
+    if (isString(text)) {
+      that.$copyText(text).then(
+        (res) => {
+          console.log('复制成功=====>', text)
+          that.$message.success('已成功复制，可直接去粘贴')
+        },
+        (res) => {
+          console.error('复制失败！', res)
+          that.$message.warning('复制失败！')
+        }
+      )
+    } else {
+      that.$message.warning('复制内容应为字符串类型！')
+    }
   },
 
   // 构想需求：记录确认弹窗操作界面/操作内容
@@ -949,7 +948,13 @@ const commFun = {
             content: config
           }
         } else if (typeof config === 'object') {
-          var { confirmCalback, cancelCallback, overCallback, isRecord = true, ...tempExtraData } = config
+          var {
+            confirmCalback,
+            cancelCallback,
+            overCallback,
+            isRecord = true,
+            ...tempExtraData
+          } = config
           extraData = tempExtraData
         }
 
@@ -973,12 +978,9 @@ const commFun = {
           })
         }
 
-        const {
-          title,
-          content,
-          model
-        } = data
-        that.$confirm(content, title, model)
+        const { title, content, model } = data
+        that
+          .$confirm(content, title, model)
           .then((res) => {
             console.log('弹窗确认======>', res)
             if (res === 'confirm') {
@@ -1006,7 +1008,6 @@ const commFun = {
       }
     })
   }
-
 }
 
 export default commFun
