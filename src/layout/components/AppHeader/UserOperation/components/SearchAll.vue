@@ -17,7 +17,6 @@
       width="80%"
       top="5vh"
       :before-close="() => (searchAllVisible = false)"
-      @closeDrawer="searchAllVisible = false"
     >
       <!-- <div slot="title">{{ searchAllDialogTitle }}</div> -->
       <div slot="content">

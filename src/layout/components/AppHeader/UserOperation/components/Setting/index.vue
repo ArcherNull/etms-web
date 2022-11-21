@@ -43,22 +43,14 @@
             <TabItemCom slot="label" name="theme" title="主题设置" />
             <SystemTheme />
           </el-tab-pane>
-          <!-- <el-tab-pane label="系统设置" name="系统设置">
+          <el-tab-pane label="系统设置" name="系统设置">
             <TabItemCom slot="label" name="cogs" title="系统设置" />
-            系统设置
-          </el-tab-pane>
-          <el-tab-pane label="安全设置" name="安全设置">
-            <TabItemCom slot="label" name="safe" title="安全设置" />
-            安全设置
+            <SystemSetting />
           </el-tab-pane>
           <el-tab-pane label="热键设置" name="热键设置">
             <TabItemCom slot="label" name="keyboard" title="热键设置" />
             <Hotkeys />
           </el-tab-pane>
-          <el-tab-pane label="表格设置" name="表格设置">
-            <TabItemCom slot="label" name="table" title="表格设置" />
-            表格设置
-          </el-tab-pane> -->
           <el-tab-pane label="关于系统" name="关于系统">
             <TabItemCom slot="label" name="exclamation" title="关于系统" />
             <AboutSystem />
@@ -85,9 +77,11 @@ export default {
     SettingStyle: () => import('./components/SettingStyle.vue'),
     TabItemCom: () => import('./components/TabItemCom.vue'),
     AboutSystem: () => import('./components/AboutSystem.vue'),
-    // Hotkeys: () => import('./components/Hotkeys.vue'),
+    Hotkeys: () => import('./components/Hotkeys.vue'),
     PersonalCenter: () => import('./components/PersonalCenter.vue'),
-    SystemTheme: () => import('./components/SystemTheme.vue')
+    SystemTheme: () => import('./components/SystemTheme.vue'),
+    SystemSetting: () => import('./components/SystemSetting.vue')
+
   },
   data () {
     return {

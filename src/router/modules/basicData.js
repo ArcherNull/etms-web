@@ -6,8 +6,7 @@
 
 const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
 import Layout from '@/layout/layout.vue'
-
-const meta = { auth: true }
+import { meta, childMeta } from '../config'
 
 const basicData = {
   path: '/basicData',
@@ -25,7 +24,7 @@ const basicData = {
       component: _import(`pages/basicData/domain/index`),
       name: 'domain',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '域名管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -37,7 +36,7 @@ const basicData = {
       component: _import('pages/basicData/user/index'),
       name: 'user',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '用户管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -49,7 +48,7 @@ const basicData = {
       component: _import('pages/basicData/role/index'),
       name: 'role',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '角色管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -61,7 +60,7 @@ const basicData = {
       component: _import('pages/basicData/power/index'),
       name: 'power',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '权限组管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -73,7 +72,7 @@ const basicData = {
       component: _import('pages/basicData/division/index'),
       name: 'division',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '部门管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -85,7 +84,7 @@ const basicData = {
       component: _import('pages/basicData/position/index'),
       name: 'position',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '职位管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -97,7 +96,7 @@ const basicData = {
       component: _import('pages/basicData/menu-detail/index'),
       name: 'menu-detail',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '菜单管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -109,7 +108,7 @@ const basicData = {
       component: _import('pages/basicData/permission/index'),
       name: 'permission',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '权限看板',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -121,7 +120,7 @@ const basicData = {
       component: _import('pages/basicData/settings/index'),
       name: 'settings',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '系统参数',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -134,7 +133,7 @@ const basicData = {
       name: 'task-manage',
       redirect: { name: 'task-plan' },
       meta: {
-        ...meta,
+        ...childMeta,
         title: '计划任务管理',
         icon: 'el-icon-tickets',
         hidden: false,
@@ -146,7 +145,7 @@ const basicData = {
           component: _import('pages/basicData/task-manage/task-plan/index'),
           name: 'task-plan',
           meta: {
-            ...meta,
+            ...childMeta,
             title: '计划任务',
             icon: 'el-icon-tickets',
             hidden: false,
@@ -158,7 +157,7 @@ const basicData = {
           component: _import('pages/basicData/task-manage/task-record/index'),
           name: 'task-record',
           meta: {
-            ...meta,
+            ...childMeta,
             title: '任务监控',
             icon: 'el-icon-tickets',
             hidden: false,
@@ -172,7 +171,7 @@ const basicData = {
       component: _import('pages/basicData/module-display/index'),
       name: 'module-display',
       meta: {
-        ...meta,
+        ...childMeta,
         title: '模块展示',
         icon: 'el-icon-tickets',
         hidden: false,
