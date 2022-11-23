@@ -10,7 +10,6 @@
         <el-form
           ref="configForm"
           :model="configForm"
-          :rules="configFormRules"
           size="mini"
           label-width="150px"
         >
@@ -46,12 +45,11 @@
         <el-form
           ref="configForm"
           :model="configForm"
-          :rules="configFormRules"
           size="mini"
           label-width="150px"
         >
           <el-form-item label="表格主题">
-            <el-select :value="theme" placeholder="请选择" @change="changeTheme">
+            <el-select :value="theme" placeholder="请选择" @change="operation($event, 'theme')">
               <el-option
                 v-for="(item,index) in themeList"
                 :key="index"
@@ -60,26 +58,29 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="每页条数" prop="name">
-            <el-input v-model="configForm.name" />
+          <el-form-item label="每页条数">
+            <el-input :value="pageSize" type="number" @change="operation($event, 'pageSize')" />
           </el-form-item>
           <el-form-item label="表格行高" prop="name">
-            <el-input v-model="configForm.name" />
+            <el-input v-model="configForm.name" type="number" @change="operation($event, 'pageSize')" />
           </el-form-item>
           <el-form-item label="表格行样式" prop="name">
             <el-input v-model="configForm.name" />
           </el-form-item>
           <el-form-item label="最大被选择行数" prop="name">
-            <el-input v-model="configForm.name" />
+            <el-input :value="maxSelectedRows" @change="operation($event, 'maxSelectedRows')" />
           </el-form-item>
           <el-form-item label="最大导入数据条数" prop="name">
-            <el-input v-model="configForm.name" />
+            <el-input :value="maxExportRows" @change="operation($event, 'maxExportRows')" />
           </el-form-item>
           <el-form-item label="列省略展开" prop="name">
-            <el-switch v-model="configForm.name" />
+            <el-switch :value="openCloEllipsis" @change="operation($event, 'openCloEllipsis')" />
+          </el-form-item>
+          <el-form-item label="显示序列行">
+            <el-switch :value="showFirstColumn" @change="operation($event, 'showFirstColumn')" />
           </el-form-item>
           <el-form-item label="显示/隐藏合计行" prop="name">
-            <el-switch v-model="configForm.name" />
+            <el-switch :value="showCalcBottomRow" @change="operation($event, 'showCalcBottomRow')" />
           </el-form-item>
         </el-form>
       </div>
@@ -88,7 +89,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'ConfigSet',
   components: {
@@ -96,41 +97,9 @@ export default {
     SearchBox: () => import('../SearchBox/index.vue'),
     MyBtnList: () => import('../MyBtnList/index.vue'),
     MyButton: () => import('../MyButton/index.vue')
-
   },
   data () {
     return {
-      theme: '', // 主题名
-      themeList: [
-        {
-          label: 'balham',
-          value: 'balham'
-        },
-        {
-          label: 'balham-dark',
-          value: 'balham-dark'
-        },
-        {
-          label: 'alpine',
-          value: 'alpine'
-        },
-        {
-          label: 'material',
-          value: 'material'
-        },
-        {
-          label: 'blue',
-          value: 'blue'
-        },
-        {
-          label: 'refresh',
-          value: 'refresh'
-        },
-        {
-          label: 'dark',
-          value: 'dark'
-        }
-      ],
       searchLoading: false,
       btnListConfig: {
         config: {
@@ -150,17 +119,16 @@ export default {
       },
       configForm: {
         name: ''
-      },
-      configFormRules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ]
       }
     }
   },
+  computed: {
+    ...mapState('agGrid/theme', ['theme', 'themeList']),
+    ...mapState('agGrid/cellContextMenu', ['openCloEllipsis', 'pageSize', 'maxSelectedRows', 'maxExportRows', 'showFirstColumn', 'showCalcBottomRow'])
+  },
   methods: {
     ...mapMutations('agGrid/theme', ['SET_THEME']),
+    ...mapMutations('agGrid/cellContextMenu', ['SET_OPEN_CLO_ELLIPSIS', 'SET_PAGE_SIZE', 'SET_MAX_SELECTED_ROWS', 'SET_MAX_EXPORT_ROWS', 'SET_SHOW_FIRST_COLUMN', 'SET_SHOW_CALC_BOTTOM_ROW']),
 
     // 搜索
     searchFun (ele) {
@@ -187,6 +155,32 @@ export default {
     changeTheme (ele) {
       console.log('改变主题', ele)
       this.SET_THEME(ele)
+    },
+    // 操作
+    operation (ele, type) {
+      switch (type) {
+        case 'theme':
+          this.SET_THEME(ele)
+          break
+        case 'pageSize':
+          this.SET_PAGE_SIZE(ele)
+          break
+        case 'maxSelectedRows':
+          this.SET_MAX_SELECTED_ROWS(ele)
+          break
+        case 'maxExportRows':
+          this.SET_MAX_EXPORT_ROWS(ele)
+          break
+        case 'openCloEllipsis':
+          this.SET_OPEN_CLO_ELLIPSIS(ele)
+          break
+        case 'showFirstColumn':
+          this.SET_SHOW_FIRST_COLUMN(ele)
+          break
+        case 'showCalcBottomRow':
+          this.SET_SHOW_CALC_BOTTOM_ROW(ele)
+          break
+      }
     }
   }
 }

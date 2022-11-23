@@ -8,6 +8,7 @@
     <FirstTitle title="AgGrid表格">
       <div slot="content">
         <MyButton @click="search">搜索</MyButton>
+        <MyButton @click="refresh">刷新</MyButton>
         <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" />
         <AgGrid :ag-table-options="agTableOptions1" @getGridApi="getGridApi1" />
       </div>
@@ -16,9 +17,9 @@
 </template>
 
 <script>
-import { AgGridUtils } from '@/components/AgGrid/common/agGrid-utils'
+import { AgGridUtils, InitColumnDefs } from '@/components/AgGrid/common/agGrid-utils'
 import { rowData } from '@/components/AgGrid/common/agGrid-data-example'
-import { fieldsConfig, InitColumnDefs } from '@/company/basic-data/fields/index'
+import { fieldsConfig } from '@/company/basic-data/fields/index'
 
 export default {
   name: 'CaseManagementIndex',
@@ -58,6 +59,10 @@ export default {
       this.agTable1 = agTable
     },
     search () {
+      // this.agTable.setRowData(rowData.getRowData())
+      this.agTableOptions.rowData = rowData.getRowData()
+    },
+    refresh () {
       // this.agTable.setRowData(rowData.getRowData())
       this.agTableOptions.rowData = rowData.getRowData()
     }

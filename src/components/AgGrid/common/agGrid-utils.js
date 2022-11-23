@@ -753,7 +753,8 @@ export const fieldsConfig = {
  * @return {*}
  */
 export class InitColumnDefs {
-  SHOW_FIRST_COLUMN = store.state.agGrid.cellContextMenu.showCalcBottomRow
+  SHOW_FIRST_COLUMN = store.state.agGrid.cellContextMenu.showFirstColumn
+  SHOW_CALC_BOTTOM_ROW = store.state.agGrid.cellContextMenu.showCalcBottomRow
 
   // 序号列
   FIRST_COLUMN = {
@@ -786,9 +787,13 @@ export class InitColumnDefs {
     console.log('this.FIRST_COLUMN=====>', this.FIRST_COLUMN)
 
     if (!isEmpty(database)) {
+      // 用户自定义
       if (oldServerData?.length) {
         console.log('oldServerData', oldServerData)
+        // [注意]:这里是拼装服务器存储的用户自定义字段,但是跟agGrid-getServerField.js方法还是有区别的,是个优化点
       } else {
+        console.log('this.SHOW_FIRST_COLUMN', this.SHOW_FIRST_COLUMN)
+
         if (isEmpty(columnDefs)) {
           let colDefs = []
           if (isEmpty(specColumns)) {
@@ -864,7 +869,6 @@ export class InitColumnDefs {
             }
           })
 
-          console.log('filterItem=====>', filterItem)
           if (isArray(filterItem) && !isEmpty(filterItem)) {
             console.log('idsArr', idsArr)
             idsArr.forEach((id) => {

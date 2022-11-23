@@ -6,8 +6,38 @@
 
 const state = {
   // 图片地址  string
-  theme: 'alpine'
-  //
+  theme: 'alpine',
+  // 主题列表
+  themeList: [
+    {
+      label: 'balham',
+      value: 'balham'
+    },
+    {
+      label: 'balham-dark',
+      value: 'balham-dark'
+    },
+    {
+      label: 'alpine',
+      value: 'alpine'
+    },
+    {
+      label: 'material',
+      value: 'material'
+    },
+    {
+      label: 'blue',
+      value: 'blue'
+    },
+    {
+      label: 'refresh',
+      value: 'refresh'
+    },
+    {
+      label: 'dark',
+      value: 'dark'
+    }
+  ]
 }
 
 const mutations = {

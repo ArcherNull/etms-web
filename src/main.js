@@ -3,7 +3,6 @@
  * @Date: 2021-11-06 14:17:36
  * @Description: 入口文件根组件实例
  */
-
 import Vue from 'vue'
 import App from './App.vue'
 import compList from './components/index'
@@ -21,7 +20,7 @@ Vue.use(admin)
 
 // 注册全局组件
 Object.keys(compList).forEach((key) => {
-  Vue.component(key, compList[key])
+  key.indexOf('/') === -1 && Vue.component(key, compList[key])
 })
 
 // 注册全局过滤器

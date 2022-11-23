@@ -13,7 +13,14 @@ const state = {
   top: 0, // 右侧菜单的坐标x
   openDialogCount: 0, // 菜单栏中打开弹窗的次数
 
-  showCalcBottomRow: true // 显示和隐藏底部合计行
+  showFirstColumn: false, // 显示和隐藏底展示序号列
+  showCalcBottomRow: true, // 显示和隐藏底部合计行
+
+  openCloEllipsis: false, // 列省略展开
+  pageSize: 100, // 每页条数
+  maxSelectedRows: 200, // 最大选择行数据条数
+  maxExportRows: 200 // 最大导入行数据条数
+
 }
 
 const mutations = {
@@ -41,9 +48,29 @@ const mutations = {
   SET_OPEN_DIALOG_COUNT: (state, count) => {
     state.openDialogCount += count
   },
+  // 设置第一行序号列
+  SET_SHOW_FIRST_COLUMN: (state, bool) => {
+    state.showFirstColumn = bool
+  },
   // 显示和隐藏底部合计行
   SET_SHOW_CALC_BOTTOM_ROW: (state, bool) => {
     state.showCalcBottomRow = bool
+  },
+  // 设置每页条数
+  SET_OPEN_CLO_ELLIPSIS: (state, openCloEllipsis) => {
+    state.openCloEllipsis = openCloEllipsis
+  },
+  // 设置每页条数
+  SET_PAGE_SIZE: (state, pageSize) => {
+    state.pageSize = pageSize
+  },
+  // 最大选择行数据条数
+  SET_MAX_SELECTED_ROWS: (state, maxSelectedRows) => {
+    state.maxSelectedRows = maxSelectedRows
+  },
+  // 最大导入行数据条数
+  SET_MAX_EXPORT_ROWS: (state, maxExportRows) => {
+    state.maxExportRows = maxExportRows
   }
 }
 
