@@ -6,6 +6,7 @@
  */
 import store from '@/store/index'
 import { sumBy, isArray, isEmpty, isObject } from 'lodash'
+import { showMessage } from '@/serve/httpCommon'
 // ag-grid渲染之前的处理
 
 /**
@@ -201,16 +202,20 @@ export function AgGridUtils (api) {
      * @description: 选中的行数据
      */
     this.getSelectedRows = function () {
-      const selectedRowDatas = gridApi.getSelectedRows()
-      console.log('selectedRowDatas------------', selectedRowDatas)
-      if (that.checkRowsType(selectedRowDatas)) {
-        if (selectedRowDatas.length <= 100) {
-          return selectedRowDatas
+      const selectedRowData = gridApi.getSelectedRows()
+      console.log('选中的行数据selectedRowData=====>', selectedRowData)
+      const maxSelectedRows = store.state.agGrid.cellContextMenu.maxSelectedRows
+
+      if (that.checkRowsType(selectedRowData)) {
+        if (selectedRowData.length <= maxSelectedRows) {
+          return selectedRowData
         } else {
-          alert('选中的行数据不可超过100条!')
+          showMessage(`选中的行数据不可超过${maxSelectedRows}条!`)
+          return false
         }
       } else {
-        alert('未选中的行数据！')
+        showMessage(`未选中的行数据！`)
+        return false
       }
     }
 
@@ -220,14 +225,14 @@ export function AgGridUtils (api) {
      * @return {*}
      */
     this.deleteSelectedRows = function (id) {
-      const selectedRowDatas = gridApi.getSelectedRows()
-      console.log('selectedRowDatas===========', selectedRowDatas)
-      if (that.checkRowsType(selectedRowDatas)) {
+      const selectedRowData = gridApi.getSelectedRows()
+      console.log('selectedRowData===========', selectedRowData)
+      if (that.checkRowsType(selectedRowData)) {
         // 注意调用updateRowData方法并不会更新vue的data
-        this.gridApi.updateRowData({ remove: selectedRowDatas })
+        this.gridApi.updateRowData({ remove: selectedRowData })
         // 正确的删除方法是这样的
         // return that.allLeafChildren.filter((item) => {
-        //   return selectedRowDatas.filter((m) => m[id] === item[id]).length <= 0
+        //   return selectedRowData.filter((m) => m[id] === item[id]).length <= 0
         // })
       } else {
         alert('您未选中任何数据')

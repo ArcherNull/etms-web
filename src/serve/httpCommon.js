@@ -3,7 +3,8 @@
  * @Date: 2022-06-16 16:34:16
  * @Description: 请求配置文件
  */
-import { Message } from 'element-ui'
+import { Message, Notification } from 'element-ui'
+import { isObject, isEmpty } from 'lodash'
 import store from '@/store'
 import util from '@/libs/util'
 import Qs from 'qs'
@@ -46,12 +47,43 @@ export function addErrorLog (error) {
  * @return {*}
  */
 export function messageAlert (message, type = 'error', duration = 3000) {
-  Message({
+  showMessage({
     message,
     type,
     showClose: true,
     duration
   })
+}
+
+// 错误提示
+export const showMessage = (obj, type, duration) => {
+  let msgObj = {
+    message: '错误',
+    type: type || 'warning',
+    duration: duration || 2000
+  }
+  if (isObject(obj) && !isEmpty(obj)) {
+    msgObj = Object.assign(msgObj, obj)
+  } else {
+    msgObj.message = obj
+  }
+  Message(msgObj)
+}
+
+// 提示
+export const showNotification = (obj, type, title, duration) => {
+  let msgObj = {
+    title: title || '提示',
+    message: '错误',
+    type: type || 'warning',
+    duration: duration || 2000
+  }
+  if (isObject(obj) && !isEmpty(obj)) {
+    msgObj = Object.assign(msgObj, obj)
+  } else {
+    msgObj.message = obj
+  }
+  Notification(msgObj)
 }
 
 /**

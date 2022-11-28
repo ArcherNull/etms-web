@@ -13,7 +13,7 @@ const state = {
   top: 0, // 右侧菜单的坐标x
   openDialogCount: 0, // 菜单栏中打开弹窗的次数
 
-  showFirstColumn: false, // 显示和隐藏底展示序号列
+  showFirstColumn: true, // 显示和隐藏底展示序号列
   showCalcBottomRow: true, // 显示和隐藏底部合计行
 
   openCloEllipsis: false, // 列省略展开

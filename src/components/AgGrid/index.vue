@@ -94,7 +94,7 @@
 
     /> -->
 
-    <AgDrawer :show-drawer="showRowDetailDrawer" :visible.sync="showAgRowDataDetailDrawer" :ag-table-options="agTableOptions" />
+    <AgDrawer :show-drawer="showRowDetailDrawer" :visible.sync="showAgRowDataDetailDrawer" :ag-table-options="agTableOptions" :ag-row-data-detail-data="agRowDataDetailData" />
 
     <!-- 单元格右键菜单栏 -->
     <div v-if="showCellMenuList">
@@ -177,7 +177,8 @@ export default {
         rowSelection: 'multiple'
       },
 
-      showAgRowDataDetailDrawer: false // 表格行数据信息抽屉窗显示或隐藏
+      showAgRowDataDetailDrawer: false, // 表格行数据信息抽屉窗显示或隐藏
+      agRowDataDetailData: {} // 表格行数据
 
       // 表格默认配置项
       // agGridDefaultOptions: {

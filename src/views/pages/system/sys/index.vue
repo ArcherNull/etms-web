@@ -9,6 +9,7 @@
       <div slot="content">
         <MyButton @click="search">搜索</MyButton>
         <MyButton @click="refresh">刷新</MyButton>
+        <MyButton @click="getSelectRowData">获取行数据</MyButton>
         <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" />
         <AgGrid :ag-table-options="agTableOptions1" @getGridApi="getGridApi1" />
       </div>
@@ -65,6 +66,10 @@ export default {
     refresh () {
       // this.agTable.setRowData(rowData.getRowData())
       this.agTableOptions.rowData = rowData.getRowData()
+    },
+    getSelectRowData () {
+      const selectedRows = this.agTable.getSelectedRows()
+      console.log('selectedRows=====>', selectedRows)
     }
   }
 }

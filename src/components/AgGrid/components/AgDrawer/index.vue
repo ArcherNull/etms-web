@@ -24,7 +24,7 @@
         >
           <div class="title">{{ item.headerName }}</div>
           <div class="context">
-            {{ agTableOptions.rowData[index][item.field] || '' }}
+            {{ agRowDataDetailData[item.field] || '' }}
           </div>
         </div>
       </div>
@@ -35,8 +35,15 @@
 <script>
 export default {
   name: 'AgDrawer',
+  filters: {
+
+  },
   props: {
     agTableOptions: {
+      type: Object,
+      default: () => {}
+    },
+    agRowDataDetailData: {
       type: Object,
       default: () => {}
     },

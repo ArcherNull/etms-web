@@ -101,8 +101,9 @@ export const agGridMethods = {
     console.log('行双击事件onRowDoubleClicked--获取选中所在行的数据', cell.data)
     if (!['bottom', 'top'].includes(cell.rowPinned)) {
       if (this.showRowDetailDrawer) {
-        console.log('agTableOptions=========>', this.agTableOptions)
+        // console.log('agTableOptions=========>', this.agTableOptions)
         this.showAgRowDataDetailDrawer = !this.showAgRowDataDetailDrawer
+        if (this.showAgRowDataDetailDrawer) this.agRowDataDetailData = cell.data
       }
     }
     // this.$emit('onRowDoubleClickedFun', cell)
