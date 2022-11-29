@@ -20,6 +20,7 @@
     "flex.css": "^1.1.7",
     "hotkeys-js": "^3.8.7",
     "js-cookie": "^3.0.1",
+    "jsbarcode": "^3.11.5",
     "jszip": "^3.10.1",
     "lowdb": "1.0.0",
     "mathjs": "^10.0.0",

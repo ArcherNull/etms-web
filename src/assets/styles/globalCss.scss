@@ -7,17 +7,12 @@
 
  // admin 系统主要样式
 @import './admin/index.scss';
-// 边距 rem
-@import './margin-padding/index.scss';
 // flex.css 样式补充
 @import './flex/flex.scss';
 // 自定义elementUi的样式
 @import './element/index.scss';
 // 引入动画样式
 @import './admin/animation.scss';
-// vxe-table 主题
-// @import './admin/theme/vxe-table/index.scss';
-
 
 *{
   box-sizing: border-box;
@@ -75,10 +70,7 @@ $borderRedSizes: ('pink', 'yellow', 'blue', 'green', 'red');
   .#{$prefix}-br-#{$border-color-gary}-#{$index} { border-right: solid 1px #{nth($borderGarySizes , $index)} }
   .#{$prefix}-bl-#{$border-color-gary}-#{$index} { border-left: solid 1px #{nth($borderGarySizes , $index)} }
 
-
-
   .#{$prefix}-b-#{$border-color-red}-#{$index} { border: solid 1px #{nth($borderRedSizes , $index)} }
-
 }
 
 // 禁选文本

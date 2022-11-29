@@ -22,11 +22,7 @@
     </FirstTitle>
 
     <!-- 导入解析 -->
-    <MyDialog
-      :visible.sync="openParseFile"
-      title="导入解析"
-      width="850px"
-    >
+    <MyDialog :visible.sync="openParseFile" title="导入解析" :width="dialogWidth">
       <div slot="content">
         <ImportFile />
       </div>
@@ -36,17 +32,18 @@
     </MyDialog>
 
     <!-- 导出 -->
-    <MyDialog :visible.sync="openExport" title="导出" width="850px">
+    <MyDialog :visible.sync="openExport" title="导出" :width="dialogWidth">
       <div slot="content">
-        <ExportFile />
+        <ExportFile ref="exportFile" />
       </div>
       <div slot="footer">
         <MyButton @click.stop="openExport = false">取消</MyButton>
+        <MyButton type="primary" @click.stop="exportFilesFun">导出</MyButton>
       </div>
     </MyDialog>
 
     <!-- 图片剪裁 -->
-    <MyDialog :visible.sync="cropperModel" title="图片剪裁" width="850px">
+    <MyDialog :visible.sync="cropperModel" title="图片剪裁" :width="dialogWidth">
       <div slot="content">
         <SecondTitle title="本地文件">
           <MyCropperUpLoad slot="content" />
@@ -58,22 +55,32 @@
     </MyDialog>
 
     <!-- 格式转化 -->
-    <MyDialog :visible.sync="convertFormat" title="格式转化" width="850px">
+    <MyDialog :visible.sync="convertFormat" title="格式转化" :width="dialogWidth">
       <div slot="content">
-        格式转化
+        <ConvertFormat ref="convertFormat" />
       </div>
       <div slot="footer">
         <MyButton @click.stop="convertFormat = false">取消</MyButton>
+        <MyButton type="primary" @click.stop="convertFormatFun">输出</MyButton>
       </div>
     </MyDialog>
 
     <!-- 线上预览 -->
-    <MyDialog :visible.sync="previewOnline" title="线上预览" width="850px">
-      <div slot="content">
-        线上预览
-      </div>
+    <MyDialog :visible.sync="previewOnline" title="线上预览" :width="dialogWidth">
+      <div slot="content">线上预览</div>
       <div slot="footer">
         <MyButton @click.stop="previewOnline = false">取消</MyButton>
+      </div>
+    </MyDialog>
+
+    <!-- 数据加密 -->
+    <MyDialog :visible.sync="dataEncryption" title="数据加密" :width="dialogWidth">
+      <div slot="content">
+        <DataEncryption ref="dataEncryption" />
+      </div>
+      <div slot="footer">
+        <MyButton @click.stop="dataEncryption = false">取消</MyButton>
+        <MyButton type="primary" @click.stop="submitDataEncryption">生成</MyButton>
       </div>
     </MyDialog>
   </div>
@@ -90,11 +97,13 @@ export default {
     MyDialog: () => import('../MyDialog/index.vue'),
     ExportFile: () => import('./components/ExportFile/index.vue'),
     ImportFile: () => import('./components/ImportFile/index.vue'),
-
+    DataEncryption: () => import('./components/DataEncryption/index.vue'),
+    ConvertFormat: () => import('./components/ConvertFormat/index.vue'),
     MyCropperUpLoad: () => import('./components/MyCropperUpLoad/index.vue')
   },
   data () {
     return {
+      dialogWidth: '850px',
       parseExcelModel: 'frontParseExcel',
       importBtnConfig: {
         config: {
@@ -138,18 +147,15 @@ export default {
           {
             type: 'primary',
             btnText: '数据加密'
-          },
-          {
-            type: 'primary',
-            btnText: '随机字符串'
           }
         ]
       },
-      cropperModel: false,
-      openParseFile: false,
-      openExport: false,
-      convertFormat: false,
-      previewOnline: false
+      cropperModel: false, // 图片剪裁
+      openParseFile: false, // 导入解析弹窗
+      openExport: false, // 导出
+      convertFormat: false, // 格式转换弹窗
+      previewOnline: false, // 线上预览弹窗
+      dataEncryption: false // 数据加密弹窗
     }
   },
   methods: {
@@ -184,9 +190,7 @@ export default {
           break
         case '数据加密':
           console.log('数据加密')
-          break
-        case '随机字符串':
-          console.log('随机字符串')
+          this.dataEncryption = true
           break
         default:
           console.log('无效点击')
@@ -195,13 +199,28 @@ export default {
       setTimeout(() => {
         item.loading = false
       }, 2000)
+    },
+    // 导出
+    exportFilesFun () {
+      console.log('导出')
+      this.$refs.exportFile.onSubmit()
+    },
+    // 格式转换输出
+    convertFormatFun () {
+      console.log('格式转换输出')
+      this.$refs.convertFormat.onSubmit()
+    },
+    // 数据加密表单提交
+    submitDataEncryption () {
+      console.log('数据加密表单提交')
+      this.$refs.dataEncryption.onSubmit()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.parseExcelModel{
+.parseExcelModel {
   margin-bottom: 10px;
 }
 </style>

@@ -142,7 +142,7 @@ export default {
         const elH = dragDom.clientHeight
         const EloffsetLeft = dragDom.offsetLeft
         const EloffsetTop = dragDom.offsetTop
-        dragDom.style.userSelect = 'none'
+        dragDom.style.userSelect = 'auto'
         const ELscrollTop = el.scrollTop
 
         // 判断点击的位置是不是为头部

@@ -43,10 +43,6 @@
           />
         </el-select>
       </el-form-item>
-
-      <el-form-item>
-        <MyButton type="primary" @click.stop="exportFilesFun">导出</MyButton>
-      </el-form-item>
     </el-form>
 
   </div>
@@ -55,9 +51,6 @@
 <script>
 export default {
   name: 'ExportFile',
-  components: {
-    MyButton: () => import('../../../MyButton/index.vue')
-  },
   data () {
     return {
 
@@ -107,7 +100,7 @@ export default {
   },
   methods: {
     // 导出
-    exportFilesFun () {
+    onSubmit () {
       console.log('导出')
       this.$refs.exportForm.validate(valid => {
         if (valid) {

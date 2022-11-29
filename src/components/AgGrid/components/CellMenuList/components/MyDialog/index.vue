@@ -16,7 +16,7 @@
     <span slot="title" class="dk-f1-title">
       <slot name="title"> {{ customizedAttrs.title || 'MyDialog' }} </slot>
     </span>
-    <div :class="['myDialog-content', customizedAttrs.contentClass]">
+    <div :class="['myDialog-content', customizedAttrs.contentClass]" @click.stop="">
       <slot name="content">
         <div class="myDialog-noMore">
           暂无数据

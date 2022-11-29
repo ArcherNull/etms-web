@@ -23,7 +23,10 @@
           class="agGrid-drawer__content-line"
         >
           <div class="title">{{ item.headerName }}</div>
-          <div class="context">
+          <div
+            class="context"
+            @dblclick="copy(agRowDataDetailData[item.field])"
+          >
             {{ agRowDataDetailData[item.field] || '' }}
           </div>
         </div>
@@ -67,12 +70,16 @@ export default {
   methods: {
     close () {
       this.$emit('update:visible', false)
+    },
+    copy (text) {
+      this.$commJs.copyToClipboard(this, text)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 ::v-deep .agGrid-drawer {
   // 抽屉宽度 -写死
   .el-drawer__container {
@@ -101,15 +108,17 @@ export default {
     margin-bottom: 60px;
     &-line {
       display: grid;
-      grid-template-columns: 1.2fr 2fr;
+      grid-template-columns: 75px 1fr;
       column-gap: 8px;
       padding: 4px 0;
+      // user-select: all;
       .title {
         text-align: right;
         color: #999;
       }
       .context {
         color: #333;
+        word-break: break-all;
       }
     }
   }

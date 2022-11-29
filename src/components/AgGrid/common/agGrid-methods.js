@@ -6,7 +6,11 @@
 
 // 定时器，用于刷新手动计算的合计行 paginationChanged
 import store from '@/store/index'
-import { AgGridUtils, refreshTotalToList, getCurrentGridDataAndNumericalOrder } from './agGrid-utils'
+import {
+  AgGridUtils,
+  refreshTotalToList,
+  getCurrentGridDataAndNumericalOrder
+} from './agGrid-utils'
 
 export const agGridMethods = {
   /**
@@ -355,6 +359,7 @@ export const agGridMethods = {
 export function paginationChanged (event) {
   const { api: gridApi } = event
   const getCurrentGridNode = gridApi?.getModel()?.rowsToDisplay || []
-  const getCurrentGridData = getCurrentGridDataAndNumericalOrder(getCurrentGridNode)
+  const getCurrentGridData =
+    getCurrentGridDataAndNumericalOrder(getCurrentGridNode)
   refreshTotalToList(getCurrentGridData, gridApi)
 }
