@@ -22,6 +22,7 @@
         <el-select
           v-model="conFormatForm.fileClassify"
           placeholder="请选择文件类别"
+          clearable
           @change="changeFileClassify"
         >
           <el-option
@@ -34,7 +35,7 @@
       </el-form-item>
 
       <el-form-item v-if="conFormatForm.fileClassify !=='content'" label="文件" prop="file">
-        <MyUpload />
+        <MyUpload :accept="acceptType" :disabled="!acceptType" :file-list="fileList" />
       </el-form-item>
 
       <el-form-item v-else label="文件内容" prop="content">
@@ -44,7 +45,7 @@
           :rows="4"
           show-word-limit
           type="textarea"
-          placeholder="请输入当前数据"
+          placeholder="请输入文件内容"
           clearable
         />
       </el-form-item>
@@ -52,7 +53,8 @@
       <el-form-item label="输出格式" prop="exportFormat">
         <el-select
           v-model="conFormatForm.exportFormat"
-          placeholder="请选择"
+          placeholder="请选择输出格式"
+          clearable
           @change="changeExportFormat"
         >
           <el-option
@@ -64,7 +66,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="输出方式">
+      <el-form-item label="输出方式" prop="exportMode">
         <el-radio-group v-model="conFormatForm.exportMode" @change="changeExportMode">
           <el-radio label="autoDownload">自动下载</el-radio>
           <el-radio label="generateLink">生成下载链接</el-radio>
@@ -72,12 +74,8 @@
       </el-form-item>
 
       <el-form-item label="输出结果">
-        <div v-if="generateResults">
-          {{ generateResults }}
-        </div>
-        <div v-else class="dk-danger-text">
-          暂无结果，请点击输出
-        </div>
+        <div v-if="generateResults">{{ generateResults }}</div>
+        <div v-else class="dk-danger-text">暂无结果，请点击输出</div>
       </el-form-item>
     </el-form>
   </div>
@@ -181,7 +179,10 @@ export default {
         content: {
           exportFileType: ['text', 'pdf']
         }
-      }
+      },
+      // 文件列表
+      fileList: [],
+      acceptType: ''
     }
   },
   methods: {
@@ -192,21 +193,28 @@ export default {
     // 转换文件类别
     changeFileClassify (ele) {
       console.log('转换文件类别', ele)
-      ele && this.$refs.conFormatForm.clearValidate(ele === 'content' ? 'file' : 'content')
+      ele &&
+        this.$refs.conFormatForm.clearValidate(
+          ele === 'content' ? 'file' : 'content'
+        )
       this.refreshExportFormat(ele)
     },
     // 更新输出格式方法
     refreshExportFormat (ele) {
       let selectList = []
       if (ele) {
-        const { exportFileType } = this.fileType[ele]
-        selectList = exportFileType?.map(item => {
+        const { importFileType, exportFileType } = this.fileType[ele]
+        selectList = exportFileType?.map((item) => {
           return {
             label: item,
             disabled: item === ele,
             value: item
           }
         })
+        if (importFileType?.length) {
+          console.log('importFileType=====>', importFileType)
+          this.acceptType = importFileType?.map(ele => '.' + ele).join(',')
+        }
       }
       this.exportFormatList = selectList
     },
