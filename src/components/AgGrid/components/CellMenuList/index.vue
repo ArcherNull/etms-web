@@ -7,7 +7,7 @@
   <div v-if="visible">
     <div
       :style="{ left: left + 'px', top: top + 'px' }"
-      class="CellMenuList"
+      class="CellMenuList borderRed"
       @click.stop=""
     >
       <el-tabs
@@ -28,9 +28,14 @@
           <AgChart />
         </el-tab-pane>
         <el-tab-pane label="配置" name="config">
-          <ConfigSet />
+          <ConfigSet :ag-table="agTable" />
         </el-tab-pane>
       </el-tabs>
+
+      <!-- tabs底部合计行 -->
+      <div class="CellMenuList-bottom">
+        <TotalRow :table-data-total="tableDataTotal" />
+      </div>
     </div>
     <!-- 蒙层 -->
     <div class="CellMenuList-mask" @click="close" />
@@ -39,6 +44,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { AgGridUtils } from '@/components/AgGrid/common/agGrid-utils'
 
 export default {
   name: 'CellMenuList',
@@ -47,7 +53,8 @@ export default {
     FieldsSet: () => import('./components/FieldsSet/index.vue'),
     FilesSet: () => import('./components/FilesSet/index.vue'),
     PrintSet: () => import('./components/PrintSet/index.vue'),
-    AgChart: () => import('./components/AgChart/indx.vue')
+    AgChart: () => import('./components/AgChart/indx.vue'),
+    TotalRow: () => import('./components/TotalRow/index.vue')
   },
   props: {
     visible: {
@@ -57,7 +64,13 @@ export default {
   },
   data () {
     return {
-      activeName: 'fields'
+      activeName: 'fields',
+      agTable: null,
+      tableDataTotal: {
+        tableRowData: 0,
+        filterRowData: 0,
+        selectRowData: 0
+      }
     }
   },
   computed: {
@@ -66,6 +79,7 @@ export default {
   watch: {
     visible (value) {
       if (value) {
+        this.dealMenuListData()
         document.body.addEventListener('click', this.closeMenu)
       } else {
         document.body.removeEventListener('click', this.closeMenu)
@@ -74,6 +88,19 @@ export default {
   },
   methods: {
     ...mapMutations('agGrid/cellContextMenu', ['OPEN_CELL_MENU_LIST']),
+    // 处理菜单数据
+    dealMenuListData () {
+      console.log('this.menuListData', this.menuListData)
+      const agTable = new AgGridUtils(this.menuListData)
+
+      this.tableDataTotal = {
+        tableRowData: agTable.getRootGridData.length,
+        filterRowData: agTable.getCurrentGridNode.length,
+        selectRowData: agTable.selectedRowData.length
+      }
+
+      console.log('this.tableDataTotal=====>', this.tableDataTotal)
+    },
     handleClick (ele) {
       console.log('handleClick', ele)
     },
@@ -99,7 +126,7 @@ $menu-width:30vw;
   background-color: #fff;
   z-index: 3000;
   position: absolute;
-  padding: 0 10px;
+  padding: 0 6px 8px 6px;
   list-style-type: none;
   border-radius: 8px;
   font-weight: 400;
@@ -130,6 +157,13 @@ $menu-width:30vw;
     bottom: 0;
     left: 0;
     right: 0;
+  }
+  &-bottom{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 10;
   }
 }
 </style>

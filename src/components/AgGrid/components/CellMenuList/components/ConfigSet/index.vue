@@ -98,6 +98,14 @@ export default {
     MyBtnList: () => import('../MyBtnList/index.vue'),
     MyButton: () => import('../MyButton/index.vue')
   },
+  props: {
+    agTable: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       searchLoading: false,
@@ -186,5 +194,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+// 单元格可复制
+.ag-unselectable {
+  user-select: initial !important;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  -webkit-user-select: text;
+}
 </style>

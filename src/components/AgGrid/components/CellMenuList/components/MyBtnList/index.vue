@@ -39,7 +39,6 @@ export default {
     btnListConfig: {
       handler (newVal) {
         if (newVal) {
-          console.log('newVal======>', newVal)
           const { schemas, config } = newVal
 
           if (config) {

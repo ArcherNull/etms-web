@@ -163,6 +163,8 @@ export function AgGridUtils (api) {
     this.getCurrentGridNode = gridApi?.getModel()?.rowsToDisplay || []
     // 获取并返回当前网格内的所有原始数据
     this.getRootGridData = gridApi?.getModel()?.rootNode?.allLeafChildren || []
+    // 获取当前选中行数据
+    this.selectedRowData = gridApi.getSelectedRows() || []
 
     // 获取并返回当前网格内的所有过滤后的前端视图数据
     this.getCurrentGridData = function () {
@@ -492,6 +494,10 @@ export function AgGridUtils (api) {
         default:
           return data
       }
+    }
+
+    this.tableDataTotal = function () {
+
     }
   } else {
     alert('ag-grid表格工具实例创建失败！')
