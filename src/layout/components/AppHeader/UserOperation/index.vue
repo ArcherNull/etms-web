@@ -7,7 +7,7 @@
     <!-- 全局搜索 -->
     <SearchAll />
     <!-- 网络 -->
-    <SearchAll />
+    <Network />
     <!-- 前端日志 -->
     <ErrorLog />
     <!-- 国际化 -->
@@ -31,6 +31,7 @@ import Local from './components/Local.vue'
 import ErrorLog from './components/ErrorLog.vue'
 import Setting from './components/Setting/index.vue'
 import SearchAll from './components/SearchAll.vue'
+import Network from './components/Network.vue'
 
 export default {
   name: 'UserOperation', // 用户信息下拉框
@@ -41,7 +42,8 @@ export default {
     Local,
     ErrorLog,
     Setting,
-    SearchAll
+    SearchAll,
+    Network
   },
   data () {
     return {}
