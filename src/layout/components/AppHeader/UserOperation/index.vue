@@ -6,6 +6,8 @@
   <div class="app-header-user" flex="main:riight cross:center">
     <!-- 全局搜索 -->
     <SearchAll />
+    <!-- 网络 -->
+    <SearchAll />
     <!-- 前端日志 -->
     <ErrorLog />
     <!-- 国际化 -->

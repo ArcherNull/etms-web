@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 13:57:28
  * @Description: 展示navigation对象信息
  */
-
+import store from '@/store/index'
 export function showNavigationDetails () {
   const [entry] = performance.getEntriesByType('navigation')
   console.table(entry.toJSON())
@@ -19,12 +19,15 @@ export function networkConnection () {
   console.log(`有效网络连接类型:${effectiveType}`) // 2g 3g 4g
   console.log(`估算的下行速度/带宽:${downlink}Mb/s`)
   console.log(`估算往返时间:${rtt}ms`)
-  console.log(`打开请求数据保护模式:${saveDate}`)
+  console.log(`打开请求数据保护模式:${saveDate || '无'}`)
   console.groupEnd()
-  return {
+
+  const connection = {
     rtt,
     downlink,
     effectiveType,
     saveDate
   }
+  store.commit('setting/network/SET_CONNECTION', connection)
+  return connection
 }

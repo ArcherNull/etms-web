@@ -8,7 +8,7 @@
     <div class="TotalRow-left">
       <LabelBox v-for="(item,index) in tableTotalList" :key="index" v-bind="item" />
     </div>
-    <div class="TotalRow-right" @click="dealTableTotalList()">
+    <div class="TotalRow-right">
       <LabelBox />
     </div>
   </div>

@@ -153,6 +153,7 @@ export function setColumnDefs (
  */
 export function AgGridUtils (api) {
   const that = this
+  console.log('api=====>', api)
   // gridApi 网格aoi , columnApi 列api
   const { api: gridApi, columnApi } = api
 
@@ -165,6 +166,14 @@ export function AgGridUtils (api) {
     this.getRootGridData = gridApi?.getModel()?.rootNode?.allLeafChildren || []
     // 获取当前选中行数据
     this.selectedRowData = gridApi.getSelectedRows() || []
+    // 原始行数据最大长度
+    this.originRowLength = this.getRootGridData.length
+    // 筛选后原始行数据最大长度
+    this.filterRowLength = this.getCurrentGridNode.length
+    // 列头数据
+    this.columnDefs = columnApi.columnModel.columnDefs
+    // 列数据最大长度
+    this.columnDefsLength = this.columnDefs.length
 
     // 获取并返回当前网格内的所有过滤后的前端视图数据
     this.getCurrentGridData = function () {
