@@ -3,7 +3,6 @@
  * @Date: 2022-02-09 16:45:51
  * @Description: el-button 透传组件
 -->
-
 <template>
   <el-button
     v-waves
@@ -25,7 +24,6 @@ export default {
     customizedAttrs () {
       const obj = {
         size: this.size,
-        // type: this.type, // 此属性会影响全局的颜色调整
         title: this.title,
         plain: this.plain,
         disabled: this.disabled,

@@ -5,19 +5,28 @@
 -->
 <template>
   <el-popover class="Network" placement="bottom" width="250" trigger="click" @show="hoverHandler">
-    <div slot="reference" class="Network-container dk-icon-btn">Network</div>
+    <div
+      slot="reference"
+      title="当前网络"
+      :class="['Network-container dk-icon-btn',
+               connection.effectiveType==='2g'?'netWork-2g':
+               connection.effectiveType==='3g'?'netWork-3g':
+               connection.effectiveType==='4g'?'netWork-4g':
+               connection.effectiveType==='5g'?'netWork-5g':'netWork-no']"
+    >{{ connection.effectiveType || '无' }}</div>
     <div class="Network-content">
-      <div class="Network-content__text">
-        有效网络连接类型: {{ connection.effectiveType }}
-      </div>
-      <div class="Network-content__text">
-        估算的下行速度/带宽: {{ connection.downlink }}
-      </div>
-      <div class="Network-content__text">
-        估算往返时间: {{ connection.rtt }}ms
-      </div>
-      <div class="Network-content__text">
-        打开请求数据保护模式: {{ connection.saveDate || '无' }}
+      <div
+        v-for="(item,index) in Object.keys(connection)"
+        :key="index"
+        class="Network-content__box"
+      >
+        <span class="Network-content__box-title">{{ labelObj[item]['title'] }}</span>
+        <span class="Network-content__box-content">
+          {{ connection[item] || '无' }}
+          <span
+            class="Network-content__box-content-unit"
+          >{{ labelObj[item]['unit'] }}</span>
+        </span>
       </div>
     </div>
   </el-popover>
@@ -29,7 +38,23 @@ export default {
   name: 'Network',
   data () {
     return {
-      showMessageBoard: false
+      showMessageBoard: false,
+      labelObj: {
+        effectiveType: {
+          title: '有效网络连接类型:'
+        },
+        downlink: {
+          title: '估算的下行速度/带宽:',
+          unit: 'Mb/s'
+        },
+        rtt: {
+          title: '打开请求数据保护模式:',
+          unit: 'ms'
+        },
+        saveDate: {
+          title: '打开请求数据保护模式:'
+        }
+      }
     }
   },
   computed: {
@@ -52,6 +77,49 @@ export default {
   &-container {
     width: $header-icon-btn-width;
     height: 100%;
+    font-weight: bold;
+    font-size: 16px;
   }
+  &-content {
+    &__box {
+      padding-bottom: 4px;
+      &-title {
+        color: #999;
+      }
+      &-content {
+        font-weight: bold;
+        font-size: 16px;
+        margin-left: 6px;
+        &-unit {
+          font-size: 12px;
+          font-weight: 400;
+          color: #67c23a;
+        }
+      }
+    }
+  }
+}
+
+/*
+#FF8F8F  none
+#E6A23C  2g
+#3898FF 3g
+#67C23A 4g
+#DA91F4 5g
+*/
+.netWork-no {
+  color: #ff8f8f;
+}
+.netWork-2g {
+  color: #e6a23c;
+}
+.netWork-3g {
+  color: #3898ff;
+}
+.netWork-4g {
+  color: #67c23a;
+}
+.netWork-5g {
+  color: #da91f4;
 }
 </style>

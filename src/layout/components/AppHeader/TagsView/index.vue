@@ -392,7 +392,7 @@ export default {
   width: 100%;
   overflow: hidden;
   &-tabs {
-    width: 100%;
+    width: 60vw;
     .el-tabs__item {
       line-height: $layout-tagview-hegiht;
       height: $layout-tagview-hegiht;
