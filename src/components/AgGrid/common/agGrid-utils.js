@@ -977,4 +977,11 @@ export class InitColumnDefs {
 
     return colDefs
   }
+
+  // 清空过滤
+  /*
+  gridOptions.api.setFilterModel(null);
+  $scope.gridOptions.api.resetFilters();
+  $scope.gridOptions.api.destroyFilter();
+  */
 }
