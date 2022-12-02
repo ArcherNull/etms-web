@@ -82,5 +82,19 @@ $borderRedSizes: ('pink', 'yellow', 'blue', 'green', 'red');
   user-select: none;
 }
 
+.default-theme{
+  background-color: #fff;
+}
 
+.black-theme{
+  background-color: black;
+}
+
+.red-theme{
+  background-color: red;
+}
+
+.gray-theme{
+  filter: grayscale(1);
+}
   
