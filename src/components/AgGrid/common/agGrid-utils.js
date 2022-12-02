@@ -155,7 +155,7 @@ export function AgGridUtils (api) {
   const that = this
   console.log('api=====>', api)
   // gridApi 网格aoi , columnApi 列api
-  const { api: gridApi, columnApi, colDef } = api
+  const { api: gridApi, columnApi, colDef, rowPinned } = api
 
   if (gridApi && columnApi) {
     /* ************************ 网格API操作 ****************************  */
@@ -196,6 +196,21 @@ export function AgGridUtils (api) {
       } else {
         return 0
       }
+    }
+
+    // 列固定状态，left / right
+    this.colPinnedPosition = function () {
+      if (colDef) {
+        const { pinned } = colDef
+        return pinned || ''
+      } else {
+        return ''
+      }
+    }
+
+    // 行固定状态， top / bottom
+    this.rowPinnedPosition = function () {
+      return rowPinned || ''
     }
 
     // 获取并返回当前网格内的所有过滤后的前端视图数据
@@ -340,9 +355,6 @@ export function AgGridUtils (api) {
       if (!isNaN(index)) {
         const allColumns = columnApi.getAllColumns()
         const column = allColumns[index]
-        console.log('allColumns===============', allColumns)
-
-        console.log('column===============', column)
         if (column) {
           gridApi.ensureColumnVisible(column)
         }
@@ -471,27 +483,28 @@ export function AgGridUtils (api) {
      * 参考属性文档：https://www.ag-grid.com/javascript-data-grid/csv-export/#csvexportparams
      * 导出csv文件，
      * 优点：能够导出视图上的渲染列头，包含设定好的列头
-     * 缺点：存在一个问题，就是时间数据容易乱码，未测试其它数据
+     * 缺点：存在一个问题，就是时间数据容易乱码【需要用户手动调整】，未测试其它数据
      *
      * @return {*}
      */
     this.exportDataAsCsv = function (config = '导出数据') {
       console.log('导出所有数据')
 
-      // const defaultConfig = {
-      //   columnSeparator: ',', // 列分隔符
-      //   allColumns: false, // 如果为true，则所有列都将按照它们在columnDefs中的显示顺序导出。
-      //   fileName: 'excel.csv', // 导出 .csv文件的文件名
-      //   onlySelected: true, // true表示仅仅导出选中的行数据
-      //   onlySelectedAllPages: false, // 导出选中的行数据，并包含其它页的数据
-      //   skipPinnedBottom: false, // 跳过固定在底部的数据
-      //   skipPinnedTop: false // 跳过固定在顶部的数据
-      // }
+      const defaultConfig = {
+        columnSeparator: ',', // 列分隔符
+        allColumns: true, // 如果为true，则所有列都将按照它们在columnDefs中的显示顺序导出。
+        fileName: 'excel.csv', // 导出 .csv文件的文件名
+        onlySelected: false, // true表示仅仅导出选中的行数据
+        onlySelectedAllPages: false, // 导出选中的行数据，并包含其它页的数据
+        skipPinnedBottom: false, // 跳过固定在底部的数据
+        skipPinnedTop: false // 跳过固定在顶部的数据
+      }
 
       // eslint-disable-next-line prefer-const
       let exportParams = {
         columnGroups: true,
-        fileName: 'excel.csv'
+        fileName: 'excel.csv',
+        ...defaultConfig
       }
       if (typeof config === 'string') {
         exportParams.fileName = `${config}`
@@ -502,6 +515,15 @@ export function AgGridUtils (api) {
       }
 
       gridApi.exportDataAsCsv(exportParams)
+    }
+
+    /**
+     * @description: 【企业版的才可使用】，当前免费版的不行
+     * @return {*}
+     */
+    this.exportDataAsExcel = function () {
+      console.log('导出excel')
+      gridApi.exportDataAsExcel(null)
     }
 
     /**

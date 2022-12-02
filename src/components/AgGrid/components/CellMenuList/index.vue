@@ -89,7 +89,7 @@ export default {
     dealMenuListData () {
       console.log('this.menuListData', this.menuListData)
       const agTable = new AgGridUtils(this.menuListData)
-
+      this.agTable = agTable
       this.tableDataTotal = {
         // 传递属性
         tableRowDataLength: agTable.getRootGridData.length,
@@ -98,9 +98,10 @@ export default {
         columnDefsLength: agTable.columnDefsLength,
         colPosition: agTable.colPosition(),
         rowPosition: agTable.rowPosition(),
+        colPinnedPosition: agTable.colPinnedPosition(),
+        rowPinnedPosition: agTable.rowPinnedPosition(),
 
         selectedRowData: agTable.selectedRowData,
-
         // 传递方法
         jumpToRow: agTable.jumpToRow,
         jumpToCol: agTable.jumpToCol
@@ -120,6 +121,9 @@ export default {
     },
     close () {
       this.OPEN_CELL_MENU_LIST(false)
+      // this.agTable.exportDataAsCsv({
+      //   fileName: '数据'
+      // })
     }
   }
 }

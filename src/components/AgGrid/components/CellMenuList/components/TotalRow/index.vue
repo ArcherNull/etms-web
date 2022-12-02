@@ -69,46 +69,85 @@ export default {
     dealTableTotalLeftList (val) {
       const keys = Object.keys(val)
       if (keys?.length) {
-        const titleObj = {
-          tableRowDataLength: {
-            title: '后端返回的总数据',
-            color: '#FF8F8F'
-          },
-          filterRowDataLength: {
-            title: '表格网格中筛选过后的数据',
-            color: '#E6A23C'
-          },
-          selectedRowDataLength: {
-            title: '表格网格中选中过后的数据',
-            color: '#3898FF'
-          },
-          columnDefsLength: {
-            title: '列数据最大长度',
-            color: '#7CCDF0'
-          },
-          rowPosition: {
-            title: '当前单元格所处行位置',
-            color: '#DA91F4'
-          },
-          colPosition: {
-            title: '当前单元格所处列位置',
-            color: '#78E6D8'
-          }
-        }
-        const displayKeys = Object.keys(titleObj)
-        const arr = displayKeys.map((ele) => {
-          const itemObj = titleObj[ele]
-          return {
-            title: itemObj.title || 'X',
-            color: itemObj.color || '#333',
-            field: ele,
-            content: val[ele]
-          }
-        })
-        return arr
+        const LeftNumArr = this.dealTableTotalLeftNum(val)
+        const LeftPinnedArr = this.dealTableTotalLeftPinned(val)
+        return [...LeftNumArr, ...LeftPinnedArr]
       } else {
         return []
       }
+    },
+    // 数字定位数据
+    dealTableTotalLeftNum (val) {
+      const titleObj = {
+        tableRowDataLength: {
+          title: '后端返回的总数据',
+          color: '#FF8F8F'
+        },
+        filterRowDataLength: {
+          title: '表格网格中筛选过后的数据',
+          color: '#E6A23C'
+        },
+        selectedRowDataLength: {
+          title: '表格网格中选中过后的数据',
+          color: '#3898FF'
+        },
+        columnDefsLength: {
+          title: '列数据最大长度',
+          color: '#7CCDF0'
+        },
+        rowPosition: {
+          title: '当前单元格所处行位置',
+          color: '#DA91F4'
+        },
+        colPosition: {
+          title: '当前单元格所处列位置',
+          color: '#78E6D8'
+        }
+      }
+      const displayKeys = Object.keys(titleObj)
+      const arr = displayKeys.map((ele) => {
+        const itemObj = titleObj[ele]
+        return {
+          title: itemObj.title || 'X',
+          color: itemObj.color || '#333',
+          field: ele,
+          content: val[ele]
+        }
+      })
+      return arr
+    },
+    // 单元格固定状态
+    dealTableTotalLeftPinned (val) {
+      const titleObj = {
+        colPinnedPosition: {
+          title: '列固定位置,L【left】:固定于左侧; R【right】:固定于右侧; N【normal】:表示正常',
+          color: '#FF8F8F'
+        },
+        rowPinnedPosition: {
+          title: '行固定位置,T【top】:固定于顶部; B【bottom】:固定于底部; N【normal】:表示正常',
+          color: '#E6A23C'
+        }
+      }
+      const displayKeys = Object.keys(titleObj)
+      const arr = displayKeys.map((ele) => {
+        const itemObj = titleObj[ele]
+        const getContent = (val) => {
+          if (val) {
+            return val?.slice(0, 1)?.toUpperCase()
+          } else {
+            return 'N'
+          }
+        }
+
+        console.log('val[ele]', val[ele])
+        return {
+          title: itemObj.title || 'X',
+          color: itemObj.color || '#333',
+          field: ele,
+          content: getContent(val[ele])
+        }
+      })
+      return arr
     },
     // 右侧
     dealTableTotalRightList (val) {
@@ -156,6 +195,8 @@ export default {
       const { selectedRowData, selectedRowDataLength, jumpToRow } = this.tableDataTotal
       if (this.jumpSelectedRows.length) {
         const shiftData = this.jumpSelectedRows.shift()
+
+        console.log('this.jumpSelectedRows', this.jumpSelectedRows)
         console.log('选中行跳转位置=====>', shiftData.numericalOrder)
         this.$message.info(`选中行跳转表新的行位置【${shiftData.numericalOrder}】`)
         jumpToRow(shiftData.numericalOrder - 1)
@@ -164,6 +205,8 @@ export default {
           console.log('selectedRowData=====>', selectedRowData)
           this.jumpSelectedRows = cloneDeep(selectedRowData)
           this.jumpSelectedRowData()
+        } else {
+          this.$message.warning(`未选中行数据`)
         }
       }
     },
