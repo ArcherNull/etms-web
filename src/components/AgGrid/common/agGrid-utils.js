@@ -550,7 +550,30 @@ export function AgGridUtils (api) {
       }
     }
 
-    this.tableDataTotal = function () {}
+    /**
+     * @description: 设置过滤,当设置为null时，清空所有过滤条件
+     * @param {*} model
+     * @return {*}
+     */
+    this.setFilterModel = function (model = null) {
+      gridApi.setFilterModel(model)
+    }
+
+    /**
+     * @description: 重置过滤【未生效】
+     * @return {*}
+     */
+    this.resetFilters = function () {
+      gridApi.resetFilters()
+    }
+
+    /**
+     * @description: 清除过滤【未生效】
+     * @return {*}
+     */
+    this.destroyFilter = function () {
+      gridApi.destroyFilter()
+    }
   } else {
     alert('ag-grid表格工具实例创建失败！')
   }

@@ -104,7 +104,8 @@ export default {
         selectedRowData: agTable.selectedRowData,
         // 传递方法
         jumpToRow: agTable.jumpToRow,
-        jumpToCol: agTable.jumpToCol
+        jumpToCol: agTable.jumpToCol,
+        setFilterModel: agTable.setFilterModel
       }
 
       console.log('this.tableDataTotal=====>', this.tableDataTotal)

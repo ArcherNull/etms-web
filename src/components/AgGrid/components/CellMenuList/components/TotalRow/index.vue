@@ -14,7 +14,7 @@
       />
     </div>
     <div class="TotalRow-right">
-      <LabelBox v-for="(item,index) in tableTotalRightList" :key="index" v-bind="item" />
+      <LabelBox v-for="(item,index) in tableTotalRightList" :key="index" :label-item="item" />
     </div>
   </div>
 </template>
@@ -181,6 +181,9 @@ export default {
     clickFun (item) {
       console.log('点击事件', item)
       switch (item.field) {
+        case 'filterRowDataLength':
+          this.setFilterRowData()
+          break
         case 'selectedRowDataLength':
           this.jumpSelectedRowData()
           break
@@ -249,6 +252,11 @@ export default {
           jumpFun(colPosition)
         }
       }
+    },
+    // 重置筛选
+    setFilterRowData () {
+      console.log('重置筛选')
+      this.tableDataTotal.setFilterModel(null)
     }
   }
 }
