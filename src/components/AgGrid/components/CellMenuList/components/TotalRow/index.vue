@@ -6,15 +6,21 @@
 <template>
   <div class="TotalRow">
     <div class="TotalRow-left">
-      <LabelBox v-for="(item,index) in tableTotalList" :key="index" v-bind="item" />
+      <LabelBox
+        v-for="(item,index) in tableTotalLeftList"
+        :key="index"
+        :label-item="item"
+        @clickFun="clickFun"
+      />
     </div>
     <div class="TotalRow-right">
-      <LabelBox />
+      <LabelBox v-for="(item,index) in tableTotalRightList" :key="index" v-bind="item" />
     </div>
   </div>
 </template>
 
 <script>
+import { isArray, isEmpty, cloneDeep } from 'lodash'
 export default {
   name: 'TotalRow',
   components: {
@@ -30,14 +36,18 @@ export default {
   },
   data () {
     return {
-      tableTotalList: []
+      tableTotalLeftList: [],
+      tableTotalRightList: [],
+      jumpSelectedRows: [], // 用于跳转行数据位置
+      jumpToColumnsArr: [], // 用于跳转列数据位置
+      jumpColIntervalPo: -1 // 记录已经跳转的位置
     }
   },
   watch: {
     tableDataTotal: {
       handler (newVal) {
         if (newVal) {
-          this.tableTotalList = this.dealTableTotalList(newVal)
+          this.initTableTotal(newVal)
         }
       },
       immediate: true,
@@ -45,24 +55,77 @@ export default {
     }
   },
   methods: {
-    dealTableTotalList (val) {
+    initTableTotal (newVal) {
+      this.initData()
+      this.tableTotalLeftList = this.dealTableTotalLeftList(newVal)
+      this.tableTotalRightList = []
+    },
+    initData () {
+      this.jumpSelectedRows = []
+      this.jumpToColumnsArr = []
+      this.jumpColIntervalPo = -1
+    },
+    // 左侧
+    dealTableTotalLeftList (val) {
       const keys = Object.keys(val)
       if (keys?.length) {
         const titleObj = {
-          tableRowData: {
-            title: '总',
+          tableRowDataLength: {
+            title: '后端返回的总数据',
             color: '#FF8F8F'
           },
-          filterRowData: {
-            title: '筛',
+          filterRowDataLength: {
+            title: '表格网格中筛选过后的数据',
             color: '#E6A23C'
           },
-          selectRowData: {
-            title: '选',
+          selectedRowDataLength: {
+            title: '表格网格中选中过后的数据',
             color: '#3898FF'
+          },
+          columnDefsLength: {
+            title: '列数据最大长度',
+            color: '#7CCDF0'
+          },
+          rowPosition: {
+            title: '当前单元格所处行位置',
+            color: '#DA91F4'
+          },
+          colPosition: {
+            title: '当前单元格所处列位置',
+            color: '#78E6D8'
           }
         }
-        const arr = keys.map((ele) => {
+        const displayKeys = Object.keys(titleObj)
+        const arr = displayKeys.map((ele) => {
+          const itemObj = titleObj[ele]
+          return {
+            title: itemObj.title || 'X',
+            color: itemObj.color || '#333',
+            field: ele,
+            content: val[ele]
+          }
+        })
+        return arr
+      } else {
+        return []
+      }
+    },
+    // 右侧
+    dealTableTotalRightList (val) {
+      const keys = Object.keys(val)
+      if (keys?.length) {
+        const titleObj = {
+          rowPosition: {
+            title: '行',
+            color: '#FF8F8F'
+          },
+          colPosition: {
+            title: '列',
+            color: '#E6A23C'
+          }
+        }
+        const displayKeys = Object.keys(titleObj)
+        const arr = displayKeys.map((ele) => {
           const itemObj = titleObj[ele]
           return {
             title: itemObj.title || 'X',
@@ -73,6 +136,75 @@ export default {
         return arr
       } else {
         return []
+      }
+    },
+    // 点击事件
+    clickFun (item) {
+      console.log('点击事件', item)
+      switch (item.field) {
+        case 'selectedRowDataLength':
+          this.jumpSelectedRowData()
+          break
+        case 'columnDefsLength':
+          this.jumpToColumns()
+          break
+      }
+    },
+    // 选中行跳转
+    jumpSelectedRowData () {
+      console.log('选中行跳转')
+      const { selectedRowData, selectedRowDataLength, jumpToRow } = this.tableDataTotal
+      if (this.jumpSelectedRows.length) {
+        const shiftData = this.jumpSelectedRows.shift()
+        console.log('选中行跳转位置=====>', shiftData.numericalOrder)
+        this.$message.info(`选中行跳转表新的行位置【${shiftData.numericalOrder}】`)
+        jumpToRow(shiftData.numericalOrder - 1)
+      } else {
+        if (selectedRowDataLength !== 0 && isArray(selectedRowData) && !isEmpty(selectedRowData)) {
+          console.log('selectedRowData=====>', selectedRowData)
+          this.jumpSelectedRows = cloneDeep(selectedRowData)
+          this.jumpSelectedRowData()
+        }
+      }
+    },
+    // 选中列跳转 ，跟据当前单元格列向后为间隔4的跳转,也就是以4为等分划分
+    jumpToColumns () {
+      console.log('选中行跳转')
+      const { columnDefsLength, colPosition, jumpToCol } = this.tableDataTotal
+      const jumpFun = (num) => {
+        const findIndex = this.jumpToColumnsArr.findIndex(item => item > num)
+        const jumpNum = this.jumpToColumnsArr[findIndex]
+
+        console.log('jumpNum=====>', jumpNum)
+        this.$message.info(`选中列跳转表新的列位置【${jumpNum}】`)
+
+        if (findIndex === this.jumpToColumnsArr.length - 1) {
+          this.jumpColIntervalPo = -1
+        } else {
+          this.jumpColIntervalPo = findIndex
+        }
+        jumpToCol(jumpNum)
+      }
+      if (this.jumpToColumnsArr.length) {
+        const ind = this.jumpColIntervalPo === -1 ? 0 : this.jumpColIntervalPo
+        jumpFun(this.jumpToColumnsArr[ind] + 1)
+      } else {
+        const interval = 4
+        // 列长度要比间隔大
+        if (columnDefsLength > interval) {
+          const intervalLev = Math.floor(columnDefsLength / interval)
+
+          // 加上头部0， 尾部columnDefsLength
+          const jumpToColumnsArr = []
+          for (let i = 0; i <= intervalLev; i++) {
+            jumpToColumnsArr.push(interval * i)
+          }
+          if (columnDefsLength[intervalLev] < columnDefsLength) {
+            jumpToColumnsArr.push(columnDefsLength)
+          }
+          this.jumpToColumnsArr = jumpToColumnsArr
+          jumpFun(colPosition)
+        }
       }
     }
   }
@@ -86,7 +218,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  &-left {
+  &-left,
+  &-right {
     display: flex;
     align-items: center;
     justify-content: flex-start;

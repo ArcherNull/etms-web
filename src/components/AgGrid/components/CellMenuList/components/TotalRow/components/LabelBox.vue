@@ -4,9 +4,8 @@
  * @Description:
 -->
 <template>
-  <span class="LabelBox" :style="{ 'color':color }">
-    <span class="LabelBox-title">{{ title }}</span>
-    <span class="LabelBox-content">{{ content || 0 }}</span>
+  <span class="LabelBox" :title="labelItem.title" :style="{ 'color': labelItem.color }" @click="clickFun(labelItem)">
+    <span class="LabelBox-content">{{ labelItem.content || 0 }}</span>
   </span>
 </template>
 
@@ -14,17 +13,18 @@
 export default {
   name: 'LabelBox',
   props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    content: {
-      type: [String, Number],
-      default: ''
-    },
-    color: {
-      type: String,
-      default: '#333'
+    labelItem: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
+  methods: {
+    // 点击事件
+    clickFun (item) {
+      console.log('点击事件', item)
+      this.$emit('clickFun', item)
     }
   }
 }
@@ -34,9 +34,17 @@ export default {
 .LabelBox {
   font-size: 13px;
   display: flex;
-  margin-right: 4px;
+  &::after{
+    content: '/';
+    color: #333 !important;
+    margin: 0 2px;
+  }
   &-content{
     font-weight: bold;
+    cursor: pointer;
+    &:hover{
+      background-color: rgba(0,0,0,0.15);
+    }
   }
 }
 </style>

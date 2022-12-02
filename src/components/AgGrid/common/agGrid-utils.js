@@ -16,19 +16,19 @@ import { showMessage } from '@/serve/httpCommon'
  * 格式为：
  *       [
           {
-            headName: '订单状态',
+            headerName: '订单状态',
             cellRender: cellRender // 特殊自定义dom字符串
           },
           {
-            headName: '是否回单',
+            headerName: '是否回单',
             cellRender: params => (Number(params.value) === 0 ? '否' : '是') // 简单的状态判断，将0改为否，将1改为是
           },
           {
-            headName: '订单时间',
+            headerName: '订单时间',
             filter: 'agDateColumnFilter' // 将时间的filter更改为时间筛选框，跟文本筛选框区分开
           },
           {
-            headName: '订单时间',
+            headerName: '订单时间',
               colSpan: function (params) {
                const country = params.data.country;
                 if (country === 'Russia') {
@@ -49,7 +49,7 @@ import { showMessage } from '@/serve/httpCommon'
  */
 export function batchProcessHeader (header = [], cellStyleArr = []) {
   return header.map((ele) => {
-    const { headName } = ele
+    const { headerName } = ele
     // 动态计算width
     const getStrLen = (str = '') => {
       const len = str.length
@@ -60,13 +60,13 @@ export function batchProcessHeader (header = [], cellStyleArr = []) {
     let extraAttribute = {}
 
     cellStyleArr.forEach((el) => {
-      if (el.headName === headName) {
+      if (el.headerName === headerName) {
         extraAttribute = { ...el }
       }
     })
     return {
       hide: false,
-      width: getStrLen(headName),
+      width: getStrLen(headerName),
       // 继承ele设置的其他属性
       ...ele,
       ...extraAttribute
@@ -155,7 +155,7 @@ export function AgGridUtils (api) {
   const that = this
   console.log('api=====>', api)
   // gridApi 网格aoi , columnApi 列api
-  const { api: gridApi, columnApi } = api
+  const { api: gridApi, columnApi, colDef } = api
 
   if (gridApi && columnApi) {
     /* ************************ 网格API操作 ****************************  */
@@ -174,6 +174,29 @@ export function AgGridUtils (api) {
     this.columnDefs = columnApi.columnModel.columnDefs
     // 列数据最大长度
     this.columnDefsLength = this.columnDefs.length
+
+    // 行位置
+    this.rowPosition = function () {
+      const rowIndex = api?.rowIndex
+      return rowIndex ? rowIndex + 1 : 0
+    }
+
+    // 列位置
+    this.colPosition = function () {
+      if (colDef) {
+        const { field, headerName } = colDef
+        if (field && headerName && this.columnDefs?.length) {
+          const findIndex = this.columnDefs.findIndex(
+            (ele) => ele.field === field && ele.headerName === headerName
+          )
+          return findIndex ? findIndex + 1 : 0
+        } else {
+          return 0
+        }
+      } else {
+        return 0
+      }
+    }
 
     // 获取并返回当前网格内的所有过滤后的前端视图数据
     this.getCurrentGridData = function () {
@@ -505,9 +528,7 @@ export function AgGridUtils (api) {
       }
     }
 
-    this.tableDataTotal = function () {
-
-    }
+    this.tableDataTotal = function () {}
   } else {
     alert('ag-grid表格工具实例创建失败！')
   }
@@ -823,12 +844,16 @@ export class InitColumnDefs {
           }
 
           console.log('this.FIRST_COLUMN', this.FIRST_COLUMN)
-          this.SHOW_FIRST_COLUMN && showFirstColumn && colDefs.unshift(this.FIRST_COLUMN)
+          this.SHOW_FIRST_COLUMN &&
+            showFirstColumn &&
+            colDefs.unshift(this.FIRST_COLUMN)
 
           console.log('colDefs=====>', colDefs)
           return colDefs
         } else {
-          this.SHOW_FIRST_COLUMN && showFirstColumn && columnDefs.unshift(this.FIRST_COLUMN)
+          this.SHOW_FIRST_COLUMN &&
+            showFirstColumn &&
+            columnDefs.unshift(this.FIRST_COLUMN)
           return columnDefs
         }
       }

@@ -5,16 +5,8 @@
 -->
 <template>
   <div v-if="visible">
-    <div
-      :style="{ left: left + 'px', top: top + 'px' }"
-      class="CellMenuList borderRed"
-      @click.stop=""
-    >
-      <el-tabs
-        v-model="activeName"
-        class="CellMenuList-tabs"
-        @tab-click="handleClick"
-      >
+    <div :style="{ left: left + 'px', top: top + 'px' }" class="CellMenuList borderRed" @click.stop>
+      <el-tabs v-model="activeName" class="CellMenuList-tabs" @tab-click="handleClick">
         <el-tab-pane label="字段" name="fields">
           <FieldsSet />
         </el-tab-pane>
@@ -74,7 +66,12 @@ export default {
     }
   },
   computed: {
-    ...mapState('agGrid/cellContextMenu', ['menuListData', 'left', 'top', 'openDialogCount'])
+    ...mapState('agGrid/cellContextMenu', [
+      'menuListData',
+      'left',
+      'top',
+      'openDialogCount'
+    ])
   },
   watch: {
     visible (value) {
@@ -94,9 +91,19 @@ export default {
       const agTable = new AgGridUtils(this.menuListData)
 
       this.tableDataTotal = {
-        tableRowData: agTable.getRootGridData.length,
-        filterRowData: agTable.getCurrentGridNode.length,
-        selectRowData: agTable.selectedRowData.length
+        // 传递属性
+        tableRowDataLength: agTable.getRootGridData.length,
+        filterRowDataLength: agTable.getCurrentGridNode.length,
+        selectedRowDataLength: agTable.selectedRowData.length,
+        columnDefsLength: agTable.columnDefsLength,
+        colPosition: agTable.colPosition(),
+        rowPosition: agTable.rowPosition(),
+
+        selectedRowData: agTable.selectedRowData,
+
+        // 传递方法
+        jumpToRow: agTable.jumpToRow,
+        jumpToCol: agTable.jumpToCol
       }
 
       console.log('this.tableDataTotal=====>', this.tableDataTotal)
@@ -119,8 +126,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$menu-height:40vh;
-$menu-width:30vw;
+$menu-height: 40vh;
+$menu-width: 30vw;
 
 .CellMenuList {
   background-color: #fff;
@@ -138,10 +145,10 @@ $menu-width:30vw;
     min-width: 400px;
     height: $menu-height;
     overflow: hidden;
-    ::v-deep .el-tabs__header{
+    ::v-deep .el-tabs__header {
       margin-bottom: 0px;
     }
-    ::v-deep .el-tab-pane{
+    ::v-deep .el-tab-pane {
       height: calc($menu-height - 50px);
       overflow: auto;
     }
@@ -151,14 +158,14 @@ $menu-width:30vw;
       justify-content: center;
     }
   }
-  &-mask{
+  &-mask {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
   }
-  &-bottom{
+  &-bottom {
     position: absolute;
     bottom: 0;
     right: 0;
