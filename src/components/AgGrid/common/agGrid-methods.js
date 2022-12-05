@@ -258,9 +258,16 @@ export const agGridMethods = {
    */
   paginationChanged (event) {
     console.log('执行=====>agGrid事件paginationChanged', event)
-    const bool = store.state.agGrid.cellContextMenu.showCalcBottomRow
-    console.log('bool=====>', bool)
-    bool && paginationChanged(event)
+    const {
+      showCalcBottomRow,
+      filterEventClearSelected
+    } = store.state.agGrid.cellContextMenu
+
+    // 数据变动时，清空选项
+    filterEventClearSelected && event.api.deselectAll()
+
+    // 置顶合计行，不进行计算
+    showCalcBottomRow && paginationChanged(event)
   },
 
   /**

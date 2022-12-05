@@ -154,6 +154,12 @@ export function setColumnDefs (
 export function AgGridUtils (api) {
   const that = this
   console.log('api=====>', api)
+
+  // Store
+  const {
+    showCalcBottomRow
+  } = store.state.agGrid.cellContextMenu
+
   // gridApi 网格aoi , columnApi 列api
   const { api: gridApi, columnApi, colDef, rowPinned } = api
 
@@ -335,7 +341,7 @@ export function AgGridUtils (api) {
       gridApi.selectAll()
     }
 
-    // 反选
+    // 不选中
     this.deselectAll = function () {
       gridApi.deselectAll()
     }
@@ -346,33 +352,72 @@ export function AgGridUtils (api) {
     }
 
     /**
+     * @description: 获取所有列数据
+     * @return {*}
+     */
+    this.getAllColumns = function () {
+      return columnApi.getAllColumns()
+    }
+
+    /**
      * @description:  跳转到对应的列
      * @param {Number} number 对应的行位置
      * @return {*}
      */
     this.jumpToCol = function (number) {
+      console.log('跳转到对应的列', index)
       const index = Number(number)
-      if (!isNaN(index)) {
-        const allColumns = columnApi.getAllColumns()
-        const column = allColumns[index]
-        if (column) {
-          gridApi.ensureColumnVisible(column)
-        }
+      const allColumns = columnApi.getAllColumns()
+      let jumpIndex = 1
+      if (isNaN(index)) {
+        showMessage('跳转列,接收的参数应为数字')
+        jumpIndex = 1
       } else {
-        return
+        const allColumnsLength = allColumns.length
+        if (index > 0) {
+          if (index <= allColumnsLength) {
+            jumpIndex = index
+          } else {
+            jumpIndex = allColumnsLength
+          }
+        } else {
+          jumpIndex = 1
+          showMessage('跳转列,传递的数字序号应大于0')
+        }
       }
+      const column = allColumns?.[jumpIndex - 1]
+      if (column) {
+        gridApi.ensureColumnVisible(column)
+      } else {
+        showMessage('跳转列,未能够获取到跳转列')
+      }
+      return jumpIndex
     }
 
     // 跳转到对应的行
     this.jumpToRow = function (number) {
       const index = Number(number)
+      let jumpIndex = 1
       if (isNaN(index)) {
-        return
+        showMessage('跳转行,接收的参数应为数字')
+        jumpIndex = 1
       } else {
-        if (typeof index === 'number' && !isNaN(index)) {
-          gridApi.ensureIndexVisible(index)
+        if (index > 0) {
+          const tableRowData = gridApi?.getModel()?.rootNode?.allLeafChildren
+          const tableRowDataLength = tableRowData.length
+          if (index <= tableRowDataLength) {
+            jumpIndex = index
+          } else {
+            jumpIndex = tableRowDataLength
+            showMessage(`跳转行，超出最大行数${tableRowDataLength}`)
+          }
+        } else {
+          jumpIndex = 1
+          showMessage('跳转行,传递的数字序号应大于0')
         }
       }
+      gridApi.ensureIndexVisible(jumpIndex - 1)
+      return jumpIndex
     }
 
     /**
@@ -574,16 +619,31 @@ export function AgGridUtils (api) {
     this.destroyFilter = function () {
       gridApi.destroyFilter()
     }
+
+    /**
+     * @description: 全局的数据过滤
+     * @param {*} value
+     * @return {*}
+     */
+    this.setQuickFilter = function (value) {
+      gridApi.setQuickFilter(value)
+    }
+
+    /**
+     * @description: 设置高度自适应，数据有多少，高度就有多高
+     * @param {*} layout
+     * @return {*}
+     */
+    this.setDomLayout = function (layout = 'autoHeight') {
+      gridApi.setDomLayout(layout)
+    }
   } else {
     alert('ag-grid表格工具实例创建失败！')
   }
 
   setTimeout(() => {
     console.group('agGrid实例创建完成之后执行')
-    console.log('1、agGrid实例创建完成之后执行=====>添加后台数据合计行')
-    const getCurrentGridData = this.getCurrentGridDataAndNumericalOrder()
-    refreshTotalToList(getCurrentGridData, gridApi)
-
+    showCalcBottomRow && addBottomCalcRow(gridApi)
     console.groupEnd()
   })
 }
@@ -591,6 +651,12 @@ export function AgGridUtils (api) {
 AgGridUtils.prototype.calculateTotalLine = calculateTotalLine
 AgGridUtils.prototype.refreshTotalToList = refreshTotalToList
 AgGridUtils.prototype.refreshTotal = refreshTotal
+
+export function addBottomCalcRow (gridApi) {
+  console.log('1、agGrid实例创建完成之后执行=====>添加后台数据合计行')
+  const getCurrentGridData = getCurrentGridDataAndNumericalOrder()
+  refreshTotalToList(getCurrentGridData, gridApi)
+}
 
 /**
  * @description: 获取当前网格数据，并添加序列列 NumericalOrder

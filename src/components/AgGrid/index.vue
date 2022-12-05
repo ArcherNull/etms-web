@@ -3,6 +3,7 @@
  * @Date: 2022-02-21 16:55:22
  * @Description: ag-grid表格二次封装
  * 从真正意义上精简用户操作和开发者开发1
+ * 参考官方demo : https://gitee.com/ku-light/ag-grid-vue-example
 -->
 <template>
   <div class="AgGrid">
@@ -241,6 +242,8 @@ export default {
       const agTableConfig = {
         theme: 'alpine',
         gridOptions: {
+          // domLayout: 'autoHeight', // 【重要】自适应高度，是根据数据的高度而增加，在特定的场景下可通过 this.gridApi.setDomLayout("autoHeight")调用
+          // context: { componentParent: this }, // 通过这个属性建立了上下文引用 ， 参考文档：https://blog.csdn.net/z19960925/article/details/113769217
           defaultColDef: {
             headerComponentParams: {
               menuIcon: 'fa-bars'

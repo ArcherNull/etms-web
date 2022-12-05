@@ -20,7 +20,7 @@
           <AgChart />
         </el-tab-pane>
         <el-tab-pane label="配置" name="config">
-          <ConfigSet :ag-table="agTable" />
+          <ConfigSet :table-data-total="tableDataTotal" />
         </el-tab-pane>
       </el-tabs>
 
@@ -37,6 +37,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { AgGridUtils } from '@/components/AgGrid/common/agGrid-utils'
+// import agGrid from '../../../../store/modules/agGrid'
 
 export default {
   name: 'CellMenuList',
@@ -58,11 +59,7 @@ export default {
     return {
       activeName: 'fields',
       agTable: null,
-      tableDataTotal: {
-        tableRowData: 0,
-        filterRowData: 0,
-        selectRowData: 0
-      }
+      tableDataTotal: {}
     }
   },
   computed: {
@@ -90,7 +87,15 @@ export default {
       console.log('this.menuListData', this.menuListData)
       const agTable = new AgGridUtils(this.menuListData)
       this.agTable = agTable
+
+      this.getTableDataTotal(agTable)
+    },
+    // 获取tableDataTotal
+    getTableDataTotal (agTable) {
+      const { value } = this.menuListData
       this.tableDataTotal = {
+        // 当前单元格的值
+        value,
         // 传递属性
         tableRowDataLength: agTable.getRootGridData.length,
         filterRowDataLength: agTable.getCurrentGridNode.length,
@@ -105,11 +110,20 @@ export default {
         // 传递方法
         jumpToRow: agTable.jumpToRow,
         jumpToCol: agTable.jumpToCol,
-        setFilterModel: agTable.setFilterModel
-      }
+        setFilterModel: agTable.setFilterModel,
+        setQuickFilter: agTable.setQuickFilter,
+        setDomLayout: agTable.setDomLayout,
+        pinnedColumns: agTable.pinnedColumns,
+        clearAllColumnsPinned: agTable.clearAllColumnsPinned,
+        deselectAll: agTable.deselectAll,
+        selectAll: agTable.selectAll,
+        setPinnedTopRowData: agTable.setPinnedTopRowData,
+        setPinnedBottomRowData: agTable.setPinnedBottomRowData
 
+      }
       console.log('this.tableDataTotal=====>', this.tableDataTotal)
     },
+
     handleClick (ele) {
       console.log('handleClick', ele)
     },

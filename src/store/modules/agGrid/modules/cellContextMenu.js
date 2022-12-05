@@ -14,12 +14,14 @@ const state = {
   openDialogCount: 0, // 菜单栏中打开弹窗的次数
 
   showFirstColumn: true, // 显示和隐藏底展示序号列
-  showCalcBottomRow: true, // 显示和隐藏底部合计行
+  showCalcBottomRow: false, // 显示和隐藏底部合计行
 
   openCloEllipsis: false, // 列省略展开
   pageSize: 100, // 每页条数
   maxSelectedRows: 200, // 最大选择行数据条数
-  maxExportRows: 200 // 最大导入行数据条数
+  maxExportRows: 200, // 最大导入行数据条数
+
+  filterEventClearSelected: true // 筛选事件清空被选项
 
 }
 
@@ -71,6 +73,10 @@ const mutations = {
   // 最大导入行数据条数
   SET_MAX_EXPORT_ROWS: (state, maxExportRows) => {
     state.maxExportRows = maxExportRows
+  },
+  // 最大导入行数据条数
+  SET_FILTER_EVENT_CLEAR_SELECTED: (state, bool) => {
+    state.filterEventClearSelected = bool
   }
 }
 

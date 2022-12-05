@@ -32,6 +32,9 @@ export const defaultColDef = {
   // 【未知其作用】
   menuTabs: ['filterMenuTab', 'columnsMenuTab', 'generalMenuTab'] // 有效值为：'filterMenuTab'，'generalMenuTab'和'columnsMenuTab' TODO filterMenuTab无效
 
+  // tooltipComponent: "renderTooltip", //声明使用的组件
+  // tooltipValueGetter: tooltipValueGetter //声明tooltip中使用的字段
+
   // enableRowGroup: true, // 打开列集合
   // enablePivot: true, // 打开枢轴控件
   // enableValue: true,
