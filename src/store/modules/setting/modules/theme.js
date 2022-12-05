@@ -12,7 +12,7 @@ export default {
   state: {
     // 颜色
     value: process.env.VUE_APP_ELEMENT_COLOR,
-    // 主题  默认主题default-theme ; 暗黑主题 black-theme ； 炫红主题 red-theme
+    // 主题  默认主题default-theme ; 暗黑主题 black-theme ； 炫红主题 red-theme ; 灰度模式 gray-theme
     theme: 'default-theme'
   },
   actions: {
