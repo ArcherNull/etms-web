@@ -5,7 +5,7 @@
  */
 export const meta = {
   auth: true,
-  cache: true,
+  cache: false,
   hidden: false,
   icon: 'el-icon-s-marketing'
 }

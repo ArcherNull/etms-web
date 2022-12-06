@@ -155,11 +155,6 @@ export function AgGridUtils (api) {
   const that = this
   console.log('api=====>', api)
 
-  // Store
-  const {
-    showCalcBottomRow
-  } = store.state.agGrid.cellContextMenu
-
   // gridApi 网格aoi , columnApi 列api
   const { api: gridApi, columnApi, colDef, rowPinned } = api
 
@@ -259,8 +254,7 @@ export function AgGridUtils (api) {
     this.getSelectedRows = function () {
       const selectedRowData = gridApi.getSelectedRows()
       console.log('选中的行数据selectedRowData=====>', selectedRowData)
-      const maxSelectedRows = store.state.agGrid.cellContextMenu.maxSelectedRows
-
+      const { maxSelectedRows } = store.state.agGrid.cellContextMenu
       if (that.checkRowsType(selectedRowData)) {
         if (selectedRowData.length <= maxSelectedRows) {
           return selectedRowData
@@ -643,7 +637,7 @@ export function AgGridUtils (api) {
 
   setTimeout(() => {
     console.group('agGrid实例创建完成之后执行')
-    showCalcBottomRow && addBottomCalcRow(gridApi)
+    addBottomCalcRow(gridApi)
     console.groupEnd()
   })
 }
@@ -756,21 +750,31 @@ function calculateTotalLine (list) {
 // 用于刷新合计行的定时器
 let refreshTotalToListTimer = null
 export function refreshTotalToList (list = [], gridApi) {
-  if (isArray(list) && !isEmpty(list)) {
-    const setTime = () => {
-      if (!refreshTotalToListTimer) {
-        refreshTotalToListTimer = setTimeout(() => {
-          refreshTotalToListTimer = null
-          console.log('用于刷新合计行的事件=====>实际执行')
-          const totalParams = calculateTotalLine(list)
-          gridApi.setPinnedBottomRowData(totalParams)
-          gridApi.refreshCells({ force: true })
-        }, 150)
-      } else {
-        console.error('刷新合计行正在执行,中断多余执行=====>')
+  const { showFirstColumn, showCalcBottomRow } = store.state.agGrid.cellContextMenu
+
+  if (showFirstColumn || showCalcBottomRow) {
+    if (isArray(list) && !isEmpty(list)) {
+      const setTime = () => {
+        if (!refreshTotalToListTimer) {
+          refreshTotalToListTimer = setTimeout(() => {
+            refreshTotalToListTimer = null
+            if (showCalcBottomRow) {
+              console.log('用于刷新合计行的事件=====>实际执行')
+              const totalParams = calculateTotalLine(list)
+              gridApi.setPinnedBottomRowData(totalParams)
+            }
+            console.log('用于刷新合计行的事件=====>123')
+
+            gridApi.refreshCells({ force: true })
+          }, 150)
+        } else {
+          console.error('刷新合计行正在执行,中断多余执行=====>')
+        }
       }
+      setTime()
     }
-    setTime()
+  } else {
+    console.error('首列[序号列]展示已关闭，并且底部合计行也不展示')
   }
 }
 

@@ -1,174 +1,80 @@
 <!--
  * @Author: Null
- * @Date: 2021-12-29 14:50:44
- * @Description: 系统管理--域名管理
+ * @Date: 2022-11-10 18:32:05
+ * @Description:
 -->
-
 <template>
   <div>
-    <div>样式处理</div>
-    <div class="testDiv" :class="{ border: test }">
-      测试1--class动态绑定对象方式
-    </div>
-    <div :class="['testDiv', test ? 'border' : '']">
-      测试2--class动态绑定数组方式
-    </div>
-    <div
-      class="testDiv"
-      :class="{
-        border: test ? 'solid 1px #f00' : '',
-        color: test ? 'yellow' : ''
-      }"
-    >
-      测试3--class绑定单个样式【不规范，只能绑定border样式】
-    </div>
-
-    <div
-      class="testDiv"
-      :style="{
-        border: test ? 'solid 1px #f00' : '',
-        color: test ? 'pink' : ''
-      }"
-    >
-      测试4--绑定单个样式
-    </div>
-
-    <div class="testDiv" :style="test ? borderObj : {}">
-      测试5--绑定样式对象
-    </div>
-
-    <MyGrid />
-
-    <el-input v-model="value" @change.native.prevent="search" />
-    <el-input v-model="value1" @keyup.enter.native="search" />
-
-    <el-cascader :collapse-tags="true" :options="options" :props="props" clearable @change="changeCascader" />
+    <FirstTitle title="AgGrid表格">
+      <div slot="content">
+        <MyButton @click="search">搜索</MyButton>
+        <MyButton @click="refresh">刷新</MyButton>
+        <MyButton @click="getSelectRowData">获取行数据</MyButton>
+        <AgGrid :ag-table-options="agTableOptions" @getGridApi="getGridApi" />
+        <AgGrid :ag-table-options="agTableOptions1" @getGridApi="getGridApi1" />
+      </div>
+    </FirstTitle>
   </div>
 </template>
 
 <script>
-import { evaluate } from '@/common/math'
+import { AgGridUtils, InitColumnDefs } from '@/components/AgGrid/common/agGrid-utils'
+import { rowData } from '@/components/AgGrid/common/agGrid-data-example'
+import { fieldsConfig } from '@/company/basic-data/fields/index'
+
 export default {
-  name: 'Domain',
+  name: 'CaseManagementIndex',
+  // import引入的组件需要注入到对象中才能使用PopupTreeInput
+  components: {},
   data () {
     return {
-      test: true,
-      borderObj: {
-        border: 'solid 1px #f00',
-        color: 'green',
-        fontWeight: 'bold'
+      agTableOptions: {
+        columnDefs: [],
+        rowData: []
       },
-      value: '',
-      value1: '',
-      props: { multiple: true },
-      options: [
-        {
-          value: 1,
-          label: '东南',
-          children: [
-            {
-              value: 2,
-              label: '上海',
-              children: [
-                {
-                  value: 3,
-                  label: '普陀',
-                  children: [
-                    {
-                      value: 22,
-                      label: '上海',
-                      children: [
-                        { value: 31, label: '普陀' },
-                        { value: 41, label: '黄埔' },
-                        { value: 52, label: '徐汇' }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  value: 41,
-                  label: '黄埔',
-                  children: [
-                    {
-                      value: 2,
-                      label: '上海',
-                      children: [
-                        { value: 354, label: '普陀' },
-                        { value: 44, label: '黄埔' },
-                        { value: 55, label: '徐汇' }
-                      ]
-                    }
-                  ]
-                },
-                { value: 5, label: '徐汇' }
-              ]
-            },
-            {
-              value: 7,
-              label: '江苏',
-              children: [
-                { value: 8, label: '南京' },
-                { value: 9, label: '苏州' },
-                { value: 10, label: '无锡' }
-              ]
-            },
-            {
-              value: 12,
-              label: '浙江',
-              children: [
-                { value: 13, label: '杭州' },
-                { value: 14, label: '宁波' },
-                { value: 15, label: '嘉兴' }
-              ]
-            }
-          ]
-        },
-        {
-          value: 17,
-          label: '西北',
-          children: [
-            {
-              value: 18,
-              label: '陕西',
-              children: [
-                { value: 19, label: '西安' },
-                { value: 20, label: '延安' }
-              ]
-            },
-            {
-              value: 21,
-              label: '新疆维吾尔族自治区',
-              children: [
-                { value: 22, label: '乌鲁木齐' },
-                { value: 23, label: '克拉玛依' }
-              ]
-            }
-          ]
-        }
-      ]
+      agTableOptions1: {
+        columnDefs: [],
+        rowData: []
+      },
+      agTable: null,
+      agTable1: null
     }
   },
   created () {
-    const value = evaluate('12.7 cm to inch')
-    console.log('12.7 cm to inch', value)
+    this.getInitTable()
   },
   methods: {
-    search (ele) {
-      console.log('输入的值', this.value)
+    // 获取初始化表格
+    getInitTable () {
+      const col = new InitColumnDefs(fieldsConfig)
+      console.log('col=====>', col)
+      this.agTableOptions.columnDefs = col
+      this.agTableOptions1.columnDefs = col
     },
-    // 项目部
-    changeCascader (ele) {
-      console.log('项目部=====>', ele)
+    getGridApi (api) {
+      const agTable = new AgGridUtils(api)
+      this.agTable = agTable
+    },
+    getGridApi1 (api) {
+      const agTable = new AgGridUtils(api)
+      this.agTable1 = agTable
+    },
+    search () {
+      // this.agTable.setRowData(rowData.getRowData())
+      this.agTableOptions.rowData = rowData.getRowData()
+    },
+    refresh () {
+      // this.agTable.setRowData(rowData.getRowData())
+      this.agTableOptions.rowData = rowData.getRowData()
+    },
+    getSelectRowData () {
+      const selectedRows = this.agTable.getSelectedRows()
+      console.log('selectedRows=====>', selectedRows)
     }
   }
 }
 </script>
-
 <style lang="scss" scoped>
-.testDiv {
-  margin-bottom: 10px;
-  &.border {
-    border: solid 1px #f00;
-  }
-}
+
 </style>
+
