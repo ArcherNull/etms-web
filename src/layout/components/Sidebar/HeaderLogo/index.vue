@@ -5,8 +5,8 @@
 <template>
   <div class="siderbar-logo" :style="{ height: height }">
     <transition name="sidebarLogoFade">
-      <LogoImg v-if="isFold" :img-url="require('@/assets/images/logo-hide.png')" />
-      <LogoImg v-else :img-url="require('@/assets/images/logo-show.png')" />
+      <LogoImg v-if="isFold" :img-url="require('@/assets/images/login.jpg')" />
+      <LogoImg v-else :img-url="require('@/assets/images/login.jpg')" />
     </transition>
   </div>
 </template>
