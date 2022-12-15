@@ -48,31 +48,26 @@ const exportExcel = {
   exportExcelFun: function (data) {
     // console.log('导柱形图excel表数据', data)
     const that = this
-    // 请求后端接口拿到list数据
-    if (data.tableData.length !== 0) {
-      const dataObj = {
-        tHeader: data.tHeader,
-        filterVal: data.filterVal,
-        lastRow: data.lastRow || [],
-        title: data.title || 'downLoadExcel',
-        data: function () {
-          // 这里存在一个this指针指向的问题
-          return that.formatJson(data.filterVal, data.tableData)
-        }
+    const dataObj = {
+      tHeader: data.tHeader,
+      filterVal: data.filterVal,
+      lastRow: data.lastRow || [],
+      title: data.title || 'downLoadExcel',
+      data: function () {
+        // 这里存在一个this指针指向的问题
+        return that.formatJson(data.filterVal, data.tableData)
       }
-      // console.log('dataObj.data()', dataObj.data())
-      dataObj.data = dataObj.data() // 过滤函数立即执行，返回对应的表格数据
-      that.exportExcel(dataObj).then(res => {
-        if (res) {
-          // console.log('下载Excel成功！')
-          Message.success(`文件名为${dataObj.title}的Excel表格导出成功！`)
-        } else {
-          Message.error(`文件名为${dataObj.title}的Excel表格导出失败！`)
-        }
-      })
-    } else {
-      Message.warning('请选择对应的数据！')
     }
+    // console.log('dataObj.data()', dataObj.data())
+    dataObj.data = dataObj.data() // 过滤函数立即执行，返回对应的表格数据
+    that.exportExcel(dataObj).then(res => {
+      if (res) {
+        // console.log('下载Excel成功！')
+        Message.success(`文件名为${dataObj.title}的Excel表格导出成功！`)
+      } else {
+        Message.error(`文件名为${dataObj.title}的Excel表格导出失败！`)
+      }
+    })
   }
 }
 

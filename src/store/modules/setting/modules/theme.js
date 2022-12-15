@@ -13,8 +13,28 @@ export default {
     // 颜色
     value: process.env.VUE_APP_ELEMENT_COLOR,
     // 主题  默认主题default-theme ; 暗黑主题 black-theme ； 炫红主题 red-theme ; 灰度模式 gray-theme
-    theme: 'default-theme'
+    theme: 'default-theme',
+    // 主题列表
+    themeList: [
+      {
+        label: '默认主体',
+        value: 'default-theme'
+      },
+      {
+        label: '暗黑主题',
+        value: 'black-theme'
+      },
+      {
+        label: '炫红主题',
+        value: 'red-theme'
+      },
+      {
+        label: '灰度模式',
+        value: 'gray-theme'
+      }
+    ]
   },
+
   actions: {
     /**
      * @description 设置颜色
@@ -67,7 +87,6 @@ export default {
         newColor: state.value
       })
     }
-
   },
   mutations: {
     /**
@@ -90,6 +109,16 @@ export default {
      * @return {*}
      */
     SET_THEME (state, theme) {
+      state.theme = theme
+    },
+
+    /**
+     * @description:设置主题
+     * @param {*} theme
+     * @return {*}
+     */
+    SET_THEME_LIST (state, theme) {
+      console.log('123123123123', theme)
       state.theme = theme
     }
   }

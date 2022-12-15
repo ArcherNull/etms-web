@@ -39,6 +39,8 @@ export const columnDefs = [
     // comparator: dateComparator, // 自定义排序，dateComparator为排序方法名
     // 给单元格添加特定的其他标签
     cellRenderer: function (params) {
+      console.log('params=====>', params)
+
       const getDom = (color = '#E6A23C') => {
         return (
           `<span style="background-color:${color};display:inline-block;width:5px;height:5px;border-radius:5px;margin-right:5px;margin-bottom:2px"></span>` +
@@ -48,13 +50,15 @@ export const columnDefs = [
       if (params.value === '李四') {
         return getDom('#E6A23C')
       } else if (params.value === '王五') {
-        return getDom('#ffffff')
+        return getDom('#b4b61a')
       } else {
         return params.value
       }
     },
     // 单元格样式颜色
     cellStyle: function (params) {
+      console.log('params=====>', params)
+
       let color = '#25262e'
       if (params.value === '张三') {
         color = '#b4b61a'
@@ -65,7 +69,7 @@ export const columnDefs = [
       } else if (params.value === '王五3') {
         color = '#DC143C'
       } else if (params.value === '') {
-        color = '#ffffff'
+        color = '#DC143C'
       }
       return { color: '#fff', background: color }
     },

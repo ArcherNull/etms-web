@@ -11,7 +11,7 @@
           <FieldsSet />
         </el-tab-pane>
         <el-tab-pane label="文件" name="file">
-          <FilesSet />
+          <FilesSet :table-data-total="tableDataTotal" />
         </el-tab-pane>
         <el-tab-pane label="打印" name="print">
           <PrintSet />
@@ -106,6 +106,7 @@ export default {
         colPinnedPosition: agTable.colPinnedPosition(),
         rowPinnedPosition: agTable.rowPinnedPosition(),
 
+        columnDefs: agTable.columnDefs,
         selectedRowData: agTable.selectedRowData,
         // 传递方法
         jumpToRow: agTable.jumpToRow,
@@ -118,7 +119,9 @@ export default {
         deselectAll: agTable.deselectAll,
         selectAll: agTable.selectAll,
         setPinnedTopRowData: agTable.setPinnedTopRowData,
-        setPinnedBottomRowData: agTable.setPinnedBottomRowData
+        setPinnedBottomRowData: agTable.setPinnedBottomRowData,
+        exportDataAsCsv: agTable.exportDataAsCsv,
+        exportExcelFun: agTable.exportExcelFun
 
       }
       console.log('this.tableDataTotal=====>', this.tableDataTotal)

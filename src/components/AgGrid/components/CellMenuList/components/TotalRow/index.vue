@@ -92,7 +92,7 @@ export default {
           color: '#3898FF'
         },
         columnDefsLength: {
-          title: '列数据最大长度',
+          title: '列数据最大长度,含合成列',
           color: '#7CCDF0'
         },
         rowPosition: {

@@ -30,6 +30,9 @@ export const fieldsConfig = {
     {
       headerName: '姓名123',
       field: 'name',
+      editable: function (params) {
+        return params.data.name === '张三'
+      },
       pinned: 'left', // 固定在左侧
       headerComponentParams: { menuIcon: 'fa-cog' },
       cellRenderer: function (params) {
@@ -46,6 +49,24 @@ export const fieldsConfig = {
         } else {
           return params.value
         }
+      },
+      // 单元格样式颜色
+      cellStyle: function (params) {
+        console.log('params=====>', params)
+
+        let color = '#25262e'
+        if (params.value === '张三') {
+          color = '#b4b61a'
+        } else if (params.value === '李四') {
+          color = '#3a65ff'
+        } else if (params.value === '王五') {
+          color = '#1AB66C'
+        } else if (params.value === '王五3') {
+          color = '#DC143C'
+        } else if (params.value === '') {
+          color = '#DC143C'
+        }
+        return { color: '#fff', background: color }
       }
     },
     {

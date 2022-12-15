@@ -101,6 +101,14 @@ export default {
     ConvertFormat: () => import('./components/ConvertFormat/index.vue'),
     MyCropperUpLoad: () => import('./components/MyCropperUpLoad/index.vue')
   },
+  props: {
+    tableDataTotal: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       dialogWidth: '850px',
@@ -123,7 +131,17 @@ export default {
         schemas: [
           {
             type: 'primary',
-            btnText: '导出'
+            btnText: '快捷导出xlsx',
+            title: '快捷导出.xlsx文件'
+          },
+          {
+            type: 'primary',
+            btnText: '快捷导出csv',
+            title: '快捷导出【选中数据】.csv文件'
+          },
+          {
+            type: 'primary',
+            btnText: '自定义导出'
           }
         ]
       },
@@ -168,9 +186,21 @@ export default {
           console.log('导入解析')
           this.openParseFile = true
           break
-        case '导出':
-          console.log('导出')
+        case '自定义导出':
+          console.log('自定义导出')
           this.openExport = true
+          break
+        case '快捷导出xlsx':
+          console.log('快捷导出xlsx')
+          this.tableDataTotal.exportExcelFun()
+          break
+        case '快捷导出csv':
+          console.log('快捷导出csv')
+          this.tableDataTotal.exportDataAsCsv({
+            fileName: '表数据',
+            onlySelectedAllPages: true, // 导出选中的行数据，并包含其它页的数据
+            skipPinnedBottom: false // 跳过固定在底部的数据
+          })
           break
         case '后端导出':
           console.log('后端导出')

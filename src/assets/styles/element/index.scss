@@ -84,6 +84,10 @@
   // cursor: pointer;
 }
 
+  .v-modal {
+    pointer-events: none;
+  }
+
 
 .el-menu--collapse  .el-submenu__title span{
   display: none;

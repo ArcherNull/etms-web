@@ -3,7 +3,7 @@
  * @Date: 2022-06-16 16:34:16
  * @Description: 请求配置文件
  */
-import { Message, Notification } from 'element-ui'
+import { Message, Notification, MessageBox } from 'element-ui'
 import { isObject, isEmpty } from 'lodash'
 import store from '@/store'
 import util from '@/libs/util'
@@ -84,6 +84,25 @@ export const showNotification = (obj, type, title, duration) => {
     msgObj.message = obj
   }
   Notification(msgObj)
+}
+
+// 确认弹窗
+export function showConfirm (obj, callback) {
+  const msgObj = {
+    title: '提示',
+    description: '您确定执行接下来的操作吗？',
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }
+
+  const { title, description, ...restObj } = Object.assign(msgObj, obj)
+
+  MessageBox.confirm(description, title, {
+    ...restObj
+  }).then((res) => {
+    callback(res)
+  })
 }
 
 /**

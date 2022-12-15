@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="ConfigSet" @click.stop>
-    <FirstTitle title="全局搜索">
+    <FirstTitle title="全局操作">
       <div slot="content">
         <el-form ref="configForm" :model="configForm" size="mini" label-width="150px">
           <el-form-item label="全局搜索">

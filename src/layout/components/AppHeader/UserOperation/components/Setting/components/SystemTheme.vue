@@ -8,21 +8,21 @@
   <div>
     <FirstTitle :is-show-title-bg="false" title="系统主题">
       <div slot="content">
-        <MyForm :register="systemformRegister" />
+        <MyForm :register="systemFormRegister" />
       </div>
     </FirstTitle>
 
     <FirstTitle :is-show-title-bg="false" title="推荐主题">
       <div slot="content">
-        12412
+        <MyForm :register="themeFormRegister" />
       </div>
     </FirstTitle>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import setting from '@/setting'
+import store from '@/store/index'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'SystemTheme',
@@ -46,7 +46,7 @@ export default {
         }
       ],
       // 系统主题
-      systemformRegister: {
+      systemFormRegister: {
         formSchemas: [{
           label: '系统主题色',
           component: 'myColorPicker',
@@ -57,21 +57,27 @@ export default {
             this.changeTheme(ele)
           }
         }]
+      },
+      // 推荐主题
+      themeFormRegister: {
+        formSchemas: [{
+          label: '主题',
+          component: 'select',
+          selectList: store.state.setting.theme.themeList,
+          defaultValue: store.state.setting.theme.theme,
+          field: 'theme',
+          change: (ele, item) => {
+            item.defaultValue = ele
+            this.SET_THEME_LIST(ele)
+          }
+        }]
       }
-    }
-  },
-  computed: {
-    systemInfoList () {
-      return [
-        {
-          label: '主题色',
-          content: setting.name
-        }
-      ]
     }
   },
   methods: {
     ...mapActions('setting/theme', ['set']),
+    ...mapMutations('setting/theme', ['SET_THEME_LIST']),
+
     setSystemTheme () {},
     // 更换颜色
     changeTheme (color) {

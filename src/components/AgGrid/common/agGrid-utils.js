@@ -6,7 +6,8 @@
  */
 import store from '@/store/index'
 import { sumBy, isArray, isEmpty, isObject } from 'lodash'
-import { showMessage } from '@/serve/httpCommon'
+import { showMessage, showConfirm } from '@/serve/httpCommon'
+import exportExcel from '@common/exportExcel'
 // ag-grid渲染之前的处理
 
 /**
@@ -557,6 +558,29 @@ export function AgGridUtils (api) {
     }
 
     /**
+     * @description: 导出excel , xlsx文件
+     * @return {*}
+     */
+    this.exportExcelFun = function () {
+      const selectedRowData = gridApi.getSelectedRows() || []
+      const columnDefs = columnApi.columnModel.columnDefs
+      if (!selectedRowData?.length) {
+        showConfirm({
+          title: '温馨提示',
+          description: '当前不存在被选项数据，是否确认导出？'
+        }, (res) => {
+          console.log('接下来的操作', res)
+          exportExcelFile([], columnDefs)
+        })
+      } else {
+        exportExcelFile(selectedRowData, columnDefs)
+      }
+    }
+
+    // 导出excel文件
+    this.exportExcelFile = exportExcelFile
+
+    /**
      * @description: 【企业版的才可使用】，当前免费版的不行
      * @return {*}
      */
@@ -798,6 +822,35 @@ function refreshTotal (gridApi) {
     // gridApi.getColumnDefs();
     resolve(true)
   })
+}
+
+/**
+ * @description: 导出excel格式为xlsx文件
+ * @param {*} selectedRowData 所选数据
+ * @param {*} columnDefs 列头
+ * @return {*}
+ */
+function exportExcelFile (selectedRowData, columnDefs) {
+  if (isArray(columnDefs) && !isEmpty(columnDefs)) {
+    const tHeader = []
+    const filterVal = []
+
+    for (const item of columnDefs) {
+      if (!item.hide) {
+        tHeader.push(item.headerName)
+        filterVal.push(item.field)
+      }
+    }
+    const exportData = {
+      title: '数据',
+      tHeader,
+      filterVal,
+      tableData: selectedRowData || []
+    }
+    exportExcel.exportExcelFun(exportData)
+  } else {
+    showMessage('列头数据columnDefs不能为空数组')
+  }
 }
 
 export const fieldsConfig = {
