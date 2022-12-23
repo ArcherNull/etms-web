@@ -13,6 +13,10 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
 // elementUI的主题更换模块
 const forElementUI = require('webpack-theme-color-replacer/forElementUI')
+// 提取CSS到一个单独的文件中
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// 复制文件或目录到执行区域
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 // const { keys } = require('lodash')
 const adminName = require('./package.json').name
@@ -81,9 +85,15 @@ module.exports = {
   // webpack打包配置
   configureWebpack: (config) => {
     const configNew = {}
+
+    configNew.plugins = [
+      new CopyWebpackPlugin([{ from: './public/image', to: './img' }])
+    ]
+
     if (process.env.NODE_ENV === 'production') {
       configNew.externals = externals || {}
       configNew.plugins = [
+        ...configNew.plugins,
         // gzip
         new CompressionWebpackPlugin({
           filename: '[path].gz[query]',
@@ -136,22 +146,30 @@ module.exports = {
     // 只有在打包的环境下才，压缩图片。如果是开发环境就会导致一个问题。src映入的图片路径找不到.
     // 主要原因是url-loader这个打包路径导致的，现在没有想到更好的办法解决
     if (process.env.NODE_ENV === 'production') {
-      const imagesRule = config.module.rule('images')
-      imagesRule.uses.clear()
-      imagesRule
-        .use('file-loader')
-        .loader('url-loader')
-        .options({
-          limit: 10240, // 限制10M
-          fallback: {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'assets/images'
-            }
-          }
-        })
-      // 压缩响应的app.json返回的代码压缩
-      config.optimization.minimize(true)
+      // const imagesRule = config.module.rule('images')
+      // imagesRule.uses.clear()
+      // imagesRule
+      //   .use('file-loader')
+      //   .loader('url-loader')
+      //   .options({
+      //     limit: 0.5 * 1024, // 限制10M
+      //     fallback: {
+      //       loader: 'file-loader',
+      //       options: {
+      //         outputPath: 'assets/images'
+      //       }
+      //     }
+      //   })
+      // // 压缩响应的app.json返回的代码压缩
+      // config.optimization.minimize(true)
+
+      // 开启图片压缩
+      config.module
+        .rule('images')
+        .test(/\.(png|jpeg|jpg|gif|svg)(\?.*)?$/)
+        .use('image-webpack-loader')
+        .loader('image-webpack-loader')
+        .options({ bypassOnDebug: true })
     }
 
     // 主题更换配置，配置打包为不同的主题样式文件
@@ -204,12 +222,17 @@ module.exports = {
 
     // webWorker
     // 初次进入的文档标题
-    config.plugin('html').tap(args => {
+    config.plugin('html').tap((args) => {
       args[0].title = name
       return args
     })
     // set worker-loader
-    config.module.rule('worker').test(/\.worker\.js$/).use('worker-loader').loader('worker-loader').end()
+    config.module
+      .rule('worker')
+      .test(/\.worker\.js$/)
+      .use('worker-loader')
+      .loader('worker-loader')
+      .end()
     // 解决：worker 热更新问题
     config.module.rule('js').exclude.add(/\.worker\.js$/)
     // 解决：“window is undefined”报错，这个是因为worker线程中不存在window对象，因此不能直接使用，要用this代替
