@@ -57,8 +57,8 @@ const actions = {
    * @description: 名言
    */
   wellKnownSaying () {
-    const rendom = commJs.getRandom(0, setting.wellKonwSayingList.length - 1)
-    const printText = setting.wellKonwSayingList[rendom][setting.defaultLanguage]
+    const rendom = commJs.getRandom(0, setting.wellKnowSayingList.length - 1)
+    const printText = setting.wellKnowSayingList[rendom][setting.defaultLanguage]
     util.log.primary(
       `${printText}`
     )

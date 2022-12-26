@@ -17,7 +17,7 @@
           <el-input
             v-model="loginForm.userLogin"
             type="text"
-            placeholder="用户名"
+            placeholder="请输入用户名"
             name="username"
             clearable
             auto-complete="on"
@@ -30,7 +30,7 @@
           <el-input
             v-model="loginForm.userPwd"
             type="password"
-            placeholder="密码"
+            placeholder="请输入密码"
             name="password"
             auto-complete="new-password"
             show-password

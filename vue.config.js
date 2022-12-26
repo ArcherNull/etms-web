@@ -146,30 +146,30 @@ module.exports = {
     // 只有在打包的环境下才，压缩图片。如果是开发环境就会导致一个问题。src映入的图片路径找不到.
     // 主要原因是url-loader这个打包路径导致的，现在没有想到更好的办法解决
     if (process.env.NODE_ENV === 'production') {
-      // const imagesRule = config.module.rule('images')
-      // imagesRule.uses.clear()
-      // imagesRule
-      //   .use('file-loader')
-      //   .loader('url-loader')
-      //   .options({
-      //     limit: 0.5 * 1024, // 限制10M
-      //     fallback: {
-      //       loader: 'file-loader',
-      //       options: {
-      //         outputPath: 'assets/images'
-      //       }
-      //     }
-      //   })
-      // // 压缩响应的app.json返回的代码压缩
-      // config.optimization.minimize(true)
+      const imagesRule = config.module.rule('images')
+      imagesRule.uses.clear()
+      imagesRule
+        .use('file-loader')
+        .loader('url-loader')
+        .options({
+          limit: 0.5 * 1024, // 限制10M
+          fallback: {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'assets/images'
+            }
+          }
+        })
+      // 压缩响应的app.json返回的代码压缩
+      config.optimization.minimize(true)
 
       // 开启图片压缩
-      config.module
-        .rule('images')
-        .test(/\.(png|jpeg|jpg|gif|svg)(\?.*)?$/)
-        .use('image-webpack-loader')
-        .loader('image-webpack-loader')
-        .options({ bypassOnDebug: true })
+      // config.module
+      //   .rule('images')
+      //   .test(/\.(png|jpeg|jpg|gif|svg)(\?.*)?$/)
+      //   .use('image-webpack-loader')
+      //   .loader('image-webpack-loader')
+      //   .options({ bypassOnDebug: true })
     }
 
     // 主题更换配置，配置打包为不同的主题样式文件

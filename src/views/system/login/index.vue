@@ -48,13 +48,18 @@
           </el-tabs>
 
           <p class="page-login--options" flex="main:justify cross:center">
-            <el-checkbox v-show="loginType === 'loginForm'" v-model="isRememberPassword">记住密码</el-checkbox>
+            <el-checkbox
+              v-show="loginType === 'loginForm'"
+              v-model="isRememberPassword"
+            >记住密码</el-checkbox>
             <span v-show="loginType === 'loginForm'">忘记密码?</span>
           </p>
           <!-- 开源项目 -->
           <div class="page-login--quick" flex="main:center cross:center">
             <span class="dk-content-12">没有账号？</span>
-            <MyButton type="text" @click="dialogVisible = true"> 去注册 </MyButton>
+            <MyButton type="text" @click="dialogVisible = true">
+              去注册
+            </MyButton>
           </div>
         </div>
       </div>
@@ -115,8 +120,9 @@ export default {
   },
   computed: {
     wellknownSaying () {
-      const setting = this.$setting
-      return setting.wellKonwSayingList[3][setting.defaultLanguage]
+      const { wellKnowSayingList, currentWellKnowSaying, defaultLanguage } =
+        this.$setting
+      return wellKnowSayingList[currentWellKnowSaying][defaultLanguage]
     }
   },
 

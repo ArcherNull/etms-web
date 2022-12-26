@@ -140,8 +140,10 @@ export default {
       value: 'en'
     }
   ],
+  // 当前言
+  currentWellKnowSaying: 0,
   // 登录页的名言设置
-  wellKonwSayingList: [
+  wellKnowSayingList: [
     {
       'zh-CN': '时间是一切财富中最宝贵的财富',
       en: 'Time is the most precious of all wealth'

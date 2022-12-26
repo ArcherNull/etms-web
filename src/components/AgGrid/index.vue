@@ -211,8 +211,8 @@ export default {
     agGridDefaultOptions () {
       // 获取名言
       const wellKnownSaying = () => {
-        const rendom = random(0, setting.wellKonwSayingList.length - 1)
-        return setting.wellKonwSayingList[rendom][setting.defaultLanguage]
+        const rendom = random(0, setting.wellKnowSayingList.length - 1)
+        return setting.wellKnowSayingList[rendom][setting.defaultLanguage]
       }
       // 表格loading
       const agGridLoading = `
