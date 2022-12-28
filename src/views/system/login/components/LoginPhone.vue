@@ -13,6 +13,27 @@
         :model="loginForm"
         size="default"
       >
+        <el-form-item prop="companyId">
+          <div class="login-company" flex="cross:center">
+            <div class="login-company-icon" flex="main:center cross:center">
+              <SvgIcon name="briefcase" />
+            </div>
+            <el-select
+              v-model="loginForm.companyId"
+              clearable
+              filterable
+              flex-box="1"
+            >
+              <el-option
+                v-for="(item, index) in companyList"
+                :key="index"
+                :label="item.companyName"
+                :value="item.companyId"
+              />
+            </el-select>
+          </div>
+        </el-form-item>
+
         <el-form-item prop="userLogin">
           <el-input
             v-model="loginForm.userLogin"
@@ -64,6 +85,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { checkPassword, checkUserName } from '@common/rules.js'
 import common from '@/common/index'
 import util from '@/libs/util'
@@ -130,6 +152,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user/login', ['companyList']),
     submitBtnText () {
       if (this.safetyVerifyFun) {
         return '确定'

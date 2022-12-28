@@ -1,5 +1,17 @@
 /*
  * @Author: Null
- * @Date: 2022-06-16 09:49:50
- * @Description: 系统模块入口文件
+ * @Date: 2021-11-08 09:13:34
+ * @Description: api接口入口集成文件
  */
+// 域名管理
+import domain from './domain/index'
+// 公司管理
+import companyManage from './company-manage/index'
+// 用户
+import user from './user/index'
+
+export default {
+  domain,
+  companyManage,
+  user
+}

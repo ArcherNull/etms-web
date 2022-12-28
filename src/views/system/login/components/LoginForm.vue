@@ -13,6 +13,27 @@
         :model="loginForm"
         size="default"
       >
+        <el-form-item prop="companyId">
+          <div class="login-company" flex="cross:center">
+            <div class="login-company-icon" flex="main:center cross:center">
+              <SvgIcon name="briefcase" />
+            </div>
+            <el-select
+              v-model="loginForm.companyId"
+              clearable
+              filterable
+              flex-box="1"
+            >
+              <el-option
+                v-for="(item, index) in companyList"
+                :key="index"
+                :label="item.companyName"
+                :value="item.companyId"
+              />
+            </el-select>
+          </div>
+        </el-form-item>
+
         <el-form-item prop="userLogin">
           <el-input
             v-model="loginForm.userLogin"
@@ -64,9 +85,9 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import { checkPassword, checkUserName } from '@common/rules.js'
 import common from '@/common/index'
-import util from '@/libs/util'
 import setting from '@/setting'
 
 let validateCode
@@ -101,8 +122,9 @@ export default {
       validateCode: '',
       loginForm: {
         // 登陆表单
-        userLogin: 'admin',
-        userPwd: '123456',
+        userLogin: 'song1',
+        userPwd: 'dekun9999',
+        companyId: '',
         code: ''
       },
       rules: {
@@ -136,6 +158,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user/login', ['companyList']),
     submitBtnText () {
       if (this.safetyVerifyFun) {
         return '确定'
@@ -152,11 +175,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions('user/login', ['login']),
     // 登录提交表单按钮
     submit () {
       console.log('登录提交表单')
       this.loading = true
-      const isVerifyForm = this.safetyVerifyFun && typeof this.safetyVerifyFun === 'function'
+      const isVerifyForm =
+        this.safetyVerifyFun && typeof this.safetyVerifyFun === 'function'
       if (!isVerifyForm) {
         this.validateLoginForm()
       } else {
@@ -169,33 +194,57 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           console.log('this.loginForm', this.loginForm)
-          this.login()
+          const { userLogin, userPwd, companyId } = this.loginForm
+          const that = this
+          this.login({
+            userLogin,
+            userPwd,
+            companyId
+          }).then((res) => {
+            console.log('res=====>', res)
+            if (res) {
+              that.$router.push({
+                path: that.$route.query.redirect || '/index'
+              })
+              this.loading = false
+
+              setTimeout(() => {
+                this.$notify({
+                  title: '登录成功',
+                  message: `${setting.name}，欢迎您回来`,
+                  type: 'success'
+                })
+              }, 400)
+            } else {
+              this.loading = false
+            }
+          })
         } else {
           this.loading = false
         }
       })
-    },
-    // 调取登录接口
-    login () {
-      const that = this
-      if (this.formType === 'loginForm') {
-        util.cookies.set('token', validateCode)
-        setTimeout(() => {
-          that.$router.push({
-            path: that.$route.query.redirect || '/index'
-          })
-          this.loading = false
-        }, 250)
-
-        setTimeout(() => {
-          this.$notify({
-            title: '登录成功',
-            message: `${setting.name}，欢迎您回来`,
-            type: 'success'
-          })
-        }, 400)
-      }
     }
+    // 调取登录接口
+    // login () {
+    //   const that = this
+    //   if (this.formType === 'loginForm') {
+    //     util.cookies.set('token', validateCode)
+    //     setTimeout(() => {
+    //       that.$router.push({
+    //         path: that.$route.query.redirect || '/index'
+    //       })
+    //       this.loading = false
+    //     }, 250)
+
+    //     setTimeout(() => {
+    //       this.$notify({
+    //         title: '登录成功',
+    //         message: `${setting.name}，欢迎您回来`,
+    //         type: 'success'
+    //       })
+    //     }, 400)
+    //   }
+    // }
   }
 }
 </script>

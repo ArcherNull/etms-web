@@ -57,12 +57,20 @@ module.exports = {
     //   })
     // },
     proxy: {
-      '/admin': {
-        target: baseUrl, // 测试域名
-        changOrigin: true
-      },
-      '/api': {
-        target: baseUrl, // 测试域名
+      "/": {
+        // target: 'http://etmstest.dekuncn.com:60001',
+        // target: 'https://etms.dekuncn.com/',
+        // target: 'http://192.168.20.142:60001', // 佳锋
+        
+        // target: 'http://47.107.40.14:60001', // 线上域名
+        // target: 'http://192.168.20.16:60001', // 悦绑定车辆信息铭本地域名
+        // target: 'http://192.168.20.64:60001', // 文良
+        // target: "http://192.168.3.182", // 福禄
+        // target: "http://192.168.20.131:60001", // 福禄
+        target: 'https://etmsone.dekuncn.com/', // 线上正式域名
+        // target: "https://onetest.dekuncn.com/", // 供应链一部测试域名
+        // target: "https://oneunit.dekuncn.com", // 供应链一部测试域名
+        // target: 'http://192.168.20.64:60001/', // 文良
         changOrigin: true
       }
     }

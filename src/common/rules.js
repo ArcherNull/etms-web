@@ -103,12 +103,14 @@ export function checkPassword (rule, value, callback) {
   const reg = /(?=.{6,16})(?=.*\d)(?=.*[a-z])[\x20-\x7f]*/i
   if (!value) {
     return callback(new Error('不能为空'))
-  } else if (reg.test(value)) {
-    return callback(
-      new Error('必须且只含有数字和字母，可以拥有英文符号，6-16位！')
-    )
   } else {
-    callback()
+    if (!reg.test(value)) {
+      return callback(
+        new Error('必须且只含有数字和字母，可以拥有英文符号，6-16位！')
+      )
+    } else {
+      callback()
+    }
   }
 }
 

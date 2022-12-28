@@ -28,13 +28,6 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
-// 注册全局指令
-
-// 设置一个token ,不用登陆放行到首页页面
-import util from './libs/util'
-util.cookies.set('token', 1234)
-util.cookies.set('lang', 'zh-CN')
-
 // 初始化系统
 async function initSystemDefault () {
   console.log('初始化系统')

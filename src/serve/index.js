@@ -21,34 +21,35 @@ import { requestInterceptor as cacheReqInterceptor, responseInterceptor as cache
 // 请求配置，错误日志记录
 import { httpConfig, handleError } from './httpCommon'
 // 配置项
-const { isDevEnv, baseURL, textBaseUrl, timeout, headers } = httpConfig
+const { isDevEnv, baseURL, textBaseUrl, timeout } = httpConfig
 
 const server = Axios.create({
   timeout,
-  headers,
-
+  // header: {
+  //   'Content-Type': 'application/json'
+  // },
   // `transformRequest` 允许在向服务器发送前，修改请求数据
   // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
   // 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
-  transformRequest: [
-    function (data, headers) {
-      // 对 data 进行任意转换处理
-      console.log(
-        "只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法对 data 进行任意转换处理",
-        data
-      )
-      return data
-    }
-  ],
+  // transformRequest: [
+  //   function (data, headers) {
+  //     // 对 data 进行任意转换处理
+  //     console.log(
+  //       "只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法对 data 进行任意转换处理",
+  //       data
+  //     )
+  //     return data
+  //   }
+  // ],
 
   // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
-  transformResponse: [
-    function (data) {
-      // 对 data 进行任意转换处理
-      console.log('transformResponse` 在传递给 then/catch 前，允许修改响应数据')
-      return data
-    }
-  ],
+  // transformResponse: [
+  //   function (data) {
+  //     // 对 data 进行任意转换处理
+  //     console.log('transformResponse` 在传递给 then/catch 前，允许修改响应数据')
+  //     return data
+  //   }
+  // ],
   // `withCredentials` 表示跨域请求时是否需要使用凭证cookies
   withCredentials: false // default
 })
@@ -87,11 +88,14 @@ server.interceptors.response.use(
     removePendingRequest(response)
     cacheResInterceptor(response)
     if (response.status === 200) {
-      const resData = JSON.parse(response.data)
+      const { data: resData } = response
       if (parseInt(resData.code) === 200) {
         return resData
+      } else if (parseInt(resData.code) === 700) {
+        Message.error(`${resData.msg || '未知错误'}`)
+        return Promise.reject(resData)
       } else {
-        Message.error(`${resData.message}`)
+        Message.error(`${resData.msg || '未知错误'}`)
         return Promise.reject(resData)
       }
     }
@@ -123,6 +127,9 @@ server.interceptors.response.use(
  */
 function errorStatusMsg (error) {
   const status = get(error, 'response.status')
+
+  console.log('status', status)
+
   switch (status) {
     case 302:
       error.message = '接口重定向了'

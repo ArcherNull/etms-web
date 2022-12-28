@@ -6,6 +6,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import i18n from '@/i18n/index.js'
+import { resetCancelRequestTimer, pendingRequest } from '@/serve/cancelRepeatRequest'
 
 // 进度条
 import NProgress from 'nprogress'
@@ -46,6 +47,16 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start()
   // 确认已经加载多标签页数据
   await store.dispatch('setting/tagViews/isLoaded')
+
+  // 如果上一个页面还存在为请求完的接口，则中止全部请求
+  if (pendingRequest.size) {
+    console.log(`当前页面正在请求的接口数为=====>${pendingRequest.size}个`)
+    pendingRequest.forEach((cancel, requestKey) => {
+      requestKey && cancel(`页面切换取消上一个页面的${requestKey}请求`)
+    })
+    pendingRequest.clear()
+    resetCancelRequestTimer()
+  }
 
   // 验证当前路由所有的匹配中是否需要有登录验证的
   if (to.matched.some((r) => r.meta.auth)) {

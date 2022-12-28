@@ -42,9 +42,9 @@
             <el-tab-pane label="手机号登录" name="loginPhone">
               <LoginPhone v-if="loginType === 'loginPhone'" />
             </el-tab-pane>
-            <el-tab-pane label="验证码登录" name="qrCodeLogin">
+            <!-- <el-tab-pane label="验证码登录" name="qrCodeLogin">
               <QrCodeLogin v-if="loginType === 'qrCodeLogin'" />
-            </el-tab-pane>
+            </el-tab-pane> -->
           </el-tabs>
 
           <p class="page-login--options" flex="main:justify cross:center">
@@ -103,13 +103,14 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import LoginForm from './components/LoginForm.vue'
 
 export default {
   name: 'Login',
   components: {
     LoginForm,
-    QrCodeLogin: () => import('./components/QrCodeLogin.vue'),
+    // QrCodeLogin: () => import('./components/QrCodeLogin.vue'),
     LoginPhone: () => import('./components/LoginPhone.vue')
   },
   data () {
@@ -125,8 +126,12 @@ export default {
       return wellKnowSayingList[currentWellKnowSaying][defaultLanguage]
     }
   },
+  created () {
+    this.getCompanyList()
+  },
 
   methods: {
+    ...mapMutations('user/login', ['SET_COMPANY_LIST']),
     // 切换语言
     onChangeLocale (ele) {
       console.log('切换语言', ele)
@@ -137,6 +142,13 @@ export default {
     // 点击tab
     handleClick (ele) {
       console.log('点击tab', ele.name)
+    },
+    // 获取城市列表
+    getCompanyList () {
+      this.$api.system.companyManage.companyList().then(res => {
+        const { result } = res
+        this.SET_COMPANY_LIST(result || [])
+      })
     }
   }
 }

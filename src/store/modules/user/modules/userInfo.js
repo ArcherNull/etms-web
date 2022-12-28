@@ -6,6 +6,7 @@
 import util from '@/libs/util'
 import router from '@/router/index'
 import { clearMessageInterval } from '@/common/timePoll'
+// import api from '@/api/index'
 
 const state = {
   // 事业部列表
@@ -20,6 +21,7 @@ const mutations = {
   SET_DIVISION_LIST (state, list) {
     state.divisionList = list
   },
+
   /**
    * @description 切换灰度状态
    */
@@ -95,6 +97,11 @@ const actions = {
 
   setDeviceInfo ({ commit }, deviceInfo) {
     commit('SET_DEVICE', deviceInfo)
+  },
+
+  // 获取
+  getUserInfo () {
+
   }
 }
 

@@ -259,3 +259,13 @@
 .dk-danger-text{
   color: $color-danger;
 }
+
+.login-company {
+  &-icon {
+    width: 58px;
+    height: 40px;
+    background-color: #f5f7fa;
+    color: #909399;
+    border: 1px solid #dcdfe6;
+  }
+}

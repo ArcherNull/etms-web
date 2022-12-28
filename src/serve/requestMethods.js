@@ -61,10 +61,10 @@ export function get (url, params) {
         params: params
       })
       .then((res) => {
-        resolve(res.data)
+        resolve(res)
       })
       .catch((err) => {
-        reject(err.data)
+        reject(err)
       })
   })
 }
@@ -74,15 +74,21 @@ export function get (url, params) {
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-export function post (url, params) {
+export function post (url, data) {
   return new Promise((resolve, reject) => {
-    server
-      .post(url, Qs.stringify(params))
+    server({
+      url,
+      method: 'post',
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then((res) => {
-        resolve(res.data)
+        resolve(res)
       })
-      .catch((err) => {
-        reject(err.data)
+      .catch((error) => {
+        reject(error)
       })
   })
 }

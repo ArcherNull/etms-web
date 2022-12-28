@@ -19,11 +19,8 @@ export const httpConfig = {
   setExpireTime: 30000, // 当前接口缓存时限
   messageDuration: 3 * 1000, // 消息提示得显示时长
   timeout: 15000, // 请求超时时长
-  baseURL: '/api', // 线上域名
-  textBaseUrl: '/api', // 测试域名
-  headers: {
-    // 'Content-type': 'application/x-www-form-urlencoded'
-  }
+  baseURL: '/', // 线上域名
+  textBaseUrl: '/' // 测试域名
 }
 
 /**

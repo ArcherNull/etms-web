@@ -6,7 +6,12 @@
 
 // 登录
 import login from './modules/login/index'
+// 系统管理
+import system from './modules/system/index'
+// 登录
+// import baseData from './modules/login/index'
 
 export default {
-  ...login
+  login,
+  system
 }

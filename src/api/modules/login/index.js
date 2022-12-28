@@ -8,9 +8,6 @@ import http from '@/serve/requestMethods.js'
 
 export default {
   // 登录
-  // login: (params) => http.post('/admin/login', params).then(res => res)
-
-  // 登录
   login: (params) => http.post('/base/user/login', params).then(res => res)
 
 }
