@@ -46,6 +46,8 @@ const actions = {
         util.cookies.set('token', data?.token)
         // 保存用户登录表单
         commit('SET_USER_LOGIN_INFO', data)
+        // 获取用户登录信息
+        await dispatch('user/userInfo/getUserInfo', null, { root: true })
 
         return Promise.resolve(true)
       } else {

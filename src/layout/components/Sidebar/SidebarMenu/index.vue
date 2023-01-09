@@ -44,7 +44,7 @@ import { mapGetters, mapState } from 'vuex'
 import MenuSearch from './components/MenuSearch/index.vue'
 import SidebarItem from './components/SidebarItem/index.vue'
 
-import { frameInRoutes } from '@/router/routers'
+// import { frameInRoutes } from '@/router/routers'
 
 export default {
   name: 'SidebarMenu',
@@ -63,8 +63,8 @@ export default {
       isCollapse: false, // 是否折叠
       menuBg: '', // 菜单栏背景颜色
       menuText: '', // 菜单栏文本
-      menuActiveText: '', // 被选中的文本颜色
-      asyncRoute: frameInRoutes // 动态路由
+      menuActiveText: '' // 被选中的文本颜色
+      // asyncRoute: frameInRoutes // 动态路由
     }
   },
   computed: {
@@ -75,7 +75,8 @@ export default {
       'menuSearchHeight',
       'menuBgColor',
       'menuTextColor',
-      'menuActiveTextColor'
+      'menuActiveTextColor',
+      'asyncRoute'
     ]),
     // 当前选中的
     activeId () {

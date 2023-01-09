@@ -77,6 +77,11 @@ const permissions = {
   btnPermissions: (state) => state.setting.log.length
 }
 
+// 当前用户的权限路由
+const asyncRoute = {
+  asyncRoute: (state) => state.user.menu.routes
+}
+
 const getters = {
   getters_count: (state) => state.user.login.count + 10,
 
@@ -87,7 +92,8 @@ const getters = {
   // 前端日志打印相关
   ...logs,
   // 当前登录用户的权限
-  ...permissions
+  ...permissions,
+  ...asyncRoute
 }
 
 export default getters

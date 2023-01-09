@@ -6,7 +6,7 @@
 
 import Axios from 'axios'
 import { generateReqKey } from './httpCommon'
-import store from '@/store/index'
+// import store from '@/store/index'
 
 const options = {
   storage: true, // 是否开启localStorage缓存
@@ -15,34 +15,34 @@ const options = {
   storage_expire: 600000, // localStorage 数据存储时间10min（刷新页面判断是否清除）
   expire: 20000 // 每个接口数据缓存ms 数
 }
-// 初始化
-;(async function () {
-  const cache = await store.dispatch('setting/db/get', {
-    dbName: options.dbName,
-    path: 'apiCache',
-    defaultValue: {},
-    user: true
-  })
-  console.log('cache', cache)
-  // const cache = window.localStorage.getItem(options.storageKey)
-  if (cache) {
-    const { storageExpire } = cache
-    // 未超时不做处理
-    if (
-      storageExpire &&
-      getNowTime() - storageExpire < options.storage_expire
-    ) {
-      return
-    }
-  }
-  console.log('立即执行=====>')
-  await store.dispatch('setting/db/set', {
-    dbName: options.dbName,
-    path: 'apiCache',
-    defaultValue: { data: {}, storageExpire: getNowTime() },
-    user: true
-  })
-})()
+// // 初始化
+// ;(async function () {
+//   const cache = await store.dispatch('setting/db/get', {
+//     dbName: options.dbName,
+//     path: 'apiCache',
+//     defaultValue: {},
+//     user: true
+//   })
+//   console.log('cache', cache)
+//   // const cache = window.localStorage.getItem(options.storageKey)
+//   if (cache) {
+//     const { storageExpire } = cache
+//     // 未超时不做处理
+//     if (
+//       storageExpire &&
+//       getNowTime() - storageExpire < options.storage_expire
+//     ) {
+//       return
+//     }
+//   }
+//   console.log('立即执行=====>')
+//   await store.dispatch('setting/db/set', {
+//     dbName: options.dbName,
+//     path: 'apiCache',
+//     defaultValue: { data: {}, storageExpire: getNowTime() },
+//     user: true
+//   })
+// })()
 
 // 获取缓存项
 function getCacheItem (key) {

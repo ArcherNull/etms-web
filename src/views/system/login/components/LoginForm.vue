@@ -88,7 +88,7 @@
 import { mapState, mapActions } from 'vuex'
 import { checkPassword, checkUserName } from '@common/rules.js'
 import common from '@/common/index'
-import setting from '@/setting'
+// import setting from '@/setting'
 
 let validateCode
 
@@ -207,14 +207,6 @@ export default {
                 path: that.$route.query.redirect || '/index'
               })
               this.loading = false
-
-              setTimeout(() => {
-                this.$notify({
-                  title: '登录成功',
-                  message: `${setting.name}，欢迎您回来`,
-                  type: 'success'
-                })
-              }, 400)
             } else {
               this.loading = false
             }

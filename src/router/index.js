@@ -6,8 +6,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import i18n from '@/i18n/index.js'
-import { resetCancelRequestTimer, pendingRequest } from '@/serve/cancelRepeatRequest'
-
+import {
+  resetCancelRequestTimer,
+  pendingRequest
+} from '@/serve/cancelRepeatRequest'
+import setting from '@/setting'
+import { Notification } from 'element-ui'
 // 进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -35,11 +39,20 @@ VueRouter.prototype.replace = function replace (location) {
 
 Vue.use(VueRouter)
 
+const createRouter = () =>
+  new VueRouter({
+    mode: 'hash', // 默认值: "hash" (浏览器环境) | "abstract" (Node.js 环境);可选值: "hash" | "history" | "abstract"
+    scrollBehavior: () => ({ y: 0 }),
+    routes
+  })
+
+export function resetRouter () {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
 // 导出路由 在 main.js 里使用
-const router = new VueRouter({
-  mode: 'hash', // 默认值: "hash" (浏览器环境) | "abstract" (Node.js 环境);可选值: "hash" | "history" | "abstract"
-  routes
-})
+const router = createRouter()
 
 // 导航前守卫
 router.beforeEach(async (to, from, next) => {
@@ -64,7 +77,13 @@ router.beforeEach(async (to, from, next) => {
     // 请根据自身业务需要修改
     const token = util.cookies.get('token')
     if (token && token !== 'undefined') {
-      next()
+      if (to.path === '/login') {
+        next()
+      } else {
+        // 添加动态路由
+        getAsyncRoutes()
+        next()
+      }
     } else {
       // 没有登录的时候跳转到登录界面
       // 携带上登陆成功之后需要跳转的页面完整路径
@@ -102,5 +121,25 @@ router.afterEach(async (to, from) => {
   NProgress.done()
   console.log('this=========>', this)
 })
+
+// 获取动态路由
+async function getAsyncRoutes () {
+  resetRouter()
+  // 请求路由
+  const accessRoutes = await store.dispatch('user/menu/generateRoutes')
+  console.log('accessRoutes=====>', accessRoutes)
+
+  // for (const route of accessRoutes) {
+  //   router.addRoute(route)
+  // }
+
+  console.log('router=====>', router.getRoutes())
+
+  Notification({
+    title: '登录成功',
+    message: `${setting.name}，欢迎您回来`,
+    type: 'success'
+  })
+}
 
 export default router

@@ -4,8 +4,9 @@
  */
 // 布局组件
 import Layout from '@/layout/layout.vue'
-import systemRoutes from './modules/system'
-
+// import systemRoutes from './modules/system'
+import { isEmpty, isArray } from 'lodash'
+import { meta } from './config'
 // 由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载
 const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
 
@@ -61,15 +62,15 @@ const frameIn = [
         component: _import('system/function/redirect')
       }
     ]
-  },
+  }
   // 动态路由
-  ...systemRoutes
+  // ...systemRoutes
 ]
 
 /**
  * 在主框架之外显示
  */
-const frameOut = [
+export const frameOut = [
   // 登录
   {
     path: '/login',
@@ -84,7 +85,7 @@ const frameOut = [
 /**
  * 错误页面
  */
-const errorPage = [
+export const errorPage = [
   {
     path: '*',
     name: '404',
@@ -97,18 +98,65 @@ const errorPage = [
         component: _import('system/error/404')
       }
     ]
-
   }
 ]
 
+// 生成菜单
+export function generaMenu (data, pUrl = '') {
+  const routes = []
+  if (!isEmpty(data) && isArray(data)) {
+    data.forEach((item, index) => {
+      const component = isEmpty(item.menuParentid)
+        ? 'Layout'
+        : pUrl + '/' + item.menuUrl
+      item.component = ''
+      //   let redirect = ''
+      if (component === 'Layout') {
+        item.component = Layout
+        // redirect = 'noRedirect'
+        if (item.path === '/') {
+          item.path = '/dashboard'
+        }
+      } else {
+        // redirect = ''
+        // 接口组件字符串转换成组件对象， 这里找不到这个模块路径
+        item.component = (resolve) => require([`@/views${component}`], resolve)
+      }
+
+      const getChildren = (item) => {
+        const child = item.baseMenudetailVoList
+        return child?.length
+          ? generaMenu(
+            item.baseMenudetailVoList,
+            pUrl !== '' ? pUrl + '/' + item.menuUrl : item.menuUrl
+          )
+          : null
+      }
+
+      const menu = {
+        pathUrl: pUrl, // 上一级url
+        path: `${pUrl}${
+          /^\//.test(item.menuUrl) ? item.menuUrl : '/' + item.menuUrl
+        }`, // 当前url
+        component: item.component,
+        menuId: item.menuId || '',
+        children: getChildren(item),
+        name: item.menuName,
+        meta: {
+          icon: item.menuIcon,
+          ...meta,
+          title: item.menuName,
+          id: item.menuId
+        }
+      }
+      routes.push(menu)
+    })
+  }
+  return routes
+}
+
 // 导出需要显示菜单的
 export const frameInRoutes = frameIn
-
-console.log('[...frameIn, ...frameOut, ...errorPage]', [
-  ...frameIn,
-  ...frameOut,
-  ...errorPage
-])
 
 // 重新组织后导出
 export default [...frameIn, ...frameOut, ...errorPage]

@@ -31,7 +31,7 @@ export default {
   // 项目名
   name: admin.name,
   // 项目名简称
-  abbreviateName: 'fk',
+  abbreviateName: 'dk',
   // 项目版本
   version,
   // 前缀名

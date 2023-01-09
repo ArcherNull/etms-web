@@ -32,7 +32,7 @@
     </template>
 
     <!-- 一级路由，有下级 -->
-    <el-submenu v-else :index="route.path" :title="$t(`layout.sidebar.menu.${route.path}`)" popper-append-to-body>
+    <el-submenu v-else :index="route.path" :title="$t(`layout.sidebar.menu.${route.path}`) || '未知'" popper-append-to-body>
       <!-- 一级/二级父标题，无法实现点击跳转，其下有children 子集 -->
       <template slot="title">
         <MenuItem
