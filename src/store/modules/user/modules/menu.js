@@ -18,15 +18,15 @@ const mutations = {
 }
 
 const actions = {
+  // 生成路由
   generateRoutes ({ commit }) {
     commit('SET_ROUTES', [])
     return new Promise((resole, reject) => {
       api.system.user.getMenuTreeList().then((res) => {
-        const resData = res?.data
+        const resData = res?.data || []
 
         const asyncRoutes = generaMenu(resData)
         commit('SET_ROUTES', asyncRoutes)
-
         resole(asyncRoutes)
       })
         .catch(_ => {

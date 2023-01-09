@@ -105,24 +105,20 @@ export const errorPage = [
 export function generaMenu (data, pUrl = '') {
   const routes = []
   if (!isEmpty(data) && isArray(data)) {
-    data.forEach((item, index) => {
-      const component = isEmpty(item.menuParentid)
-        ? 'Layout'
-        : pUrl + '/' + item.menuUrl
+    data.forEach((item) => {
+      const isParentPath = /^\//.test(item.menuUrl)
+      const path = `${pUrl}${isParentPath ? item.menuUrl : '/' + item.menuUrl}`
+      const component = isParentPath ? 'Layout' : path
       item.component = ''
-      //   let redirect = ''
       if (component === 'Layout') {
         item.component = Layout
-        // redirect = 'noRedirect'
-        if (item.path === '/') {
-          item.path = '/dashboard'
-        }
       } else {
-        // redirect = ''
         // 接口组件字符串转换成组件对象， 这里找不到这个模块路径
-        item.component = (resolve) => require([`@/views${component}`], resolve)
+        item.component = (resolve) =>
+          require([`@/views/pages${component}`], resolve)
       }
 
+      // 获取children子集
       const getChildren = (item) => {
         const child = item.baseMenudetailVoList
         return child?.length
@@ -135,13 +131,11 @@ export function generaMenu (data, pUrl = '') {
 
       const menu = {
         pathUrl: pUrl, // 上一级url
-        path: `${pUrl}${
-          /^\//.test(item.menuUrl) ? item.menuUrl : '/' + item.menuUrl
-        }`, // 当前url
+        path, // 当前url
         component: item.component,
         menuId: item.menuId || '',
         children: getChildren(item),
-        name: item.menuName,
+        name: path,
         meta: {
           icon: item.menuIcon,
           ...meta,

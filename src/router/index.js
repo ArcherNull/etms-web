@@ -54,6 +54,10 @@ export function resetRouter () {
 // 导出路由 在 main.js 里使用
 const router = createRouter()
 
+// 这里暂时将cookie里是否存有token作为验证是否登录的条件
+// 请根据自身业务需要修改
+const getToken = () => util.cookies.get('token')
+
 // 导航前守卫
 router.beforeEach(async (to, from, next) => {
   // 进度条
@@ -73,16 +77,26 @@ router.beforeEach(async (to, from, next) => {
 
   // 验证当前路由所有的匹配中是否需要有登录验证的
   if (to.matched.some((r) => r.meta.auth)) {
-    // 这里暂时将cookie里是否存有token作为验证是否登录的条件
-    // 请根据自身业务需要修改
-    const token = util.cookies.get('token')
+    const token = getToken()
     if (token && token !== 'undefined') {
-      if (to.path === '/login') {
+      if (['/login', '/'].includes(to.path)) {
         next()
       } else {
+        // 有token但是动态路由为空，则请求动态路由
+        if (!store.state.user.menu.routes?.length && token) {
         // 添加动态路由
-        getAsyncRoutes()
-        next()
+          resetRouter()
+          const asyncRoutes = await store.dispatch('user/menu/generateRoutes')
+          console.log('asyncRoutes=====>', asyncRoutes)
+          asyncRoutes.forEach(item => {
+            router.addRoute(item)
+          })
+
+          console.log('router.getRoutes()', router.getRoutes())
+          next({ ...to, replace: true })
+        } else {
+          next()
+        }
       }
     } else {
       // 没有登录的时候跳转到登录界面
@@ -111,35 +125,23 @@ router.afterEach(async (to, from) => {
   if (anchor) {
     jumpPageAnchor(to.path, anchor)
   } else {
-    const dom = document.getElementById('layout-main-container')
-    console.log('dom==============>', dom)
+    // const dom = document.getElementById('layout-main-container')
+    // console.log('dom==============>', dom)
     // dom.scrollTo(0, 0)
+  }
+
+  const token = getToken()
+  if (from.path === '/login' && token) {
+    Notification({
+      title: '登录成功',
+      message: `${setting.name}，欢迎您回来`,
+      type: 'success'
+    })
   }
 
   util.title(to.meta.title)
   // 进度条
   NProgress.done()
-  console.log('this=========>', this)
 })
-
-// 获取动态路由
-async function getAsyncRoutes () {
-  resetRouter()
-  // 请求路由
-  const accessRoutes = await store.dispatch('user/menu/generateRoutes')
-  console.log('accessRoutes=====>', accessRoutes)
-
-  // for (const route of accessRoutes) {
-  //   router.addRoute(route)
-  // }
-
-  console.log('router=====>', router.getRoutes())
-
-  Notification({
-    title: '登录成功',
-    message: `${setting.name}，欢迎您回来`,
-    type: 'success'
-  })
-}
 
 export default router
