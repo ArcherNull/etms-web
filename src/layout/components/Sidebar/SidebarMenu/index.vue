@@ -21,7 +21,6 @@
           :active-text-color="menuActiveTextColor"
           :collapse-transition="false"
           mode="vertical"
-          :router="true"
         >
           <SidebarItem
             v-for="route in asyncRoute"

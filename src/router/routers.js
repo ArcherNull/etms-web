@@ -5,6 +5,8 @@
 // 布局组件
 import Layout from '@/layout/layout.vue'
 // import systemRoutes from './modules/system'
+// import basicData from './modules/basicData'
+
 import { isEmpty, isArray } from 'lodash'
 import { meta } from './config'
 // 由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载
@@ -63,8 +65,6 @@ const frameIn = [
       }
     ]
   }
-  // 动态路由
-  // ...systemRoutes
 ]
 
 /**
@@ -109,13 +109,14 @@ export function generaMenu (data, pUrl = '') {
       const isParentPath = /^\//.test(item.menuUrl)
       const path = `${pUrl}${isParentPath ? item.menuUrl : '/' + item.menuUrl}`
       const component = isParentPath ? 'Layout' : path
-      item.component = ''
+      // item.component = ''
       if (component === 'Layout') {
         item.component = Layout
       } else {
-        // 接口组件字符串转换成组件对象， 这里找不到这个模块路径
+        // 接口组件字符串转换成组件对象， 这里找不到这个模块路径  webpack版本低时的引入方式
         item.component = (resolve) =>
-          require([`@/views/pages${component}`], resolve)
+          require([`@views/pages${component}`], resolve)
+        // item.component = () => import('../views/pages/' + component + '/index.vue')
       }
 
       // 获取children子集

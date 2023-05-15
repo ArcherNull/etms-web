@@ -52,8 +52,8 @@
         <MyButton type="primary" plain title="添加水印" @click="addWaterMask()">印</MyButton>
       </div>
       <div class="MyVueCropper-button__right">
-        <MyButton type="primary" title="上传base64数据" icon="el-icon-upload" @click="getCropBase64Data()">base64</MyButton>
-        <MyButton type="primary" title="上传blob数据" icon="el-icon-upload" @click="getCropBlobData()">blob</MyButton>
+        <MyButton type="primary" title="上传base64数据" icon="el-icon-upload" @click="getCropBase64Data">base64</MyButton>
+        <MyButton type="primary" title="上传blob数据" icon="el-icon-upload" @click="getCropBlobData">blob</MyButton>
       </div>
     </div>
   </div>
@@ -242,14 +242,15 @@ export default {
     getCropBase64Data () {
       const that = this
       return new Promise((resolve, reject) => {
-        if (that.$refs.cropper) {
+        that.$nextTick(() => {
+          if (that.$refs.cropper) {
           that.$refs?.cropper?.getCropData((data) => {
-            console.log('获取截图的 base64 数据=====>', data)
             resolve(data)
           })
-        } else {
-          reject(false)
-        }
+          } else {
+            reject(false)
+          }
+        })
       })
     },
 
@@ -257,14 +258,15 @@ export default {
     getCropBlobData () {
       const that = this
       return new Promise((resolve, reject) => {
-        if (that.$refs.cropper) {
+        that.$nextTick(() => {
+          if (that.$refs.cropper) {
           that.$refs?.cropper?.getCropBlob((data) => {
-            console.log('获取截图的 blob 数据=====>', data)
             resolve(data)
           })
-        } else {
-          reject(false)
-        }
+          } else {
+            reject(false)
+          }
+        })
       })
     }
   }

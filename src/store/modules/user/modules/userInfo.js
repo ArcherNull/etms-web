@@ -72,15 +72,16 @@ const actions = {
    * @return {*}
    */
   async loadUserInfo ({ dispatch }) {
+    await dispatch('setting/tagViews/generateRoutes', null, { root: true })
     // 持久化数据加载上次退出时的多页列表
     await dispatch('setting/tagViews/openedLoad', null, { root: true })
     // 全屏监听
     await dispatch('setting/fullscreen/listen', null, { root: true })
 
-    // 测试快捷键用 【可删除】
-    await dispatch('settingsPanel/hotkeys/setHotkeysShowSettingsPanel', 'f8', {
-      root: true
-    })
+    // // 测试快捷键用 【可删除】
+    // await dispatch('settingsPanel/hotkeys/setHotkeysShowSettingsPanel', 'f8', {
+    //   root: true
+    // })
 
     // 加载用户自定义快捷键
     await dispatch('settingsPanel/hotkeys/loadHotkeys', null, { root: true })

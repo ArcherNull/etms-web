@@ -60,6 +60,7 @@ const getToken = () => util.cookies.get('token')
 
 // 导航前守卫
 router.beforeEach(async (to, from, next) => {
+  console.log('导航前守卫', to)
   // 进度条
   NProgress.start()
   // 确认已经加载多标签页数据
@@ -78,25 +79,13 @@ router.beforeEach(async (to, from, next) => {
   // 验证当前路由所有的匹配中是否需要有登录验证的
   if (to.matched.some((r) => r.meta.auth)) {
     const token = getToken()
-    if (token && token !== 'undefined') {
+    if (token) {
       if (['/login', '/'].includes(to.path)) {
         next()
       } else {
-        // 有token但是动态路由为空，则请求动态路由
-        if (!store.state.user.menu.routes?.length && token) {
-        // 添加动态路由
-          resetRouter()
-          const asyncRoutes = await store.dispatch('user/menu/generateRoutes')
-          console.log('asyncRoutes=====>', asyncRoutes)
-          asyncRoutes.forEach(item => {
-            router.addRoute(item)
-          })
+        // const hasMenuList = store.state.user.menu?.routes?.length > 0
 
-          console.log('router.getRoutes()', router.getRoutes())
-          next({ ...to, replace: true })
-        } else {
-          next()
-        }
+        next({ ...to, replace: true })
       }
     } else {
       // 没有登录的时候跳转到登录界面

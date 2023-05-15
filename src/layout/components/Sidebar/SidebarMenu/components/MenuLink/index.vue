@@ -18,13 +18,17 @@ export default {
   props: {
     // 必传，跳转路径
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     }
   },
   computed: {
     isExternal () {
-      return isExternal(this.to)
+      if (typeof this.to === 'string') {
+        return isExternal(this.to)
+      } else {
+        return isExternal(this.to.path)
+      }
     },
     type () {
       // 如果是外链,则显示a标签
@@ -45,6 +49,7 @@ export default {
           rel: 'noopener'
         }
       }
+
       // 如果是页面路径
       return {
         to: to

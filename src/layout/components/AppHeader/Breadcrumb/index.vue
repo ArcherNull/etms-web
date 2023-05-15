@@ -4,7 +4,7 @@
 -->
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
-    <transition-group name="breadcrumb" mode="out-in" flex>
+    <transition-group v-if="routerLevelList && routerLevelList.length" name="breadcrumb" mode="out-in" flex>
       <el-breadcrumb-item
         v-for="(item, index) in routerLevelList"
         :key="item.path"
@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       // 等级路由列表[1,2,3,4级路由]
-      routerLevelList: null
+      routerLevelList: []
     }
   },
   watch: {
@@ -60,7 +60,7 @@ export default {
       if (first && first.name === 'index') {
         matched = [{ path: '/index', meta: { title: '首页' }}]
       }
-      this.routerLevelList = matched
+      this.routerLevelList = matched || []
     }
   }
 }

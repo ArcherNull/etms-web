@@ -7,6 +7,10 @@
 import { cloneDeep, uniq, get, merge } from 'lodash'
 import router from '@/router'
 import setting from '@/setting.js'
+import api from '@/api/index'
+import { generaMenu } from '@/router/routers'
+// 框架内的公共路由
+import { frameInRoutes } from '@/router/routers'
 
 // 判定是否需要缓存
 const isKeepAlive = (data) => get(data, 'meta.cache', false)
@@ -22,13 +26,10 @@ const state = {
   current: '',
   // 需要缓存的页面 name
   keepAlive: ['ModuleDisplay'],
-
   // 额外的功能,是否放大内容窗口
   isZoomInScreen: false,
-
   // 页面锚点详情
   currentPageAnchors: [],
-
   // 当前页面anchor列表
   currentAnchorList: []
 }
@@ -180,7 +181,7 @@ const actions = {
     const pool = []
     const push = function (routes) {
       routes.forEach((route) => {
-        if (route.children && route.children.length > 0) {
+        if (route.children && route.children?.length > 0) {
           push(route.children)
         } else if (!route.hidden) {
           const { meta, name, path } = route
@@ -245,6 +246,9 @@ const actions = {
     // 添加进当前显示的页面数组
     state.opened.push(newTag)
     console.log('添加进当前显示的页面数组', state.opened)
+
+    console.log('eqweqweqwe')
+
     // 如果这个页面需要缓存 将其添加到缓存设置
     if (isKeepAlive(newTag)) commit('KEEP_ALIVE_PUSH', tag.name)
     // 持久化
@@ -270,6 +274,9 @@ const actions = {
       pageOpendIndex = same ? index : pageOpendIndex
       return same
     })
+
+    console.log('pageOpend=====>', pageOpend)
+
     if (pageOpend) {
       // 页面以前打开过
       await dispatch('openedUpdate', {
@@ -279,8 +286,13 @@ const actions = {
         fullPath
       })
     } else {
+      console.log('state.pool', state.pool)
+
       // 页面以前没有打开过
       const page = state.pool.find((t) => t.name === name)
+
+      console.log('page=====>', page)
+
       // 如果这里没有找到 page 代表这个路由虽然在框架内 但是不参与标签页显示
       if (page) {
         await dispatch('add', {
@@ -294,6 +306,9 @@ const actions = {
     // 如果这个页面需要缓存 将其添加到缓存设置
     if (isKeepAlive({ meta })) commit('KEEP_ALIVE_PUSH', name)
     // 设置当前的页面
+
+    console.log('fullPath=====>', fullPath)
+
     commit('SET_CURRENT_PATH', fullPath)
   },
   /**
@@ -310,7 +325,7 @@ const actions = {
     })
     if (currentIndex > 0) {
       // 删除打开的页面 并在缓存设置中删除
-      for (let i = state.opened.length - 1; i >= 0; i--) {
+      for (let i = state.opened?.length - 1; i >= 0; i--) {
         if (state.opened[i].name === 'index' || i >= currentIndex) continue
         commit('KEEP_ALIVE_REMOVE', state.opened[i].name)
         state.opened.splice(i, 1)
@@ -335,7 +350,7 @@ const actions = {
       if (page.fullPath === pageAim) currentIndex = index
     })
     // 删除打开的页面 并在缓存设置中删除
-    for (let i = state.opened.length - 1; i >= 0; i--) {
+    for (let i = state.opened?.length - 1; i >= 0; i--) {
       if (state.opened[i].name === 'index' || currentIndex >= i) continue
       commit('KEEP_ALIVE_REMOVE', state.opened[i].name)
       state.opened.splice(i, 1)
@@ -359,7 +374,7 @@ const actions = {
       if (page.fullPath === pageAim) currentIndex = index
     })
     // 删除打开的页面数据 并更新缓存设置
-    for (let i = state.opened.length - 1; i >= 0; i--) {
+    for (let i = state.opened?.length - 1; i >= 0; i--) {
       if (state.opened[i].name === 'index' || currentIndex === i) continue
       commit('KEEP_ALIVE_REMOVE', state.opened[i].name)
       state.opened.splice(i, 1)
@@ -377,7 +392,7 @@ const actions = {
    */
   async closeAll ({ state, commit, dispatch }) {
     // 删除打开的页面 并在缓存设置中删除
-    for (let i = state.opened.length - 1; i >= 0; i--) {
+    for (let i = state.opened?.length - 1; i >= 0; i--) {
       if (state.opened[i].name === 'index') continue
       commit('KEEP_ALIVE_REMOVE', state.opened[i].name)
       state.opened.splice(i, 1)
@@ -402,7 +417,7 @@ const actions = {
     // 如果关闭的页面就是当前显示的页面
     if (isCurrent) {
       // 去找一个新的页面
-      const len = state.opened.length
+      const len = state.opened?.length
       for (let i = 0; i < len; i++) {
         if (state.opened[i].fullPath === tagName) {
           newPage = i < len - 1 ? state.opened[i + 1] : state.opened[i - 1]
@@ -441,6 +456,36 @@ const actions = {
    */
   reloadFrame () {
     window.location.reload()
+  },
+
+  /**
+   * @description: 生成路由
+   * @param {*} commit
+   * @return {*}
+   */
+  generateRoutes ({ commit }) {
+    commit('SET_ROUTES', [])
+    return new Promise((resole, reject) => {
+      api.system.user.getMenuTreeList().then((res) => {
+        const resData = res?.data || []
+
+        const asyncRoutes = generaMenu(resData)
+
+        console.log('asyncRoutes=====>', asyncRoutes)
+
+        if (asyncRoutes?.length) {
+          asyncRoutes.forEach(item => {
+            router.addRoute(item)
+          })
+        }
+
+        commit('SET_ALL_PAGES', [...frameInRoutes, ...asyncRoutes])
+        resole(asyncRoutes)
+      })
+        .catch(_ => {
+          reject(false)
+        })
+    })
   }
 }
 

@@ -83,7 +83,7 @@
 
       <!-- 页面快捷导航 -->
       <el-dropdown
-        v-if="currentAnchorList.length"
+        v-if="currentAnchorList && currentAnchorList.length"
         trigger="click"
         @click="closeAllTags"
         @command="(command) => handleCurrentPageAnchor(command)"

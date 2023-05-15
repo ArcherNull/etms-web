@@ -8,6 +8,7 @@ import Axios from 'axios'
 import { Message } from 'element-ui'
 import { get } from 'lodash'
 import util from '@/libs/util'
+import router from '@/router/index'
 
 // 加密解密
 // import { encrypt, decrypt } from '@/utils/cryptoJs/index'
@@ -91,6 +92,12 @@ server.interceptors.response.use(
       const { data: resData } = response
       if (parseInt(resData.code) === 200) {
         return resData
+      } else if (parseInt(resData.code) === 401) {
+        const currentPath = router.history.current.path
+        router.push({
+          path: `/login?redirect=${currentPath}`
+        })
+        return Promise.reject(resData)
       } else if (parseInt(resData.code) === 700) {
         Message.error(`${resData.msg || '未知错误'}`)
         return Promise.reject(resData)

@@ -79,7 +79,7 @@ const permissions = {
 
 // 当前用户的权限路由
 const asyncRoute = {
-  asyncRoute: (state) => state.user.menu.routes
+  asyncRoute: (state) => state.setting.tagViews.pool
 }
 
 const getters = {

@@ -7,15 +7,15 @@
 <template>
   <!-- 菜单路由是否隐藏 -->
   <div
-    v-if="route.meta && !route.meta.hidden"
+    v-if="route && route.meta && !route.meta.hidden"
     class="siderbarMenu-siderbar-item"
   >
     <!-- 没有下级，可点击跳转的路由， 可接受外链或者页面路由 -->
     <template v-if="!route.children">
-      <MenuLink :to="route.path">
+      <MenuLink :to="route">
         <el-menu-item
           v-waves
-          :index="route.path"
+          :index="resolvePath(route.path)"
           class="siderbarMenu-siderbar-item__container"
           :style="{
             height: menuChildrenLevelHeight,
@@ -44,7 +44,7 @@
       <!-- 二级可跳转 -->
       <SidebarItem
         v-for="(child, index) in route.children"
-        :key="child.path + index"
+        :key="resolvePath(child.path) + index"
         :route="child"
         :default-atict="defaultActive"
         :default-id="defaultId"
@@ -55,7 +55,9 @@
 </template>
 
 <script>
+import path from 'path'
 import { mapGetters } from 'vuex'
+import { isExternal } from '@/common/validate'
 import MenuLink from '../MenuLink/index.vue'
 import MenuItem from '../MenuItem/index.vue'
 
@@ -65,15 +67,6 @@ export default {
     MenuLink,
     MenuItem
   },
-  // filters: {
-  //   languageSwitch (route) {
-  //     console.log('languageSwitch--------------', route.path)
-  //     const replaceStr = route.path.replace(/\//g, '.')
-  //     const locale = this.$t(`layout.sidebar.menu${replaceStr}`) || '未知页面'
-  //     // return route.meta.title
-  //     return locale
-  //   }
-  // },
   props: {
     // 路由，必传
     route: {
@@ -99,6 +92,17 @@ export default {
   },
   computed: {
     ...mapGetters(['menuChildrenLevelHeight', 'sidebarWidth'])
+  },
+  methods: {
+    resolvePath (routePath) {
+      if (isExternal(routePath)) {
+        return routePath
+      }
+      if (isExternal(this.basePath)) {
+        return this.basePath
+      }
+      return path.resolve(this.basePath, routePath)
+    }
   }
 }
 </script>

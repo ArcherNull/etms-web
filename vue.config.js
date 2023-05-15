@@ -67,8 +67,8 @@ module.exports = {
         // target: 'http://192.168.20.64:60001', // 文良
         // target: "http://192.168.3.182", // 福禄
         // target: "http://192.168.20.131:60001", // 福禄
-        target: 'https://etmsone.dekuncn.com/', // 线上正式域名
-        // target: "https://onetest.dekuncn.com/", // 供应链一部测试域名
+        // target: 'https://etmsone.dekuncn.com/', // 线上正式域名
+        target: "https://onetest.dekuncn.com/", // 供应链一部测试域名
         // target: "https://oneunit.dekuncn.com", // 供应链一部测试域名
         // target: 'http://192.168.20.64:60001/', // 文良
         changOrigin: true

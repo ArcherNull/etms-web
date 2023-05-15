@@ -2,7 +2,7 @@
   <div class="HotkeysDiaItem">
     <DisplayText :display-text="hotkeysItem">
       <div
-        v-if="hotkeysItem.slotList && hotkeysItem.slotList.length"
+        v-if="hotkeysItem && hotkeysItem.slotList && hotkeysItem.slotList.length"
         slot="content"
         class="HotkeysDiaItem_container"
       >

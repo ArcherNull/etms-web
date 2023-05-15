@@ -5,6 +5,7 @@
  */
 import api from '@/api/index'
 import { generaMenu } from '@/router/routers'
+// import basicData from '@/router/modules/basicData'
 
 const state = {
   routes: []
@@ -26,6 +27,9 @@ const actions = {
         const resData = res?.data || []
 
         const asyncRoutes = generaMenu(resData)
+
+        console.log('asyncRoutes=====>', asyncRoutes)
+
         commit('SET_ROUTES', asyncRoutes)
         resole(asyncRoutes)
       })

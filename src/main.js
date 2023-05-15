@@ -11,8 +11,6 @@ import store from '@/store/index'
 import router from './router/index'
 import i18n from '@/i18n/index'
 
-// 框架内的公共路由
-import { frameInRoutes } from '@/router/routers'
 import * as filters from '@/filters/index'
 
 // 核心插件
@@ -34,9 +32,7 @@ async function initSystemDefault () {
   // 系统版本信息
   await store.dispatch('setting/version/loadSystemInfo')
   // 初始化tagViews
-  await store.dispatch('setting/tagViews/init', frameInRoutes)
-
-  // 模拟加载用户数据【可删除】
+  await store.dispatch('user/userInfo/loadUserInfo')
 }
 
 new Vue({
@@ -47,8 +43,8 @@ new Vue({
     // 初始化系统
     initSystemDefault()
   },
-  mounted () {
-    store.dispatch('user/userInfo/loadUserInfo')
-  },
+  // mounted () {
+  //   store.dispatch('user/userInfo/loadUserInfo')
+  // },
   render: (h) => h(App)
 }).$mount('#app')

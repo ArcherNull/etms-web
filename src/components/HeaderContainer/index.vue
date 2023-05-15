@@ -4,7 +4,7 @@
  * @Description: 页面顶部搜索容器
 -->
 <template>
-  <div :class="['HeaderContainer', className]" :flex="layoutType">
+  <div :class="['HeaderContainer', `${className}`]" :flex="layoutType">
     <div class="HeaderContainer-left">
       <slot name="left" />
     </div>
@@ -31,13 +31,17 @@ export default {
   },
   computed: {
     layoutType () {
-      return {
-        'flex-between': 'main:justify cross:center',
-        'flex-start': 'main:left cross:center',
-        'flex-end': 'main:right cross:center',
-        'dir-start': 'dir:top main:left cross:top',
-        'dir-end': 'dir:top cross:bottom'
-      }[this.layout]
+      if (this.layout) {
+        return {
+          'flex-between': 'main:justify cross:center',
+          'flex-start': 'main:left cross:center',
+          'flex-end': 'main:right cross:center',
+          'dir-start': 'dir:top main:left cross:top',
+          'dir-end': 'dir:top cross:bottom'
+        }[this.layout]
+      } else {
+        return ''
+      }
     }
   },
   methods: {}

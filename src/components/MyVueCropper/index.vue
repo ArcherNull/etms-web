@@ -242,8 +242,8 @@ export default {
     getCropBase64Data () {
       const that = this
       return new Promise((resolve, reject) => {
-        if (that.$refs.cropper) {
-          that.$refs?.cropper?.getCropData((data) => {
+        if (that.$refs?.cropper) {
+          that.$refs.cropper.getCropData((data) => {
             console.log('获取截图的 base64 数据=====>', data)
             resolve(data)
           })
@@ -257,8 +257,8 @@ export default {
     getCropBlobData () {
       const that = this
       return new Promise((resolve, reject) => {
-        if (that.$refs.cropper) {
-          that.$refs?.cropper?.getCropBlob((data) => {
+        if (that.$refs?.cropper) {
+          that.$refs.cropper.getCropBlob((data) => {
             console.log('获取截图的 blob 数据=====>', data)
             resolve(data)
           })
