@@ -1,20 +1,20 @@
 <template>
-    <div class='DataBulletinBoard'>
-        DataBulletinBoard
-    </div>
+  <div class="DataBulletinBoard">
+    DataBulletinBoard
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'DataBulletinBoard',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'DataBulletinBoard',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

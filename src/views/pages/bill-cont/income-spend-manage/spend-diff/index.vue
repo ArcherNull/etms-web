@@ -1,20 +1,20 @@
 <template>
-    <div class='SpendDiff'>
-        SpendDiff
-    </div>
+  <div class="SpendDiff">
+    SpendDiff
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'SpendDiff',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'SpendDiff',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

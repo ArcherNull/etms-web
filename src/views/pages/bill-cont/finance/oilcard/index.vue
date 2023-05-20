@@ -1,20 +1,20 @@
 <template>
-    <div class='Oilcard'>
-        Oilcard
-    </div>
+  <div class="Oilcard">
+    Oilcard
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Oilcard',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Oilcard',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

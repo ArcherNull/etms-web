@@ -1,20 +1,20 @@
 <template>
-    <div class='KpiReport'>
-        KpiReport
-    </div>
+  <div class="KpiReport">
+    KpiReport
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'KpiReport',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'KpiReport',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

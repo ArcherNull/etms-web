@@ -1,20 +1,20 @@
 <template>
-    <div class='CarrierQuote'>
-        CarrierQuote
-    </div>
+  <div class="CarrierQuote">
+    CarrierQuote
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'CarrierQuote',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'CarrierQuote',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

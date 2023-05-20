@@ -1,20 +1,20 @@
 <template>
-    <div class='PayApplication'>
-        PayApplication
-    </div>
+  <div class="PayApplication">
+    PayApplication
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'PayApplication',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'PayApplication',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

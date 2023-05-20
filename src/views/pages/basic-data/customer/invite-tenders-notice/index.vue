@@ -1,20 +1,20 @@
 <template>
-    <div class='InviteTendersNotice'>
-        InviteTendersNotice
-    </div>
+  <div class="InviteTendersNotice">
+    InviteTendersNotice
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'InviteTendersNotice',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'InviteTendersNotice',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

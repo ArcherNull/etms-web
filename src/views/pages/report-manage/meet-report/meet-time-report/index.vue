@@ -1,20 +1,20 @@
 <template>
-    <div class='MeetTimeReport'>
-        MeetTimeReport
-    </div>
+  <div class="MeetTimeReport">
+    MeetTimeReport
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'MeetTimeReport',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'MeetTimeReport',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

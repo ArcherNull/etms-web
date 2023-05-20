@@ -1,20 +1,20 @@
 <template>
-    <div class='Subjects'>
-        Subjects
-    </div>
+  <div class="Subjects">
+    Subjects
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Subjects',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Subjects',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

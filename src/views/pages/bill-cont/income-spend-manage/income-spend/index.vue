@@ -1,20 +1,20 @@
 <template>
-    <div class='IncomeSpend'>
-        IncomeSpend
-    </div>
+  <div class="IncomeSpend">
+    IncomeSpend
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'IncomeSpend',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'IncomeSpend',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

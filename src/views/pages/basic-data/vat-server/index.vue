@@ -1,20 +1,20 @@
 <template>
-    <div class='VatServer'>
-        VatServer
-    </div>
+  <div class="VatServer">
+    VatServer
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'VatServer',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'VatServer',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

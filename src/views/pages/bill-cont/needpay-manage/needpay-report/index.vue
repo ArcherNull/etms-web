@@ -1,20 +1,20 @@
 <template>
-    <div class='NeedpayReport'>
-        NeedpayReport
-    </div>
+  <div class="NeedpayReport">
+    NeedpayReport
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'NeedpayReport',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'NeedpayReport',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

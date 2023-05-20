@@ -1,20 +1,20 @@
 <template>
-    <div class='InvoiceVerification'>
-        InvoiceVerification
-    </div>
+  <div class="InvoiceVerification">
+    InvoiceVerification
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'InvoiceVerification',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'InvoiceVerification',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

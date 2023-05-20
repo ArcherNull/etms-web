@@ -1,20 +1,20 @@
 <template>
-    <div class='Permission'>
-        Permission
-    </div>
+  <div class="Permission">
+    Permission
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Permission',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Permission',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

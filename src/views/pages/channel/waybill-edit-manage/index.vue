@@ -1,20 +1,20 @@
 <template>
-    <div class='WaybillEditManage'>
-        WaybillEditManage
-    </div>
+  <div class="WaybillEditManage">
+    WaybillEditManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'WaybillEditManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'WaybillEditManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

@@ -1,20 +1,20 @@
 <template>
-    <div class='OrderManage'>
-        OrderManage
-    </div>
+  <div class="OrderManage">
+    OrderManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'OrderManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'OrderManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

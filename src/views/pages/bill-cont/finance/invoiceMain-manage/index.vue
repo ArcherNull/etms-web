@@ -1,20 +1,20 @@
 <template>
-    <div class='InvoiceMainManage'>
-        InvoiceMainManage
-    </div>
+  <div class="InvoiceMainManage">
+    InvoiceMainManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'InvoiceMainManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'InvoiceMainManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

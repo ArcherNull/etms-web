@@ -1,20 +1,20 @@
 <template>
-    <div class='MarginManage'>
-        MarginManage
-    </div>
+  <div class="MarginManage">
+    MarginManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'MarginManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'MarginManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

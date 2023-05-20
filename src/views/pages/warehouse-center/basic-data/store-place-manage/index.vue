@@ -1,20 +1,20 @@
 <template>
-    <div class='StorePlaceManage'>
-        StorePlaceManage
-    </div>
+  <div class="StorePlaceManage">
+    StorePlaceManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'StorePlaceManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'StorePlaceManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

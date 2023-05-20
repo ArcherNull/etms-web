@@ -1,20 +1,20 @@
 <template>
-    <div class='TrackConsumeSummary'>
-        TrackConsumeSummary
-    </div>
+  <div class="TrackConsumeSummary">
+    TrackConsumeSummary
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'TrackConsumeSummary',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'TrackConsumeSummary',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

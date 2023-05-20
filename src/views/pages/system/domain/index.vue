@@ -1,20 +1,20 @@
 <template>
-    <div class='Domain'>
-        Domain
-    </div>
+  <div class="Domain">
+    Domain
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Domain',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Domain',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

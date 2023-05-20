@@ -1,20 +1,20 @@
 <template>
-    <div class='ReportSetting'>
-        ReportSetting
-    </div>
+  <div class="ReportSetting">
+    ReportSetting
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ReportSetting',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ReportSetting',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

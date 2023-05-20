@@ -1,20 +1,20 @@
 <template>
-    <div class='PayConfirm'>
-        PayConfirm
-    </div>
+  <div class="PayConfirm">
+    PayConfirm
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'PayConfirm',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'PayConfirm',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

@@ -1,20 +1,20 @@
 <template>
-    <div class='TenderQuote'>
-        TenderQuote
-    </div>
+  <div class="TenderQuote">
+    TenderQuote
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'TenderQuote',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'TenderQuote',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

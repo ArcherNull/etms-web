@@ -1,20 +1,20 @@
 <template>
-    <div class='CustomerPriceManage'>
-        CustomerPriceManage
-    </div>
+  <div class="CustomerPriceManage">
+    CustomerPriceManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'CustomerPriceManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'CustomerPriceManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

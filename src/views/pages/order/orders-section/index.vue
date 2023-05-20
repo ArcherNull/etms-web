@@ -1,20 +1,20 @@
 <template>
-    <div class='OrdersSection'>
-        OrdersSection
-    </div>
+  <div class="OrdersSection">
+    OrdersSection
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'OrdersSection',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'OrdersSection',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

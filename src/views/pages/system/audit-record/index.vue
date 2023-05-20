@@ -1,20 +1,20 @@
 <template>
-    <div class='AuditRecord'>
-        AuditRecord
-    </div>
+  <div class="AuditRecord">
+    AuditRecord
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'AuditRecord',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'AuditRecord',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

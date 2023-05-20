@@ -1,20 +1,20 @@
 <template>
-    <div class='Region'>
-        Region
-    </div>
+  <div class="Region">
+    Region
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Region',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Region',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

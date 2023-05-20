@@ -1,20 +1,20 @@
 <template>
-    <div class='Quote'>
-        Quote
-    </div>
+  <div class="Quote">
+    Quote
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Quote',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Quote',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

@@ -1,20 +1,20 @@
 <template>
-    <div class='ReceiveTurnoverReport'>
-        ReceiveTurnoverReport
-    </div>
+  <div class="ReceiveTurnoverReport">
+    ReceiveTurnoverReport
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ReceiveTurnoverReport',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ReceiveTurnoverReport',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

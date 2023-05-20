@@ -1,20 +1,20 @@
 <template>
-    <div class='MeetVerifyReport'>
-        MeetVerifyReport
-    </div>
+  <div class="MeetVerifyReport">
+    MeetVerifyReport
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'MeetVerifyReport',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'MeetVerifyReport',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

@@ -1,20 +1,20 @@
 <template>
-    <div class='SupplierOffer'>
-        SupplierOffer
-    </div>
+  <div class="SupplierOffer">
+    SupplierOffer
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'SupplierOffer',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'SupplierOffer',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

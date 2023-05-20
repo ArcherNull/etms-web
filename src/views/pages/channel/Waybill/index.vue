@@ -1,20 +1,20 @@
 <template>
-    <div class='Waybill'>
-        Waybill
-    </div>
+  <div class="Waybill">
+    Waybill
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Waybill',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'Waybill',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

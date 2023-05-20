@@ -1,20 +1,20 @@
 <template>
-    <div class='ResBidding'>
-        ResBidding
-    </div>
+  <div class="ResBidding">
+    ResBidding
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ResBidding',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ResBidding',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

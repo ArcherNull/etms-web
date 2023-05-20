@@ -1,20 +1,20 @@
 <template>
-    <div class='PutInWarehouse'>
-        PutInWarehouse
-    </div>
+  <div class="PutInWarehouse">
+    PutInWarehouse
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'PutInWarehouse',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'PutInWarehouse',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

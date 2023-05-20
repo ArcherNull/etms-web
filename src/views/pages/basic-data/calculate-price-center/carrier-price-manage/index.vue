@@ -1,20 +1,20 @@
 <template>
-    <div class='CarrierPriceManage'>
-        CarrierPriceManage
-    </div>
+  <div class="CarrierPriceManage">
+    CarrierPriceManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'CarrierPriceManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'CarrierPriceManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

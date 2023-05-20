@@ -1,20 +1,20 @@
 <template>
-    <div class='IncomeDiff'>
-        IncomeDiff
-    </div>
+  <div class="IncomeDiff">
+    IncomeDiff
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'IncomeDiff',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'IncomeDiff',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

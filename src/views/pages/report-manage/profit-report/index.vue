@@ -1,20 +1,20 @@
 <template>
-    <div class='ProfitReport'>
-        ProfitReport
-    </div>
+  <div class="ProfitReport">
+    ProfitReport
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ProfitReport',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ProfitReport',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

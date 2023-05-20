@@ -1,20 +1,20 @@
 <template>
-    <div class='CustomerInfo'>
-        CustomerInfo
-    </div>
+  <div class="CustomerInfo">
+    CustomerInfo
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'CustomerInfo',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'CustomerInfo',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

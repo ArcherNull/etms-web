@@ -1,20 +1,20 @@
 <template>
-    <div class='ReceiveAccount'>
-        ReceiveAccount
-    </div>
+  <div class="ReceiveAccount">
+    ReceiveAccount
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ReceiveAccount',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ReceiveAccount',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

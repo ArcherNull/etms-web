@@ -1,20 +1,20 @@
 <template>
-    <div class='LogManage'>
-        LogManage
-    </div>
+  <div class="LogManage">
+    LogManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'LogManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'LogManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

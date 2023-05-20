@@ -1,20 +1,20 @@
 <template>
-    <div class='UnwrittenOff'>
-        UnwrittenOff
-    </div>
+  <div class="UnwrittenOff">
+    UnwrittenOff
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'UnwrittenOff',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'UnwrittenOff',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

@@ -1,20 +1,20 @@
 <template>
-    <div class='StowageScheduling'>
-        StowageScheduling
-    </div>
+  <div class="StowageScheduling">
+    StowageScheduling
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'StowageScheduling',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'StowageScheduling',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

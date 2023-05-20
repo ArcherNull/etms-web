@@ -1,20 +1,20 @@
 <template>
-    <div class='FreightPlatform'>
-        FreightPlatform
-    </div>
+  <div class="FreightPlatform">
+    FreightPlatform
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'FreightPlatform',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'FreightPlatform',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

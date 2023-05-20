@@ -1,20 +1,20 @@
 <template>
-    <div class='PayVerify'>
-        PayVerify
-    </div>
+  <div class="PayVerify">
+    PayVerify
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'PayVerify',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'PayVerify',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

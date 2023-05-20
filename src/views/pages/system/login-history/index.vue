@@ -1,20 +1,20 @@
 <template>
-    <div class='LoginHistory'>
-        LoginHistory
-    </div>
+  <div class="LoginHistory">
+    LoginHistory
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'LoginHistory',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'LoginHistory',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

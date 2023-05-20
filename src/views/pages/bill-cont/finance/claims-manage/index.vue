@@ -1,20 +1,20 @@
 <template>
-    <div class='ClaimsManage'>
-        ClaimsManage
-    </div>
+  <div class="ClaimsManage">
+    ClaimsManage
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ClaimsManage',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ClaimsManage',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 

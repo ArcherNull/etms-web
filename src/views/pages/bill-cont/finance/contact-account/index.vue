@@ -1,20 +1,20 @@
 <template>
-    <div class='ContactAccount'>
-        ContactAccount
-    </div>
+  <div class="ContactAccount">
+    ContactAccount
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ContactAccount',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  name: 'ContactAccount',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 }
 </script>
 
