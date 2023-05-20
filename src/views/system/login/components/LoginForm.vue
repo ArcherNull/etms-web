@@ -158,7 +158,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user/login', ['companyList']),
+    ...mapState('user/userInfo', ['companyList']),
     submitBtnText () {
       if (this.safetyVerifyFun) {
         return '确定'
@@ -175,7 +175,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user/login', ['login']),
+    ...mapActions('user/userInfo', ['login']),
     // 登录提交表单按钮
     submit () {
       console.log('登录提交表单')

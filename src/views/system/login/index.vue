@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import LoginForm from './components/LoginForm.vue'
 
 export default {
@@ -128,10 +128,13 @@ export default {
   },
   created () {
     this.getCompanyList()
+    this.logout('clear')
   },
 
   methods: {
-    ...mapMutations('user/login', ['SET_COMPANY_LIST']),
+    ...mapMutations('user/userInfo', ['SET_COMPANY_LIST']),
+    ...mapActions('user/userInfo', ['logout']),
+
     // 切换语言
     onChangeLocale (ele) {
       console.log('切换语言', ele)
@@ -162,8 +165,8 @@ export default {
   justify-content: center;
   align-items: center;
   // background-image: url('../../../assets/images/login.jpg');
-  background: url('./images/login-bg.png') center no-repeat;
-  // background: #ffffff;
+  // background: url('./images/login-bg.png') center no-repeat;
+  background: #ffffff;
   background-color: $color-bg;
   background-size: 100% 100%;
   position: relative;

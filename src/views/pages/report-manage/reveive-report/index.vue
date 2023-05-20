@@ -1,20 +1,20 @@
 <template>
-  <div class="ReveiveReport">
-    ReveiveReport
-  </div>
+    <div class='ReveiveReport'>
+        ReveiveReport
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'ReveiveReport',
-  data () {
-    return {
+    name: 'ReveiveReport',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

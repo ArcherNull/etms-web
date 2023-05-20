@@ -22,14 +22,24 @@ const state = {
   organization: [], // 组织管理【不含公司管理列表】
   organization4: [], // 组织管理【含公司管理列表】
   roleInfo: [], // 角色信息
-  userInfo: [] // 用户信息
+  userInfo: [], // 用户信息
+
+  // 公司列表
+  companyList: [],
+  // 童虎登录信息
+  userLoginInfo: {
+    userLogin: '',
+    userPwd: '',
+    companyId: ''
+  },
+  // 按钮权限
+  btnPermissions: []
 }
 
 const mutations = {
   SET_DIVISION_LIST (state, list) {
     state.divisionList = list
   },
-
   /**
    * @description 切换灰度状态
    */
@@ -62,6 +72,14 @@ const mutations = {
     state.organization4 = data?.organization4 || []
     state.roleInfo = data?.roleInfo || []
     state.userInfo = data?.userInfo || []
+  },
+  // 设置用户登录信息
+  SET_USER_LOGIN_INFO: (state, data) => {
+    state.login = data
+  },
+  // 设置公司列表
+  SET_COMPANY_LIST: (state, list) => {
+    state.companyList = list
   }
 }
 
@@ -71,12 +89,12 @@ const actions = {
    * @param {*} dispatch 分发事件
    * @return {*}
    */
-  async loadUserInfo ({ dispatch }) {
-    await dispatch('setting/tagViews/generateRoutes', null, { root: true })
+  loadUserInfo ({ dispatch }) {
     // 持久化数据加载上次退出时的多页列表
-    await dispatch('setting/tagViews/openedLoad', null, { root: true })
+    dispatch('setting/tagViews/openedLoad', null, { root: true })
+
     // 全屏监听
-    await dispatch('setting/fullscreen/listen', null, { root: true })
+    dispatch('setting/fullscreen/listen', null, { root: true })
 
     // // 测试快捷键用 【可删除】
     // await dispatch('settingsPanel/hotkeys/setHotkeysShowSettingsPanel', 'f8', {
@@ -84,13 +102,13 @@ const actions = {
     // })
 
     // 加载用户自定义快捷键
-    await dispatch('settingsPanel/hotkeys/loadHotkeys', null, { root: true })
+    dispatch('settingsPanel/hotkeys/loadHotkeys', null, { root: true })
 
     // 加载用户默认的主题色
-    await dispatch('setting/theme/load', null, { root: true })
+    dispatch('setting/theme/load', null, { root: true })
 
     // 加载用户上次登录信息
-    await dispatch(
+    dispatch(
       'setting/db/get',
       {
         dbName: 'user',
@@ -111,14 +129,16 @@ const actions = {
    * @description: 登出
    * @return {*}
    */
-  logout () {
+  logout (type = 'logout') {
     util.cookies.remove('token')
     const currentPath = router.history.current.path
     console.log('currentPath========>', currentPath)
-    router.push({
-      path: `/login?redirect=${currentPath}`
-    })
     clearMessageInterval()
+    if (type === 'logout') {
+      router.push({
+        path: `/login?redirect=${currentPath}`
+      })
+    }
   },
 
   setDeviceInfo ({ commit }, deviceInfo) {
@@ -139,6 +159,33 @@ const actions = {
       validateResult && commit('SET_USER_INFO', validateResult)
     } else {
       throw new Error(msg || '获取用户详情失败')
+    }
+  },
+
+  // 记录用户登录信息， 用户名及密码
+  setUserLoginInfoFun ({ commit }, data) {
+    commit('SET_USER_LOGIN_INFO', data)
+  },
+
+  // 用户登录
+  async login ({ commit, dispatch }, dataObj) {
+    try {
+      const { code, data, msg } = await api.login.login(dataObj)
+
+      if (code === 200 && data?.token) {
+        // 保存token
+        util.cookies.set('token', data?.token)
+        // 保存用户登录表单
+        commit('SET_USER_LOGIN_INFO', data)
+        // 获取用户登录信息
+        await dispatch('getUserInfo')
+
+        return Promise.resolve(true)
+      } else {
+        throw new Error(msg || '获取token失败')
+      }
+    } catch (error) {
+      return Promise.resolve(false)
     }
   }
 }

@@ -1,20 +1,20 @@
 <template>
-  <div class="ReviewProcess">
-    ReviewProcess
-  </div>
+    <div class='ReviewProcess'>
+        ReviewProcess
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'ReviewProcess',
-  data () {
-    return {
+    name: 'ReviewProcess',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

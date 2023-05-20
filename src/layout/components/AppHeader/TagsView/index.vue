@@ -3,7 +3,7 @@
  * @Date: 2021-12-02 00:06:47
 -->
 <template>
-  <div class="appHeader-tagViews dk-bb-gray-5" :style="{ height: height }" flex>
+  <div class="appHeader-tagViews dk-bb-gray-5" :style="{ 'height': height }" flex>
     <!-- tabs -->
     <div class="appHeader-tagViews-tabs" flex-box="1">
       <div class="appHeader-tagViews-tabs__inner">

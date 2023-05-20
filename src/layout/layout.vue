@@ -124,7 +124,7 @@ export default {
       this.appMainLoading = !(newVal === oldVal)
       setTimeout(() => {
         this.appMainLoading = false
-      }, 1000)
+      }, 500)
     }
   },
   mounted () {

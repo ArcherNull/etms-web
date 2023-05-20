@@ -27,24 +27,19 @@ Object.keys(filters).forEach(key => {
 })
 
 // 初始化系统
-async function initSystemDefault () {
+function initSystemDefault () {
   console.log('初始化系统')
   // 系统版本信息
-  await store.dispatch('setting/version/loadSystemInfo')
+  store.dispatch('setting/version/loadSystemInfo')
   // 初始化tagViews
-  await store.dispatch('user/userInfo/loadUserInfo')
+  store.dispatch('user/userInfo/loadUserInfo')
 }
+
+initSystemDefault()
 
 new Vue({
   store,
   router,
   i18n,
-  created () {
-    // 初始化系统
-    initSystemDefault()
-  },
-  // mounted () {
-  //   store.dispatch('user/userInfo/loadUserInfo')
-  // },
   render: (h) => h(App)
 }).$mount('#app')

@@ -1,20 +1,20 @@
 <template>
-  <div class="SiteManage">
-    SiteManage
-  </div>
+    <div class='SiteManage'>
+        SiteManage
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'SiteManage',
-  data () {
-    return {
+    name: 'SiteManage',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

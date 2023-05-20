@@ -1,20 +1,20 @@
 <template>
-  <div class="DispatchCenter">
-    DispatchCenter
-  </div>
+    <div class='DispatchCenter'>
+        DispatchCenter
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'DispatchCenter',
-  data () {
-    return {
+    name: 'DispatchCenter',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

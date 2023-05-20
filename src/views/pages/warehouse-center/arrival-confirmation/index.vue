@@ -1,20 +1,20 @@
 <template>
-  <div class="ArrivalConfirmation">
-    ArrivalConfirmation
-  </div>
+    <div class='ArrivalConfirmation'>
+        ArrivalConfirmation
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'ArrivalConfirmation',
-  data () {
-    return {
+    name: 'ArrivalConfirmation',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

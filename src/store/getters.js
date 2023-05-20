@@ -32,9 +32,9 @@ const layoutSize = {
     dimensionUnit,
   // 布局尺寸--侧边栏--菜单栏总高度
   menuTotalHeight: (state) =>
-    state.setting.layout.sidebarHeight.menuHeight.menuTotalHeight -
-    state.setting.layout.sidebarHeight.logoHeight -
-    state.setting.layout.sidebarHeight.settingHeight +
+    (state.setting.layout.sidebarHeight.menuHeight.menuTotalHeight -
+      state.setting.layout.sidebarHeight.logoHeight -
+      state.setting.layout.sidebarHeight.settingHeight) +
     dimensionUnit,
   // 布局尺寸--侧边栏--底部设置高度
 
@@ -42,8 +42,8 @@ const layoutSize = {
     state.setting.layout.sidebarHeight.settingHeight + dimensionUnit,
   // 布局尺寸--头部--总高度
   headerHeight: (state) =>
-    state.setting.layout.headerStyle.navBoxHeight +
-    state.setting.layout.headerStyle.tagsViewsHeight +
+    (state.setting.layout.headerStyle.navBoxHeight +
+      state.setting.layout.headerStyle.tagsViewsHeight) +
     dimensionUnit,
   // 布局尺寸--头部--面包屑导航栏高度
   navBoxHeight: (state) =>
@@ -79,12 +79,10 @@ const permissions = {
 
 // 当前用户的权限路由
 const asyncRoute = {
-  asyncRoute: (state) => state.setting.tagViews.pool
+  asyncRoute: (state) => state.setting.tagViews.asyncRoutes || []
 }
 
 const getters = {
-  getters_count: (state) => state.user.login.count + 10,
-
   // 布局尺寸--相关计算值
   ...layoutSize,
   // 布局颜色
@@ -93,6 +91,7 @@ const getters = {
   ...logs,
   // 当前登录用户的权限
   ...permissions,
+  // 动态路由
   ...asyncRoute
 }
 

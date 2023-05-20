@@ -1,20 +1,20 @@
 <template>
-  <div class="Cartrail">
-    Cartrail
-  </div>
+    <div class='Cartrail'>
+        Cartrail
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Cartrail',
-  data () {
-    return {
+    name: 'Cartrail',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

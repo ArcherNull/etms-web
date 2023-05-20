@@ -1,20 +1,20 @@
 <template>
-  <div class="SetProcess">
-    SetProcess
-  </div>
+    <div class='SetProcess'>
+        SetProcess
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'SetProcess',
-  data () {
-    return {
+    name: 'SetProcess',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

@@ -1,20 +1,20 @@
 <template>
-  <div class="Inroad">
-    Inroad
-  </div>
+    <div class='Inroad'>
+        Inroad
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Inroad',
-  data () {
-    return {
+    name: 'Inroad',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

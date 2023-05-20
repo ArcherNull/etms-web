@@ -30,7 +30,7 @@ import VueCropper from 'vue-cropper'
 import VueClipboard from 'vue-clipboard2'
 
 // 全局混入
-import mixins from '@/mixins/index'
+// import mixins from '@/mixins/index'
 // 全局指令
 import directives from '@/directives/index'
 // dayjs
@@ -104,7 +104,7 @@ export default {
     // 剪贴板
     Vue.use(VueClipboard)
     // 混入
-    Vue.use(mixins)
+    // Vue.use(mixins)
     // 指令
     Vue.use(directives)
     // 百度地图

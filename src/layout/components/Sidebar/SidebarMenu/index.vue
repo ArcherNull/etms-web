@@ -7,7 +7,7 @@
     <!-- 菜单搜索区域 -->
     <MenuSearch :height="menuSearchHeight" />
     <!-- 菜单向区域 -->
-    <div class="siderbarMenu-menuBox">
+    <div v-loading="!menuRoutes.length" class="siderbarMenu-menuBox">
       <!-- <MenuItem title="菜单项" icon="add" /> -->
       <el-scrollbar wrap-class="scrollbar-wrapper">
         <!-- collapse-transition 是否开启折叠动画 unique-opened 	是否只保持一个子菜单的展开 -->
@@ -23,7 +23,7 @@
           mode="vertical"
         >
           <SidebarItem
-            v-for="route in asyncRoute"
+            v-for="route in menuRoutes"
             :key="route.path"
             :index="route.path"
             :route="route"
@@ -62,7 +62,8 @@ export default {
       isCollapse: false, // 是否折叠
       menuBg: '', // 菜单栏背景颜色
       menuText: '', // 菜单栏文本
-      menuActiveText: '' // 被选中的文本颜色
+      menuActiveText: '', // 被选中的文本颜色
+      menuRoutes: []
       // asyncRoute: frameInRoutes // 动态路由
     }
   },
@@ -82,6 +83,18 @@ export default {
       const route = this.$route
       const { meta } = route
       return meta.id
+    }
+  },
+  watch: {
+    asyncRoute: {
+      handler (newVal) {
+        if (Array.isArray(newVal)) {
+          this.menuRoutes = newVal
+        } else {
+          this.menuRoutes = []
+        }
+      },
+      immediate: true
     }
   },
   methods: {

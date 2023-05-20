@@ -1,20 +1,20 @@
 <template>
-  <div class="Division">
-    Division
-  </div>
+    <div class='Division'>
+        Division
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Division',
-  data () {
-    return {
+    name: 'Division',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

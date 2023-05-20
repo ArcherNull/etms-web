@@ -1,20 +1,20 @@
 <template>
-  <div class="Menudetail">
-    Menudetail
-  </div>
+    <div class='Menudetail'>
+        Menudetail
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Menudetail',
-  data () {
-    return {
+    name: 'Menudetail',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

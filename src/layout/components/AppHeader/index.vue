@@ -6,7 +6,7 @@
   <div>
     <!-- 面包屑导航/用户信息/消息通知 -->
     <div
-      :style="{ height: navBoxHeight }"
+      :style="{ 'height': navBoxHeight }"
       class="appHeader"
       flex="main:justify cross:stretch"
     >

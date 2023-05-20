@@ -1,20 +1,20 @@
 <template>
-  <div class="ImportCenter">
-    ImportCenter
-  </div>
+    <div class='ImportCenter'>
+        ImportCenter
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'ImportCenter',
-  data () {
-    return {
+    name: 'ImportCenter',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

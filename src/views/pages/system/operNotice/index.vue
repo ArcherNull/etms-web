@@ -1,20 +1,20 @@
 <template>
-  <div class="OperNotice">
-    OperNotice
-  </div>
+    <div class='OperNotice'>
+        OperNotice
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'OperNotice',
-  data () {
-    return {
+    name: 'OperNotice',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

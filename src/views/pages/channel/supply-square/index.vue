@@ -1,20 +1,20 @@
 <template>
-  <div class="SupplySquare">
-    SupplySquare
-  </div>
+    <div class='SupplySquare'>
+        SupplySquare
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'SupplySquare',
-  data () {
-    return {
+    name: 'SupplySquare',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
 
     }
-  },
-  methods: {
-
-  }
 }
 </script>
 

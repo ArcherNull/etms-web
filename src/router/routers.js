@@ -101,6 +101,28 @@ export const errorPage = [
   }
 ]
 
+// 获取最后一级路由，并转换为大写
+const getLastMenuPath = (ele) => {
+  if (ele && typeof ele === 'string') {
+    const str = ele.split('/')
+    const letter = str[str.length - 1]
+
+    const convertBigCamelizeCase = (str) => {
+      function upper (all, letter) {
+        return letter.toUpperCase()
+      }
+      const res = str.replace(/[-_](\w)/g, upper).replace(/\b\w/g, function (th) {
+        return th.toUpperCase()
+      }).replace(/\s*/g, '')
+      return res
+    }
+
+    return convertBigCamelizeCase(letter)
+  } else {
+    return ''
+  }
+}
+
 // 生成菜单
 export function generaMenu (data, pUrl = '') {
   const routes = []
@@ -109,34 +131,12 @@ export function generaMenu (data, pUrl = '') {
       const isParentPath = /^\//.test(item.menuUrl)
       const path = `${pUrl}${isParentPath ? item.menuUrl : '/' + item.menuUrl}`
       const component = isParentPath ? 'Layout' : path
-      // item.component = ''
-      if (component === 'Layout') {
-        item.component = Layout
-      } else {
-        // 接口组件字符串转换成组件对象， 这里找不到这个模块路径  webpack版本低时的引入方式
-        item.component = (resolve) =>
-          require([`@views/pages${component}`], resolve)
-        // item.component = () => import('../views/pages/' + component + '/index.vue')
-      }
+      const child = item.baseMenudetailVoList
 
-      // 获取children子集
-      const getChildren = (item) => {
-        const child = item.baseMenudetailVoList
-        return child?.length
-          ? generaMenu(
-            item.baseMenudetailVoList,
-            pUrl !== '' ? pUrl + '/' + item.menuUrl : item.menuUrl
-          )
-          : null
-      }
-
-      const menu = {
+      const menuObj = {
         pathUrl: pUrl, // 上一级url
         path, // 当前url
-        component: item.component,
-        menuId: item.menuId || '',
-        children: getChildren(item),
-        name: path,
+        name: getLastMenuPath(path),
         meta: {
           icon: item.menuIcon,
           ...meta,
@@ -144,9 +144,48 @@ export function generaMenu (data, pUrl = '') {
           id: item.menuId
         }
       }
-      routes.push(menu)
+
+      // item.component = ''
+      if (component === 'Layout') {
+        menuObj.component = Layout
+        menuObj.redirect = {
+          name: child?.[0]?.menuUrl
+        }
+      } else {
+        if (!child?.length) {
+          // 三级路由
+          // 接口组件字符串转换成组件对象， 这里找不到这个模块路径  webpack版本低时的引入方式
+          menuObj.component = (resolve) => require([`@/views/pages${component}`], resolve)
+          // item.component = () => import('@/views/pages/' + component + '/index.vue')
+        } else {
+          // 二级路由重定向
+          menuObj.redirect = {
+            name: child?.[0].menuUrl
+          }
+        }
+      }
+
+      // 获取children子集
+      const getChildren = (cItem) => {
+        return child?.length
+          ? generaMenu(
+            cItem.baseMenudetailVoList,
+            pUrl !== '' ? pUrl + '/' + cItem.menuUrl : cItem.menuUrl
+          )
+          : null
+      }
+
+      const childArr = getChildren(item)
+      if (childArr && Array.isArray(childArr)) {
+        menuObj.children = childArr
+      }
+
+      routes.push(menuObj)
     })
   }
+
+  // console.log('routes=====>', routes)
+
   return routes
 }
 

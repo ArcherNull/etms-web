@@ -25,13 +25,14 @@ import util from '@/libs/util.js'
 import routes from './routers'
 
 // 引入页面锚点方法
-import { jumpPageAnchor } from '@/common/commFun.js'
+// import { jumpPageAnchor } from '@/common/commFun.js'
 
 // 解决点击相同路由的时候，路由报错的问题
 const VueRouterPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
   return VueRouterPush.call(this, location).catch((err) => err)
 }
+
 const VueRouterReplace = VueRouter.prototype.replace
 VueRouter.prototype.replace = function replace (location) {
   return VueRouterReplace.call(this, location).catch((err) => err)
@@ -54,10 +55,6 @@ export function resetRouter () {
 // 导出路由 在 main.js 里使用
 const router = createRouter()
 
-// 这里暂时将cookie里是否存有token作为验证是否登录的条件
-// 请根据自身业务需要修改
-const getToken = () => util.cookies.get('token')
-
 // 导航前守卫
 router.beforeEach(async (to, from, next) => {
   console.log('导航前守卫', to)
@@ -77,30 +74,45 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 验证当前路由所有的匹配中是否需要有登录验证的
-  if (to.matched.some((r) => r.meta.auth)) {
-    const token = getToken()
-    if (token) {
-      if (['/login', '/'].includes(to.path)) {
-        next()
-      } else {
-        // const hasMenuList = store.state.user.menu?.routes?.length > 0
+  if (util.cookies.get('token')) {
+    if (['/login', '/'].includes(to.path)) {
+      next()
+    } else {
+      const hasAsyncRoutesRequest = store.state.setting.tagViews.hasAsyncRoutesRequest
+
+      console.log('hasAsyncRoutesRequest=====>', hasAsyncRoutesRequest)
+
+      // 有token但是动态路由为空，则请求动态路由
+      if (!hasAsyncRoutesRequest) {
+        // 添加动态路由
+        // resetRouter()
+        const asyncRoutes = await store.dispatch('setting/tagViews/generateRoutes')
+        console.log('asyncRoutes=====>', asyncRoutes)
+        asyncRoutes.forEach(item => {
+          router.addRoute(item)
+        })
 
         next({ ...to, replace: true })
-      }
-    } else {
-      // 没有登录的时候跳转到登录界面
-      // 携带上登陆成功之后需要跳转的页面完整路径
-      next({
-        name: 'login',
-        query: {
-          redirect: to.fullPath
+      } else {
+        if (to.matched.some((r) => r.meta.auth)) {
+          next()
+        } else {
+          // 不需要身份校验 直接通过12
+          next()
         }
-      })
-      NProgress.done()
+      }
     }
   } else {
-    // 不需要身份校验 直接通过12
-    next()
+    console.log('jingrusdfsdf')
+    // 没有登录的时候跳转到登录界面
+    // 携带上登陆成功之后需要跳转的页面完整路径
+    next({
+      name: 'login',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+    NProgress.done()
   }
 })
 
@@ -112,15 +124,14 @@ router.afterEach(async (to, from) => {
 
   const { anchor } = to.params
   if (anchor) {
-    jumpPageAnchor(to.path, anchor)
+    // jumpPageAnchor(to.path, anchor)
   } else {
     // const dom = document.getElementById('layout-main-container')
     // console.log('dom==============>', dom)
     // dom.scrollTo(0, 0)
   }
 
-  const token = getToken()
-  if (from.path === '/login' && token) {
+  if (from.path === '/login' && util.cookies.get('token')) {
     Notification({
       title: '登录成功',
       message: `${setting.name}，欢迎您回来`,

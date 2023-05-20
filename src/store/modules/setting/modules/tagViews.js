@@ -10,14 +10,18 @@ import setting from '@/setting.js'
 import api from '@/api/index'
 import { generaMenu } from '@/router/routers'
 // 框架内的公共路由
-import { frameInRoutes } from '@/router/routers'
+// import { frameInRoutes } from '@/router/routers'
 
 // 判定是否需要缓存
 const isKeepAlive = (data) => get(data, 'meta.cache', false)
 
 const state = {
-  // 可以在多页 tab 模式下显示的页面
+  // 存在动态路由的请求
+  hasAsyncRoutesRequest: false,
+  // 可以在多页 tab 模式下显示的页面, 菜单数组的平铺数组对象
   pool: [],
+  // 动态路由
+  asyncRoutes: [],
   // 当前显示的多页面列表
   opened: get(setting, 'page.opened', []),
   // 已经加载多标签页数据 https://github.com/d2-projects/d2-admin/issues/201
@@ -35,6 +39,9 @@ const state = {
 }
 
 const mutations = {
+  SET_HAS_ASYNC_ROUTES_REQUEST (state, bool) {
+    state.hasAsyncRoutesRequest = bool
+  },
   /**
    * @class current
    * @description 设置当前激活的页面 fullPath
@@ -55,6 +62,7 @@ const mutations = {
     keep.push(name)
     state.keepAlive = uniq(keep)
   },
+
   /**
    * @description: 设置页面池
    * @param {Object} state state
@@ -63,6 +71,7 @@ const mutations = {
   SET_ALL_PAGES (state, pages) {
     state.pool = pages
   },
+
   /**
    * @description 删除一个页面的缓存设置
    * @param {Object} state state
@@ -98,6 +107,11 @@ const mutations = {
     state.isZoomInScreen = bool
   },
 
+  /**
+   * @description: 设置页面锚点
+   * @param {*} arr
+   * @return {*}
+   */
   SET_CURRENT_PAGE_ANCHORS (state, arr) {
     state.currentPageAnchors = arr
   },
@@ -109,6 +123,15 @@ const mutations = {
    */
   SET_CURRENT_ANCHOR_LIST (state, list) {
     state.currentAnchorList = list
+  },
+
+  /**
+   * @description: 动态路由
+   * @param {Array} list
+   * @return {*}
+   */
+  SET_ASYNC_ROUTES (state, asyncRoutes) {
+    state.asyncRoutes = asyncRoutes
   }
 }
 
@@ -178,21 +201,24 @@ const actions = {
    * @param {Array} routes routes
    */
   init ({ commit }, routes) {
-    const pool = []
-    const push = function (routes) {
-      routes.forEach((route) => {
-        if (route.children && route.children?.length > 0) {
-          push(route.children)
-        } else if (!route.hidden) {
-          const { meta, name, path } = route
-          pool.push({ meta, name, path })
-        }
-      })
-    }
-    push(routes)
-    console.log('初始化router', pool)
-    // state.pool = pool
-    commit('SET_ALL_PAGES', pool)
+    return new Promise((reslove, reject) => {
+      const pool = []
+      const push = function (routes) {
+        routes.forEach((route) => {
+          if (route.children && route.children?.length > 0) {
+            push(route.children)
+          } else if (!route.hidden) {
+            const { meta, name, path } = route
+            pool.push({ meta, name, path })
+          }
+        })
+      }
+      push(routes)
+      console.log('初始化router', pool)
+      // state.pool = pool
+      commit('SET_ALL_PAGES', pool)
+      reslove(pool)
+    })
   },
   /**
    * @class opened
@@ -447,7 +473,6 @@ const actions = {
    * @description: 刷新页面
    */
   refreshPage () {
-    console.log('navigator', window.location)
     router.push({ name: 'refresh' })
   },
 
@@ -463,23 +488,19 @@ const actions = {
    * @param {*} commit
    * @return {*}
    */
-  generateRoutes ({ commit }) {
-    commit('SET_ROUTES', [])
+  generateRoutes ({ commit, dispatch }) {
+    console.log('生成路由')
     return new Promise((resole, reject) => {
-      api.system.user.getMenuTreeList().then((res) => {
+      api.system.user.getMenuTreeList().then(async (res) => {
         const resData = res?.data || []
-
         const asyncRoutes = generaMenu(resData)
-
         console.log('asyncRoutes=====>', asyncRoutes)
-
-        if (asyncRoutes?.length) {
-          asyncRoutes.forEach(item => {
-            router.addRoute(item)
-          })
-        }
-
-        commit('SET_ALL_PAGES', [...frameInRoutes, ...asyncRoutes])
+        // 设置动态路由
+        commit('SET_ASYNC_ROUTES', asyncRoutes)
+        // 已经请求过路由了
+        commit('SET_HAS_ASYNC_ROUTES_REQUEST', true)
+        // tagViews的pool
+        await dispatch('init', asyncRoutes)
         resole(asyncRoutes)
       })
         .catch(_ => {
