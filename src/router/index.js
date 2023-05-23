@@ -11,7 +11,7 @@ import {
   pendingRequest
 } from '@/serve/cancelRepeatRequest'
 import setting from '@/setting'
-import { Notification } from 'element-ui'
+import { Notification, Message } from 'element-ui'
 // 进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -23,6 +23,9 @@ import util from '@/libs/util.js'
 
 // 路由数据
 import routes from './routers'
+
+// 白名单路径
+const whitePathList = ['/login']
 
 // 引入页面锚点方法
 // import { jumpPageAnchor } from '@/common/commFun.js'
@@ -60,32 +63,33 @@ router.beforeEach(async (to, from, next) => {
   console.log('导航前守卫', to)
   // 进度条
   NProgress.start()
-  // 确认已经加载多标签页数据
-  await store.dispatch('setting/tagViews/isLoaded')
-
-  // 如果上一个页面还存在为请求完的接口，则中止全部请求
-  if (pendingRequest.size) {
-    console.log(`当前页面正在请求的接口数为=====>${pendingRequest.size}个`)
-    pendingRequest.forEach((cancel, requestKey) => {
-      requestKey && cancel(`页面切换取消上一个页面的${requestKey}请求`)
-    })
-    pendingRequest.clear()
-    resetCancelRequestTimer()
-  }
 
   // 验证当前路由所有的匹配中是否需要有登录验证的
-  if (util.cookies.get('token')) {
-    if (['/login', '/'].includes(to.path)) {
-      next()
-    } else {
+  const token = util.cookies.get('token')
+  console.log('token=====>', token)
+  if (token) {
+    try {
+    // 确认已经加载多标签页数据
+      await store.dispatch('setting/tagViews/isLoaded')
+
+      // 如果上一个页面还存在为请求完的接口，则中止全部请求
+      if (pendingRequest.size) {
+        console.log(`当前页面正在请求的接口数为=====>${pendingRequest.size}个`)
+        pendingRequest.forEach((cancel, requestKey) => {
+          requestKey && cancel(`页面切换取消上一个页面的${requestKey}请求`)
+        })
+        pendingRequest.clear()
+        resetCancelRequestTimer()
+      }
+
       const hasAsyncRoutesRequest = store.state.setting.tagViews.hasAsyncRoutesRequest
 
       console.log('hasAsyncRoutesRequest=====>', hasAsyncRoutesRequest)
 
       // 有token但是动态路由为空，则请求动态路由
       if (!hasAsyncRoutesRequest) {
-        // 添加动态路由
-        // resetRouter()
+      // 添加动态路由
+      // resetRouter()
         const asyncRoutes = await store.dispatch('setting/tagViews/generateRoutes')
         console.log('asyncRoutes=====>', asyncRoutes)
         asyncRoutes.forEach(item => {
@@ -97,23 +101,27 @@ router.beforeEach(async (to, from, next) => {
         if (to.matched.some((r) => r.meta.auth)) {
           next()
         } else {
-          // 不需要身份校验 直接通过12
+        // 不需要身份校验 直接通过12
           next()
         }
       }
+    } catch (err) {
+      await store.dispatch('user/userInfo/logout')
+      Message.error(`路由跳转出错`)
     }
   } else {
-    console.log('jingrusdfsdf')
-    // 没有登录的时候跳转到登录界面
-    // 携带上登陆成功之后需要跳转的页面完整路径
-    next({
-      name: 'login',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-    NProgress.done()
+    if (whitePathList.includes(to.path)) {
+      next()
+    } else {
+      next({
+        name: 'login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    }
   }
+  NProgress.done()
 })
 
 router.afterEach(async (to, from) => {

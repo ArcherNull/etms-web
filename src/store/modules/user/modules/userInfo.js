@@ -89,7 +89,7 @@ const actions = {
    * @param {*} dispatch 分发事件
    * @return {*}
    */
-  loadUserInfo ({ dispatch }) {
+  async loadUserInfo ({ dispatch }) {
     // 持久化数据加载上次退出时的多页列表
     dispatch('setting/tagViews/openedLoad', null, { root: true })
 
