@@ -49,44 +49,7 @@ export default {
   data () {
     return {
       asideShow: true,
-      appMainLoading: false,
-      AppMainVContextmenu: [
-        {
-          title: '系统快捷菜单1',
-          click: () => {
-            console.log('系统快捷菜单1')
-          }
-        },
-        {
-          title: '系统快捷菜单2',
-          click: () => {
-            console.log('系统快捷菜单2')
-          }
-        },
-        {
-          title: '系统快捷菜单3',
-          children: [
-            {
-              title: '土豆',
-              click: () => {
-                console.log('土豆')
-              }
-            },
-            {
-              title: '小油菜',
-              disabled: false,
-              children: [
-                {
-                  title: '空心菜',
-                  click: () => {
-                    console.log('空心菜')
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      appMainLoading: false
     }
   },
   computed: {

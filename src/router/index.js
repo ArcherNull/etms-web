@@ -50,6 +50,7 @@ const createRouter = () =>
     routes
   })
 
+// 这个方法就是将路由重新实例化，相当于换了一个新的路由，之前加的路由就不存在了，需要在登出的时候， 调用一下即可
 export function resetRouter () {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
@@ -89,12 +90,16 @@ router.beforeEach(async (to, from, next) => {
       // 有token但是动态路由为空，则请求动态路由
       if (!hasAsyncRoutesRequest) {
       // 添加动态路由
-      // resetRouter()
+        resetRouter()
         const asyncRoutes = await store.dispatch('setting/tagViews/generateRoutes')
         console.log('asyncRoutes=====>', asyncRoutes)
+
+        // 这里存在问题，可能是动态路由并未挂载到同一个vue实例上去【懵逼中.....】
         asyncRoutes.forEach(item => {
           router.addRoute(item)
         })
+
+        console.log('router=====>', router)
 
         next({ ...to, replace: true })
       } else {

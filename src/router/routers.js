@@ -145,7 +145,6 @@ export function generaMenu (data, pUrl = '') {
         }
       }
 
-      // item.component = ''
       if (component === 'Layout') {
         menuObj.component = Layout
         menuObj.redirect = {
