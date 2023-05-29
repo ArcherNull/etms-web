@@ -154,7 +154,12 @@ export function generaMenu (data, pUrl = '') {
         if (!child?.length) {
           // 三级路由
           // 接口组件字符串转换成组件对象， 这里找不到这个模块路径  webpack版本低时的引入方式
+          console.log('component=====>', component)
+
           menuObj.component = (resolve) => require([`@/views/pages${component}`], resolve)
+
+          // menuObj.component = (resolve) => require([`@/views/pages${component}`], resolve)
+
           // item.component = () => import('@/views/pages/' + component + '/index.vue')
         } else {
           // 二级路由重定向
