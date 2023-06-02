@@ -37,13 +37,13 @@ const state = {
 }
 
 const mutations = {
-  SET_DIVISION_LIST(state, list) {
+  SET_DIVISION_LIST (state, list) {
     state.divisionList = list
   },
   /**
    * @description 切换灰度状态
    */
-  SET_GRAY_MODE_TOGGLE(state) {
+  SET_GRAY_MODE_TOGGLE (state) {
     state.garyMode = !state.garyMode
   },
 
@@ -51,7 +51,7 @@ const mutations = {
    * @description 设置灰度模式
    * @param {Boolean} active 灰度模式的开启和关闭
    */
-  SET_GRAY_MODE(state, active) {
+  SET_GRAY_MODE (state, active) {
     state.garyMode = active
   },
 
@@ -59,7 +59,7 @@ const mutations = {
    * @description:  设置设备
    * @param { String } deviceInfo  mobile / desktop
    */
-  SET_DEVICE(state, deviceInfo) {
+  SET_DEVICE (state, deviceInfo) {
     state.device = deviceInfo
   },
 
@@ -67,7 +67,7 @@ const mutations = {
    * @description:  设置设备
    * @param { String } deviceInfo  mobile / desktop
    */
-  SET_USER_INFO(state, data) {
+  SET_USER_INFO (state, data) {
     state.organization = data?.organization || []
     state.organization4 = data?.organization4 || []
     state.roleInfo = data?.roleInfo || []
@@ -89,7 +89,7 @@ const actions = {
    * @param {*} dispatch 分发事件
    * @return {*}
    */
-  async loadUserInfo({ dispatch }) {
+  async loadUserInfo ({ dispatch }) {
     // 全屏监听
     dispatch('setting/fullscreen/listen', null, { root: true })
 
@@ -126,7 +126,7 @@ const actions = {
    * @description: 登出
    * @return {*}
    */
-  logout(type = 'logout') {
+  logout (type = 'logout') {
     util.cookies.remove('token')
     const currentPath = router.history.current.path
     console.log('currentPath========>', currentPath)
@@ -138,12 +138,12 @@ const actions = {
     }
   },
 
-  setDeviceInfo({ commit }, deviceInfo) {
+  setDeviceInfo ({ commit }, deviceInfo) {
     commit('SET_DEVICE', deviceInfo)
   },
 
   // 获取用户详情
-  async getUserInfo({ commit }) {
+  async getUserInfo ({ commit }) {
     const { code, data: userData, msg } = await api.system.user.getUserInfo()
     if (code === 200) {
       const { organization, organization4, roleInfo, userInfo } = userData
@@ -160,12 +160,12 @@ const actions = {
   },
 
   // 记录用户登录信息， 用户名及密码
-  setUserLoginInfoFun({ commit }, data) {
+  setUserLoginInfoFun ({ commit }, data) {
     commit('SET_USER_LOGIN_INFO', data)
   },
 
   // 用户登录
-  async login({ commit, dispatch }, dataObj) {
+  async login ({ commit, dispatch }, dataObj) {
     try {
       const { code, data, msg } = await api.login.login(dataObj)
 
@@ -187,7 +187,7 @@ const actions = {
   }
 }
 
-function validateUserInfo(data) {
+function validateUserInfo (data) {
   return new Promise((resolve, reject) => {
     if (isObject(data) && !isEmpty(data)) {
       const validateObj = {
