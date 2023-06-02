@@ -66,7 +66,7 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
   // 确认已经加载多标签页数据
-  await store.dispatch('setting/tagViews/isLoaded')
+  // await store.dispatch('setting/tagViews/isLoaded')
 
   // 验证当前路由所有的匹配中是否需要有登录验证的
   const token = util.cookies.get('token')
@@ -95,11 +95,11 @@ router.beforeEach(async (to, from, next) => {
         console.log('asyncRoutes=====>', asyncRoutes)
 
         // 这里存在问题，可能是动态路由并未挂载到同一个vue实例上去【懵逼中.....】
-        asyncRoutes.forEach(item => {
-          router.addRoute(item)
-        })
+        // asyncRoutes.forEach(item => {
+        //   router.addRoute(item)
+        // })
 
-        console.log('router=====>', router)
+        // console.log('router=====>123', router)
 
         next({ ...to, replace: true })
       } else {

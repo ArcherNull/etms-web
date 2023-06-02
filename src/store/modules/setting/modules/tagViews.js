@@ -501,6 +501,13 @@ const actions = {
         commit('SET_HAS_ASYNC_ROUTES_REQUEST', true)
         // tagViews的pool
         await dispatch('init', asyncRoutes)
+        // 持久化数据加载上次退出时的多页列表
+        await dispatch('openedLoad')
+        // 这里存在问题，可能是动态路由并未挂载到同一个vue实例上去【懵逼中.....】
+        asyncRoutes.forEach(item => {
+          router.addRoute(item)
+        })
+        // 返回动态路由
         resole(asyncRoutes)
       })
         .catch(_ => {

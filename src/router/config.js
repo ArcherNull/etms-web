@@ -4,7 +4,7 @@
  * @Description:
  */
 export const meta = {
-  auth: true,
+  auth: false,
   cache: false,
   hidden: false,
   icon: 'el-icon-s-marketing'

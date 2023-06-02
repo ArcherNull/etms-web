@@ -147,26 +147,12 @@ export function generaMenu (data, pUrl = '') {
 
       if (component === 'Layout') {
         menuObj.component = Layout
-        menuObj.redirect = {
-          name: child?.[0]?.menuUrl
-        }
       } else {
-        if (!child?.length) {
-          // 三级路由
-          // 接口组件字符串转换成组件对象， 这里找不到这个模块路径  webpack版本低时的引入方式
-          console.log('component=====>', component)
+        // 这个地方，二级到三级路由用不了redict属性的方式，只能使用component的方式
+        menuObj.component = () => import('@/views/pages' + component + '/index.vue')
 
-          menuObj.component = (resolve) => require([`@/views/pages${component}`], resolve)
-
-          // menuObj.component = (resolve) => require([`@/views/pages${component}`], resolve)
-
-          // item.component = () => import('@/views/pages/' + component + '/index.vue')
-        } else {
-          // 二级路由重定向
-          menuObj.redirect = {
-            name: child?.[0].menuUrl
-          }
-        }
+        // 两种方式引入
+        // menuObj.component = (resolve) => require([`@/views/pages${component}`], resolve)
       }
 
       // 获取children子集
