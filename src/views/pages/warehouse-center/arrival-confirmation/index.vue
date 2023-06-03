@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/arrival-confirmation'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/arrival-confirmation'
 export default {
   name: 'ArrivalConfirmation',
   data () {

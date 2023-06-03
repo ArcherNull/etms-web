@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/domain'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/domain'
 export default {
   name: 'Domain',
   data () {

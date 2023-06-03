@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/message'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/message'
 export default {
   name: 'Message',
   data () {

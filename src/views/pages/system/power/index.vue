@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/power'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/power'
 export default {
   name: 'Power',
   data () {

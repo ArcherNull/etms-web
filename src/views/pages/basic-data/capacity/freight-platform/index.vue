@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/capacity/freight-platform'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/capacity/freight-platform'
 export default {
   name: 'FreightPlatform',
   data () {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/dekun-transport/dispatch-center'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/dekun-transport/dispatch-center'
 export default {
   name: 'DispatchCenter',
   data () {

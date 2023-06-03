@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/risk/warning'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/risk/warning'
 export default {
   name: 'Warning',
   data () {

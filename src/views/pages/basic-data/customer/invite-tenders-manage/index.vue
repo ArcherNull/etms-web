@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/customer/invite-tenders-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/customer/invite-tenders-manage'
 export default {
   name: 'InviteTendersManage',
   data () {

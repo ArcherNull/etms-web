@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/needpay-manage/invoice-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/needpay-manage/invoice-manage'
 export default {
   name: 'InvoiceManage',
   data () {

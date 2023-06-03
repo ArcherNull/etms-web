@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/customer-price-template'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/customer-price-template'
 export default {
   name: 'CustomerPriceTemplate',
   data () {

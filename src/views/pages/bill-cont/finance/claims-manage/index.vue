@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/finance/claims-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/finance/claims-manage'
 export default {
   name: 'ClaimsManage',
   data () {

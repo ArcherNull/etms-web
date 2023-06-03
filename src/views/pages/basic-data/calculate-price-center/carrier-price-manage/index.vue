@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/carrier-price-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/carrier-price-manage'
 export default {
   name: 'CarrierPriceManage',
   data () {

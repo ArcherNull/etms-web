@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-order/shipping-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-order/shipping-manage'
 export default {
   name: 'ShippingManage',
   data () {

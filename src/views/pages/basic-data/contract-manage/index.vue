@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/contract-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/contract-manage'
 export default {
   name: 'ContractManage',
   data () {

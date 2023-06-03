@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/risk/error-info'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/risk/error-info'
 export default {
   name: 'ErrorInfo',
   data () {

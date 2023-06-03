@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/basic-data/store-area-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/basic-data/store-area-manage'
 export default {
   name: 'StoreAreaManage',
   data () {

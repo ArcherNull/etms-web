@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/quote-center/carrier-quote'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/quote-center/carrier-quote'
 export default {
   name: 'CarrierQuote',
   data () {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/report-manage/kpi-report'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/report-manage/kpi-report'
 export default {
   name: 'KpiReport',
   data () {

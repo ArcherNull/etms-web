@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/company-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/company-manage'
 export default {
   name: 'CompanyManage',
   data () {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/waybill-edit-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/waybill-edit-manage'
 export default {
   name: 'WaybillEditManage',
   data () {

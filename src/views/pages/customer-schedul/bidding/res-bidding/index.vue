@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-schedul/bidding/res-bidding'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-schedul/bidding/res-bidding'
 export default {
   name: 'ResBidding',
   data () {

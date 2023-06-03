@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/customer/margin-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/customer/margin-manage'
 export default {
   name: 'MarginManage',
   data () {

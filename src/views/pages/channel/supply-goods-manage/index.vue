@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/supply-goods-manage'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/supply-goods-manage'
 export default {
   name: 'SupplyGoodsManage',
   data () {

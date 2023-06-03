@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/finance/oilcard'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/finance/oilcard'
 export default {
   name: 'Oilcard',
   data () {

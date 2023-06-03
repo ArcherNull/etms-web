@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/needpay-manage/unwritten-off'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/needpay-manage/unwritten-off'
 export default {
   name: 'UnwrittenOff',
   data () {

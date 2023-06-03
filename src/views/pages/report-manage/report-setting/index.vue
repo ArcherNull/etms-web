@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/report-manage/report-setting'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/report-manage/report-setting'
 export default {
   name: 'ReportSetting',
   data () {

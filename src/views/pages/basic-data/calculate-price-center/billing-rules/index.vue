@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/billing-rules'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/billing-rules'
 export default {
   name: 'BillingRules',
   data () {

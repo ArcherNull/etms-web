@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/needpay-manage/pay-verify'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/needpay-manage/pay-verify'
 export default {
   name: 'PayVerify',
   data () {

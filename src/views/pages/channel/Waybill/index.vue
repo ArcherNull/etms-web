@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/Waybill'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/Waybill'
 export default {
   name: 'Waybill',
   data () {

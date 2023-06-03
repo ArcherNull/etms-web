@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/position'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/position'
 export default {
   name: 'Position',
   data () {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-schedul/waybill'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-schedul/waybill'
 export default {
   name: 'Waybill',
   data () {

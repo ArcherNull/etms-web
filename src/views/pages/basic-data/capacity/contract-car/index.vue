@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/capacity/contract-car'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/capacity/contract-car'
 export default {
   name: 'ContractCar',
   data () {

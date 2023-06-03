@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/finance/subjects'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/finance/subjects'
 export default {
   name: 'Subjects',
   data () {

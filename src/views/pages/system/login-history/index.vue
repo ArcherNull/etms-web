@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/login-history'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/login-history'
 export default {
   name: 'LoginHistory',
   data () {

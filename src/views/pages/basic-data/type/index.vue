@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/type'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/type'
 export default {
   name: 'Type',
   data () {

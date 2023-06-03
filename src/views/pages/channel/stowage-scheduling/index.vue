@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/stowage-scheduling'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/channel/stowage-scheduling'
 export default {
   name: 'StowageScheduling',
   data () {

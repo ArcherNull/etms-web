@@ -1,3 +1,9 @@
+<!--
+ * @Author: junsong Chen 779217162@qq.com
+ * @Date: 2023-06-03 10:19:54
+ * @LastEditTime: 2023-06-03 11:49:16
+ * @Description:
+-->
 <template>
   <div class="PutInWarehouse">
     PutInWarehouse
@@ -5,7 +11,7 @@
 </template>
 
 <script>
-import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/stock-control/put-in-warehouse'
+// import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/stock-control/put-in-warehouse'
 export default {
   name: 'PutInWarehouse',
   data () {
