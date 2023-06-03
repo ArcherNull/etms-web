@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/permission'
 export default {
   name: 'Permission',
   data () {

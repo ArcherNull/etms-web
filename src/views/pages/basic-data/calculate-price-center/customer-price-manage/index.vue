@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/calculate-price-center/customer-price-manage'
 export default {
   name: 'CustomerPriceManage',
   data () {

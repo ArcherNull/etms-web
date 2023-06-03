@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/order/receipt-sign'
 export default {
   name: 'ReceiptSign',
   data () {

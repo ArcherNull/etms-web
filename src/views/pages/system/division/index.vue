@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/system/division'
 export default {
   name: 'Division',
   data () {

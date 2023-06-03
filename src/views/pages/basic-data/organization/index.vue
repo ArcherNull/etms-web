@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/organization'
 export default {
   name: 'Organization',
   data () {

@@ -713,6 +713,12 @@ function calculateTotalLine (list) {
       }
     }
 
+    // 数字转换
+    const convertNumber = (num) => {
+      const val = Number(num)
+      return isNaN(val) ? 0 : val
+    }
+
     const formatMathNum = (num) => (!num && isNaN(num) ? 0 : num.toFixed(3))
 
     /**
@@ -721,7 +727,7 @@ function calculateTotalLine (list) {
      */
     const getSum = (arr, keyName) => {
       const sum = sumBy(arr, function (item) {
-        return Number(item[keyName])
+        return convertNumber(item[keyName])
       })
       return formatMathNum(sum)
     }
@@ -737,7 +743,7 @@ function calculateTotalLine (list) {
      */
     const getAverageNum = (arr, keyName) => {
       const sum = getSum(arr, keyName)
-      return sum && formatMathNum((sum * 1000) / (1000 * arr.length))
+      return sum && formatMathNum((convertNumber(sum) * 1000) / (1000 * arr.length))
     }
 
     for (const ele of keys) {

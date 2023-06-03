@@ -1,9 +1,3 @@
-<!--
- * @Author: junsong Chen 779217162@qq.com
- * @Date: 2023-05-19 10:14:18
- * @LastEditTime: 2023-05-19 10:16:57
- * @Description:
--->
 <template>
   <div class="CustomerAccountManage">
     CustomerAccountManage
@@ -11,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/basic-data/customer/customer-account-manage'
 export default {
   name: 'CustomerAccountManage',
   data () {

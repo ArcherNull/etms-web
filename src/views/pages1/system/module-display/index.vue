@@ -55,7 +55,7 @@
         >错误信息</MyButton>
         <MyButton
           type="danger"
-          @click="showMessageBox('氪金使你变强','自定义信息内容')"
+          @click="showMessageBox('氪金使你变强', '自定义信息内容')"
         >自定义信息</MyButton>
       </div>
     </FirstTitle>
@@ -104,10 +104,7 @@
 
     <FirstTitle title="Notification通知">
       <div slot="content">
-        <MyButton
-          type="info"
-          @click="notification()"
-        >通知弹窗</MyButton>
+        <MyButton type="info" @click="notification()">通知弹窗</MyButton>
       </div>
     </FirstTitle>
 
@@ -276,18 +273,44 @@
       <div slot="content" class="dk-grid-3">
         <span>
           <div class="dk-f3-title">带地图下拉选项的：</div>
-          <MyCascaderAddress class="dk-mb-4" :default-value="baiduRegion" :get-checked-nodes="getBaiduCheckedNodes" @change="baiduMapSearch" />
-          <MySearchAddress :location="baiduLocation" :keyword="baiduStreetDetail" />
+          <MyCascaderAddress
+            class="dk-mb-4"
+            :default-value="baiduRegion"
+            :get-checked-nodes="getBaiduCheckedNodes"
+            @change="baiduMapSearch"
+          />
+          <MySearchAddress
+            :location="baiduLocation"
+            :keyword="baiduStreetDetail"
+          />
         </span>
         <span>
           <div class="dk-f3-title">不带地图，只带下拉选项的：</div>
-          <MyCascaderAddress class="dk-mb-4" :default-value="baiduRegion" :get-checked-nodes="getBaiduCheckedNodes" @change="baiduMapSearch" />
-          <MySearchAddress type="search" :location="baiduLocation" :keyword="baiduStreetDetail" />
+          <MyCascaderAddress
+            class="dk-mb-4"
+            :default-value="baiduRegion"
+            :get-checked-nodes="getBaiduCheckedNodes"
+            @change="baiduMapSearch"
+          />
+          <MySearchAddress
+            type="search"
+            :location="baiduLocation"
+            :keyword="baiduStreetDetail"
+          />
         </span>
         <span>
           <div class="dk-f3-title">只带地图，不带下拉选项的：</div>
-          <MyCascaderAddress class="dk-mb-4" :default-value="baiduRegion" :get-checked-nodes="getBaiduCheckedNodes" @change="baiduMapSearch" />
-          <MySearchAddress type="map" :location="baiduLocation" :keyword="baiduStreetDetail" />
+          <MyCascaderAddress
+            class="dk-mb-4"
+            :default-value="baiduRegion"
+            :get-checked-nodes="getBaiduCheckedNodes"
+            @change="baiduMapSearch"
+          />
+          <MySearchAddress
+            type="map"
+            :location="baiduLocation"
+            :keyword="baiduStreetDetail"
+          />
         </span>
       </div>
     </FirstTitle>
@@ -296,7 +319,10 @@
       <div slot="content" class="dk-grid-4">
         <span>
           <span class="dk-mr-8">省市区级联框:</span>
-          <MyCascaderAddress :default-value="pcaRegionValue" :get-checked-nodes="getCheckedNodes" />
+          <MyCascaderAddress
+            :default-value="pcaRegionValue"
+            :get-checked-nodes="getCheckedNodes"
+          />
         </span>
         <span>
           <span class="dk-ml-16 dk-mr-8">省市级联框:</span>
@@ -776,37 +802,50 @@ export default {
             label: '单选级联框',
             component: 'cascader',
             field: 'singleCascader',
-            options: [{
-              value: 'zhinan',
-              label: '指南',
-              children: [{
-                value: 'shejiyuanze',
-                label: '设计原则',
-                children: [{
-                  value: 'yizhi',
-                  label: '一致'
-                }, {
-                  value: 'fankui',
-                  label: '反馈'
-                }, {
-                  value: 'xiaolv',
-                  label: '效率'
-                }, {
-                  value: 'kekong',
-                  label: '可控'
-                }]
-              }, {
-                value: 'daohang',
-                label: '导航',
-                children: [{
-                  value: 'cexiangdaohang',
-                  label: '侧向导航'
-                }, {
-                  value: 'dingbudaohang',
-                  label: '顶部导航'
-                }]
-              }]
-            }]
+            options: [
+              {
+                value: 'zhinan',
+                label: '指南',
+                children: [
+                  {
+                    value: 'shejiyuanze',
+                    label: '设计原则',
+                    children: [
+                      {
+                        value: 'yizhi',
+                        label: '一致'
+                      },
+                      {
+                        value: 'fankui',
+                        label: '反馈'
+                      },
+                      {
+                        value: 'xiaolv',
+                        label: '效率'
+                      },
+                      {
+                        value: 'kekong',
+                        label: '可控'
+                      }
+                    ]
+                  },
+                  {
+                    value: 'daohang',
+                    label: '导航',
+                    children: [
+                      {
+                        value: 'cexiangdaohang',
+                        label: '侧向导航'
+                      },
+                      {
+                        value: 'dingbudaohang',
+                        label: '顶部导航'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           },
           {
             label: '多选级联框',
@@ -814,39 +853,51 @@ export default {
             field: 'multiCascader',
             propsObj: { multiple: true },
             collapseTags: true,
-            options: [{
-              value: 'zhinan',
-              label: '指南',
-              children: [{
-                value: 'shejiyuanze',
-                label: '设计原则',
-                children: [{
-                  value: 'yizhi',
-                  label: '一致'
-                }, {
-                  value: 'fankui',
-                  label: '反馈'
-                }, {
-                  value: 'xiaolv',
-                  label: '效率'
-                }, {
-                  value: 'kekong',
-                  label: '可控'
-                }]
-              }, {
-                value: 'daohang',
-                label: '导航',
-                children: [{
-                  value: 'cexiangdaohang',
-                  label: '侧向导航'
-                }, {
-                  value: 'dingbudaohang',
-                  label: '顶部导航'
-                }]
-              }]
-            }]
+            options: [
+              {
+                value: 'zhinan',
+                label: '指南',
+                children: [
+                  {
+                    value: 'shejiyuanze',
+                    label: '设计原则',
+                    children: [
+                      {
+                        value: 'yizhi',
+                        label: '一致'
+                      },
+                      {
+                        value: 'fankui',
+                        label: '反馈'
+                      },
+                      {
+                        value: 'xiaolv',
+                        label: '效率'
+                      },
+                      {
+                        value: 'kekong',
+                        label: '可控'
+                      }
+                    ]
+                  },
+                  {
+                    value: 'daohang',
+                    label: '导航',
+                    children: [
+                      {
+                        value: 'cexiangdaohang',
+                        label: '侧向导航'
+                      },
+                      {
+                        value: 'dingbudaohang',
+                        label: '顶部导航'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
-
         ]
       },
       formSchemas: [
@@ -1309,19 +1360,25 @@ export default {
       switch (item.btnText) {
         case '新增':
           console.log('新增')
-          this.$commJs.confirmModel('确认新增吗？', this).then((res) => {
-            console.log('res======>', res)
-          }).finally(() => {
-            item.loading = false
-          })
+          this.$commJs
+            .confirmModel('确认新增吗？', this)
+            .then((res) => {
+              console.log('res======>', res)
+            })
+            .finally(() => {
+              item.loading = false
+            })
           break
         case '审批':
           console.log('审批')
-          this.$commJs.confirmModel('确认审批吗？', this).then((res) => {
-            console.log('res======>', res)
-          }).finally(() => {
-            item.loading = false
-          })
+          this.$commJs
+            .confirmModel('确认审批吗？', this)
+            .then((res) => {
+              console.log('res======>', res)
+            })
+            .finally(() => {
+              item.loading = false
+            })
           break
         case '删除':
           console.log('删除')
@@ -1389,21 +1446,36 @@ export default {
      */
     showMessageBox (title = '', content = '') {
       const h = this.$createElement
-      const createEle = h('p',
-        { style: {
-          color: 'green'
-        }},
+      const createEle = h(
+        'p',
+        {
+          style: {
+            color: 'green'
+          }
+        },
         [
-          h('span', { style: {
-            color: 'red',
-            fontSize: '18px'
-          }}, content),
-          h('div', {
-            style: {
-              backgroundImage: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a8ec8a13632762d01fd3ada8a8ec08fa513dc63c.jpg',
-              width: '50px',
-              height: '50px'
-            }}, ''),
+          h(
+            'span',
+            {
+              style: {
+                color: 'red',
+                fontSize: '18px'
+              }
+            },
+            content
+          ),
+          h(
+            'div',
+            {
+              style: {
+                backgroundImage:
+                  'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a8ec8a13632762d01fd3ada8a8ec08fa513dc63c.jpg',
+                width: '50px',
+                height: '50px'
+              }
+            },
+            ''
+          ),
           h('p', null, 'fish is you')
         ]
       )
@@ -1416,17 +1488,19 @@ export default {
         beforeClose: (action, instance, done) => {
           done()
         }
-      }).then((res) => {
-        console.log('action=====>', res)
-        if (res === 'confirm') {
-          console.log('点击了确定')
-        }
-      }).catch((action) => {
-        console.log('action=====>', action)
-        if (action === 'cancel') {
-          console.log('点击了否')
-        }
       })
+        .then((res) => {
+          console.log('action=====>', res)
+          if (res === 'confirm') {
+            console.log('点击了确定')
+          }
+        })
+        .catch((action) => {
+          console.log('action=====>', action)
+          if (action === 'cancel') {
+            console.log('点击了否')
+          }
+        })
     }
   }
 }

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/receive/invoice-regist'
 export default {
   name: 'InvoiceRegist',
   data () {

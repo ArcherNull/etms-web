@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/bill-cont/receive/unwritten-off'
 export default {
   name: 'UnwrittenOff',
   data () {

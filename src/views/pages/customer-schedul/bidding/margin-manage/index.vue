@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/customer-schedul/bidding/margin-manage'
 export default {
   name: 'MarginManage',
   data () {

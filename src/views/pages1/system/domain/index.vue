@@ -60,11 +60,9 @@ export default {
       this.agTable1 = agTable
     },
     search () {
-      // this.agTable.setRowData(rowData.getRowData())
       this.agTableOptions.rowData = rowData.getRowData()
     },
     refresh () {
-      // this.agTable.setRowData(rowData.getRowData())
       this.agTableOptions.rowData = rowData.getRowData()
     },
     getSelectRowData () {

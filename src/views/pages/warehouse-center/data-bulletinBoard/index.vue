@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/data-bulletinBoard'
 export default {
   name: 'DataBulletinBoard',
   data () {

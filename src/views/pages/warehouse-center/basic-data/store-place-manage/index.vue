@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/warehouse-center/basic-data/store-place-manage'
 export default {
   name: 'StorePlaceManage',
   data () {

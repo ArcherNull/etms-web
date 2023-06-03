@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { addHttp, delHttp, editHttp, queryHttp } from '@/api/order/order-manage'
 export default {
   name: 'OrderManage',
   data () {
