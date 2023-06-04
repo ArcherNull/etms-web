@@ -15,10 +15,10 @@
           class="siderbarMenu-menuBox-menu"
           :default-active="current"
           :collapse="menubarIsFold"
-          :background-color="menuBgColor"
-          :text-color="menuTextColor"
+          :background-color="variables.menuBg"
+          :text-color="variables.menuText"
           :unique-opened="false"
-          :active-text-color="menuActiveTextColor"
+          :active-text-color="variables.menuActiveText"
           :collapse-transition="false"
           mode="vertical"
         >
@@ -39,7 +39,7 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-
+import variables from './index.scss'
 import MenuSearch from './components/MenuSearch/index.vue'
 import SidebarItem from './components/SidebarItem/index.vue'
 
@@ -73,9 +73,6 @@ export default {
 
     ...mapGetters([
       'menuSearchHeight',
-      'menuBgColor',
-      'menuTextColor',
-      'menuActiveTextColor',
       'asyncRoute'
     ]),
     // 当前选中的
@@ -83,6 +80,9 @@ export default {
       const route = this.$route
       const { meta } = route
       return meta.id
+    },
+    variables () {
+      return variables
     }
   },
   watch: {
@@ -109,6 +109,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './index.scss';
+
 ::v-deep .siderbarMenu-menuBox-menu {
   height: calc(100vh - 90px);
   box-sizing: border-box;
@@ -123,5 +125,68 @@ export default {
       }
     }
   }
+
+  .submenu-title-noDropdown,
+  .el-submenu__title {
+    &:hover {
+      background-color: $menuHover !important;
+    }
+  }
+
+  & .nest-menu .el-submenu > .el-submenu__title,
+  & .el-submenu .el-menu-item {
+    // min-width: $sideBarWidth !important;
+    background-color: $subMenuBg !important; //
+
+    &:hover {
+      background-color: $menuHover !important;
+    }
+  }
+
+  & .router-link-active .el-menu-item {
+    color: $subMenuActiveText !important;
+    background-color: $subMenuActive !important;
+  }
 }
+
+// when menu collapsed
+// .el-menu--vertical {
+//   & > .el-menu {
+//     .svg-icon {
+//       margin-right: 16px;
+//     }
+//     .sub-el-icon {
+//       margin-right: 12px;
+//       margin-left: -2px;
+//     }
+//   }
+
+//   .nest-menu .el-submenu > .el-submenu__title,
+//   .el-menu-item {
+//     // background-color: #ff0000 !important;
+//     &:hover {
+//       // you can use $subMenuHover
+//       background-color: $menuHover !important;
+//     }
+//   }
+
+//   // the scroll bar appears when the subMenu is too long
+//   > .el-menu--popup {
+//     max-height: 100vh;
+//     overflow-y: auto;
+
+//     &::-webkit-scrollbar-track-piece {
+//       background: #d3dce6;
+//     }
+
+//     &::-webkit-scrollbar {
+//       width: 6px;
+//     }
+
+//     &::-webkit-scrollbar-thumb {
+//       background: #99a9bf;
+//       border-radius: 20px;
+//     }
+//   }
+// }
 </style>

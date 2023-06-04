@@ -28,20 +28,9 @@ const layoutSize = {
   menubarIsFold: false // 菜单栏是否折叠
 }
 
-// 布局颜色
-const layoutColor = {
-  menuColor: {
-    menuBgColor: '#0b263f', // 菜单栏背景色
-    menuTextColor: '#fff', // 菜单栏默认文字颜色
-    menuActiveTextColor: '#ffffff' // 菜单栏选中的菜单的文本颜色
-  }
-}
-
 const state = {
   // 布局尺寸
-  ...layoutSize,
-  // 布局颜色
-  ...layoutColor
+  ...layoutSize
 }
 
 const mutations = {

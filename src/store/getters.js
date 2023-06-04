@@ -53,17 +53,6 @@ const layoutSize = {
     state.setting.layout.headerStyle.tagsViewsHeight + dimensionUnit
 }
 
-// 布局颜色
-const layoutColor = {
-  // 布局尺寸--侧边栏--菜单栏背景颜色
-  menuBgColor: (state) => state.setting.layout.menuColor.menuBgColor,
-  // 布局尺寸--侧边栏--菜单栏文本
-  menuTextColor: (state) => state.setting.layout.menuColor.menuTextColor,
-  // 布局尺寸--侧边栏--被选中的文本颜色
-  menuActiveTextColor: (state) =>
-    state.setting.layout.menuColor.menuActiveTextColor
-}
-
 // 前端日志打印相关
 const logs = {
   // 返回现存 log (all) 的条数
@@ -85,8 +74,6 @@ const asyncRoute = {
 const getters = {
   // 布局尺寸--相关计算值
   ...layoutSize,
-  // 布局颜色
-  ...layoutColor,
   // 前端日志打印相关
   ...logs,
   // 当前登录用户的权限
