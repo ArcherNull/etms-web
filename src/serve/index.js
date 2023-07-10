@@ -109,7 +109,6 @@ server.interceptors.response.use(
   },
   (error) => {
     console.log('error=====>', error)
-
     // 从pending 列表中移除请求
     removePendingRequest(error || {})
 

@@ -1,6 +1,6 @@
 <template>
   <div class="Domain">
-    Domain
+    <MyButton @click="login">登录</MyButton>
   </div>
 </template>
 
@@ -14,7 +14,9 @@ export default {
     }
   },
   methods: {
-
+    login () {
+      console.log('12312312')
+    }
   }
 }
 </script>

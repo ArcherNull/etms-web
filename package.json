@@ -2,6 +2,10 @@
   "name": "ETMS",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=16.17.0",
+    "yarn": ">=1.22.19"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

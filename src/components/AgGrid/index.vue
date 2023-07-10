@@ -25,11 +25,12 @@
       @contextmenu.prevent.native=""
     />
 
-    <!-- :default-col-def="
-        agTableOptions.defaultColDef || agGridDefaultOptions.defaultColDef
-      " -->
+    <!--
+      :default-col-def="agTableOptions.defaultColDef || agGridDefaultOptions.defaultColDef"
+    -->
 
-    <!--       @rowClicked="rowClicked"
+    <!--
+      @rowClicked="rowClicked"
       @rowDoubleClicked="rowDoubleClicked"
       @rowSelected="rowSelected"
       @gridReady="onGridReady"
@@ -37,7 +38,8 @@
       @rowDataUpdated="OnRowDataUpdatedEvent"
       @filterChanged="FilterChangedEvent"
       @cell-clicked="onCellClicked"
-      @cellEditingStopped="cellEditingStopped" -->
+      @cellEditingStopped="cellEditingStopped"
+    -->
 
     <!-- 假数据，由该组件遍历生成，用于测试ag-grid-vue的属性和方法【下方注释不可删除】 -->
 
@@ -46,7 +48,8 @@
     <!-- :column-defs="$agTableOptions.data.columnDefs" 列头数据 ； :row-data="rowData" 行数据 -->
     <!-- :row-height="30" 行高为30，:header-height="40"列头高度 edit-type="fullRow" 编辑方式，使用键盘上的D或者F2，会打开所在行所有可编辑的单元格【双击编辑又是会失效】  -->
     <!-- :enable-col-resize="false" 列自适应，row-selection="multiple" 行选择，"multiple"表示为多选;single表示单选； :floating-filter="false"筛选行是否开启，true开启，false关闭 -->
-    <!--     <ag-grid-vue
+    <!--
+      <ag-grid-vue
       :style="style"
       class="table ag-theme-balham"
       :grid-options="$agTableOptions.gridOptions"
@@ -92,8 +95,8 @@
       @filterModified='onFilterModified'
       @filterChanged="FilterChangedEvent"
       @selectionChanged='onSelectionChanged'
-
-    /> -->
+    />
+    -->
 
     <AgDrawer :show-drawer="showRowDetailDrawer" :visible.sync="showAgRowDataDetailDrawer" :ag-table-options="agTableOptions" :ag-row-data-detail-data="agRowDataDetailData" />
 

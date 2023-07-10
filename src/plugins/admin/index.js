@@ -28,6 +28,8 @@ import Viewer from '../vViewer/index'
 import VueCropper from 'vue-cropper'
 // vue-clipboard2剪贴板
 import VueClipboard from 'vue-clipboard2'
+// 全局按钮节流
+import setVueClickGlobalThrottle from '../button/index'
 
 // 全局混入
 // import mixins from '@/mixins/index'
@@ -94,6 +96,8 @@ export default {
     // Vue.prototype.$agGridOptions = agGridOptions
     // 挂在日期处理插件
     Vue.prototype.$dayjs = dayjs
+
+    setVueClickGlobalThrottle(Vue)
 
     // 功能插件
     Vue.use(pluginLog)
