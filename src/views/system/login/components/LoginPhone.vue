@@ -152,7 +152,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user/login', ['companyList']),
+    ...mapState('user/userInfo', ['companyList']),
     submitBtnText () {
       if (this.safetyVerifyFun) {
         return '确定'

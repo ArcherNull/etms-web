@@ -12,8 +12,7 @@
       :id="agGridOptions.id || 'ag-table'"
       :style="agTableOptions.style || { height: '600px', width: '100%' }"
       :class="[`ag-theme-${agGridOptions.theme || theme}`]"
-      :grid-options="agGridDefaultOptions.gridOptions
-      "
+      :grid-options="agGridDefaultOptions.gridOptions"
       :column-defs="agTableOptions.columnDefs"
       :row-data="agTableOptions.rowData"
       :enable-col-resize="true"
@@ -48,6 +47,10 @@
     <!-- :column-defs="$agTableOptions.data.columnDefs" 列头数据 ； :row-data="rowData" 行数据 -->
     <!-- :row-height="30" 行高为30，:header-height="40"列头高度 edit-type="fullRow" 编辑方式，使用键盘上的D或者F2，会打开所在行所有可编辑的单元格【双击编辑又是会失效】  -->
     <!-- :enable-col-resize="false" 列自适应，row-selection="multiple" 行选择，"multiple"表示为多选;single表示单选； :floating-filter="false"筛选行是否开启，true开启，false关闭 -->
+    <!-- tooltipShowDelay 单元格tooltip提示延迟时间ms  -->
+    <!-- alwaysShowHorizontalScroll 总是显示垂直滚动条  -->
+    <!-- alwaysShowVerticalScroll 总是显示水平滚动条  -->
+
     <!--
       <ag-grid-vue
       :style="style"
@@ -62,6 +65,11 @@
       :enable-col-resize="false"
       row-selection="multiple"
       :floating-filter="true"
+
+      :alwaysShowHorizontalScroll="true"
+      :alwaysShowVerticalScroll="true"
+
+      :tooltipShowDelay="100"
 
       @bodyScroll="bodyScroll"
       @gridReady="onGridReady"
@@ -98,7 +106,12 @@
     />
     -->
 
-    <AgDrawer :show-drawer="showRowDetailDrawer" :visible.sync="showAgRowDataDetailDrawer" :ag-table-options="agTableOptions" :ag-row-data-detail-data="agRowDataDetailData" />
+    <AgDrawer
+      :show-drawer="showRowDetailDrawer"
+      :visible.sync="showAgRowDataDetailDrawer"
+      :ag-table-options="agTableOptions"
+      :ag-row-data-detail-data="agRowDataDetailData"
+    />
 
     <!-- 单元格右键菜单栏 -->
     <div v-if="showCellMenuList">
@@ -151,7 +164,7 @@ export default {
   props: {
     agTableOptions: {
       type: Object,
-      default: () => {}
+      default: () => { }
     },
     showCellMenuList: {
       type: Boolean,
@@ -209,6 +222,32 @@ export default {
       'filter'
     ]),
     ...mapState('element/myLoading', ['currentSelectedLoadingType']),
+
+    // 侧边抽屉
+    showRowDetailDrawer () {
+      const { columnDefs, rowData } = this.agTableOptions
+      return this.showRowDataDetailDrawer && columnDefs && columnDefs.length && rowData && rowData.length
+    }
+  },
+  mounted () {
+    eventBus.$off('agEventBus')
+    eventBus.$on('agEventBus', (data) => {
+      console.log('agEventBus=====>', data)
+    })
+  },
+  destroyed () {
+    eventBus.$off('agEventBus')
+  },
+
+  // 错误捕获钩子
+  errorCaptured (err, vm, info) {
+    console.log(
+      `ag-grid components throw error: ${err.toString()}\n  info: ${info}`
+    )
+    return false
+  },
+  methods: {
+    ...agGridMethods,
 
     // 这里为什么一定要采用computed , 需要的是computed缓存功能，如果是单纯的js引用，表格loading,第一次加载后，不会受vuex的改变而影响
     agGridDefaultOptions () {
@@ -394,33 +433,7 @@ export default {
       }
       console.log('表格配置项agTableConfig========>', agTableConfig)
       return agTableConfig
-    },
-
-    // 侧边抽屉
-    showRowDetailDrawer () {
-      const { columnDefs, rowData } = this.agTableOptions
-      return this.showRowDataDetailDrawer && columnDefs && columnDefs.length && rowData && rowData.length
     }
-  },
-  mounted () {
-    eventBus.$off('agEventBus')
-    eventBus.$on('agEventBus', (data) => {
-      console.log('agEventBus=====>', data)
-    })
-  },
-  destroyed () {
-    eventBus.$off('agEventBus')
-  },
-
-  // 错误捕获钩子
-  errorCaptured (err, vm, info) {
-    console.log(
-      `ag-grid components throw error: ${err.toString()}\n  info: ${info}`
-    )
-    return false
-  },
-  methods: {
-    ...agGridMethods
   }
 }
 </script>

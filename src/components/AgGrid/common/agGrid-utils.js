@@ -176,6 +176,12 @@ export function AgGridUtils (api) {
     this.columnDefs = columnApi.columnModel.columnDefs
     // 列数据最大长度
     this.columnDefsLength = this.columnDefs.length
+    // 获取视图展示的第一行数据下标
+    this.displayedFirstRowIndex = gridApi?.getFirstDisplayedRow() || 0
+    // 获取视图展示的最后一行数据下标， 如果为-1表示无数据，也就是说小于等于所有原始数据的长度时，可以请求接口
+    this.displayedLastRowIndex = gridApi?.getLastDisplayedRow() || 0
+    // 表格共设置后台数据量
+    this.displayedRowCount = gridApi?.getDisplayedRowCount() || 0
 
     // 行位置
     this.rowPosition = function () {

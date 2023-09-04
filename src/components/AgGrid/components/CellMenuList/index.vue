@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-if="visible">
-    <div :style="{ left: left + 'px', top: top + 'px' }" class="CellMenuList borderRed" @click.stop>
+    <div :style="{ left: left + 'px', top: top + 'px' }" class="CellMenuList borderRed" @click.stop="">
       <el-tabs v-model="activeName" class="CellMenuList-tabs" @tab-click="handleClick">
         <el-tab-pane label="字段" name="fields">
           <FieldsSet />

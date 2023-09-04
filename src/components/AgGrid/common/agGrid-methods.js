@@ -12,9 +12,7 @@ import {
   getCurrentGridDataAndNumericalOrder
 } from './agGrid-utils'
 
-const {
-  filterEventClearSelected
-} = store.state.agGrid.cellContextMenu
+const { filterEventClearSelected } = store.state.agGrid.cellContextMenu
 
 export const agGridMethods = {
   /**
@@ -24,6 +22,45 @@ export const agGridMethods = {
    */
   bodyScroll (event) {
     console.log('滚动事件bodyScroll', event)
+  },
+
+  /**
+   * @description: 停止触底事件bodyScrollEnd,对应ag-grid-vue 标签上的@bodyScrollEnd事件的监听
+   * @param {*} event
+   * @return {*}
+   */
+  bodyScrollEnd (event) {
+    console.log('停止滚动事件bodyScrollEnd', event)
+    const gridApi = event.api
+    console.log('gridApi=====>', gridApi.getSelectedRows())
+
+    console.log('获取视图展示的第一行的index', gridApi.getFirstDisplayedRow())
+    console.log('获取视图展示的最后一行的index', gridApi.getLastDisplayedRow())
+    console.log('表格共设置后台数据量', gridApi.getDisplayedRowCount())
+
+    console.log('获取水平滚动的滚动坐标值', gridApi.getVerticalPixelRange())
+
+    console.log('获取垂直滚动的滚动坐标值', gridApi.getHorizontalPixelRange())
+
+    const lastDisplayedRowIndex = gridApi.getLastDisplayedRow()
+    const displayedRowCount = gridApi.getDisplayedRowCount()
+
+    if (displayedRowCount) {
+      if (displayedRowCount === lastDisplayedRowIndex + 1) {
+        console.log('滚动条触底了，可以出发接口调用下一页数据')
+      } else {
+        console.log('滚动条未触底')
+      }
+    }
+  },
+
+  /**
+   * @description: 停止触底事件bodyScrollEnd,对应ag-grid-vue 标签上的@bodyScrollEnd事件的监听
+   * @param {*} event
+   * @return {*}
+   */
+  getVerticalPixelRange (event) {
+    console.log('尺寸范围', event)
   },
 
   /**

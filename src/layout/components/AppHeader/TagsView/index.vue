@@ -28,8 +28,8 @@
           @contextmenu.native="handleContextmenu"
         >
           <el-tab-pane
-            v-for="page in opened"
-            :key="page.fullPath"
+            v-for="(page , index) in opened"
+            :key="`${page.fullPath}-${index}`"
             :label="$t(`layout.sidebar.menu.${page.path || '/index'}`)"
             :name="page.fullPath"
             :closable="isTabClosable(page)"
