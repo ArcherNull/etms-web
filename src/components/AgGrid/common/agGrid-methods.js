@@ -11,6 +11,7 @@ import {
   refreshTotalToList,
   getCurrentGridDataAndNumericalOrder
 } from './agGrid-utils'
+import { showMessage } from '@/serve/httpCommon'
 
 const { filterEventClearSelected } = store.state.agGrid.cellContextMenu
 
@@ -325,7 +326,28 @@ export const agGridMethods = {
    */
   FilterChangedEvent (event) {
     // 刷新合计
-    // AgGridUtils.refreshTotalToList(event.api)
+    console.log('过滤事件,监听过滤行的筛选的改变FilterChangedEvent', event)
+    AgGridUtils.refreshTotal(event.api)
+
+    console.log('activeAdvancedFilters', activeAdvancedFilters)
+
+    const activeAdvancedFilters = event.api.filterManager.activeAdvancedFilters
+
+    const resultObj = {}
+    for (let i = 0; i < activeAdvancedFilters.length; i++) {
+      const item = activeAdvancedFilters[i]
+      const headerName = item?.textFilterParams?.colDef?.headerName
+      const eCondition1BodyValue =
+        item?.appliedModel?.filter || item?.appliedModel?.condition1?.filter
+      if (headerName && eCondition1BodyValue) {
+        resultObj[headerName] = eCondition1BodyValue
+      }
+    }
+
+    console.log('resultObj=====>', resultObj)
+    if (Object.keys(resultObj).length) {
+      showMessage(`【${JSON.stringify(resultObj)}】发生更改`)
+    }
   },
 
   /**
